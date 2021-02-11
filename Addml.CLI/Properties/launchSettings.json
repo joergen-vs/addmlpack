@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Addml.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "help"
+    }
+  }
+}
