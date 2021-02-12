@@ -1,6 +1,5 @@
 ## AddmlPack
-Verktøykasse under utvikling, for rask og enkel produksjon av arkivbeskrivelser som følger standarden ADDML. 
-#
+This is a toolbox under development, for quick and simple production of archival descriptions which follows the archival standard ADDML. 
 ## Modules
 ### Addml.Standard
 Contains the addml-classes, with various schemas (xml-schema and document-type definition).
@@ -14,7 +13,6 @@ Elements from addml not yet implemented:
 Common interface for all tools in AddmlPack.
 ### Addml.CLI
 Fully portable command-line interface.
-#
 ## Processes
 - generate: generate addml- or excel-file from template
 - convert: transforms addml to and from excel
@@ -51,7 +49,7 @@ dotnet Addml.CLI.dll appendProcesses
     [(-l | --lang) (<Language>)]
 dotnet Addml.CLI.dll appendProcesses (-h |--help)
 ```
-The keyword customoptions takes a string or filepath ot a json-structure, to apply some text-heavy options. If omitted, a standard set of processes is added. Currently uses following format:
+The keyword customoptions takes a string or filepath of a json-structure, to apply some text-heavy options. If omitted, a standard set of processes is added. Currently uses following format:
 
 ```json
 {
