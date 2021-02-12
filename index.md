@@ -1,24 +1,32 @@
 ## AddmlPack
 This is a toolbox under development, for quick and simple production of archival descriptions which follows the archival standard ADDML. 
+
 ## Modules
+
 ### Addml.Standard
 Contains the addml-classes, with various schemas (xml-schema and document-type definition).
+
 ### Addml.Utils
 Grouped support-functions, for manipulation of common objects like files, addml and projects.
+
 ### Addml.Spreadsheet
 Supports the conversion of addml to and from Excel 2007+ (.xlsx, .xlsm), using the ClosedXML library from [github.com](https://github.com/ClosedXML/ClosedXML).
 Elements from addml not yet implemented:
 - processes
+
 ### Addml.API
 Common interface for all tools in AddmlPack.
+
 ### Addml.CLI
 Fully portable command-line interface.
+
 ## Processes
 - generate: generate addml- or excel-file from template
 - convert: transforms addml to and from excel
 - help: shows documentation of and lists all implemented processes
 
 All processes will show documentation with keyword -h or --help.
+
 ### generate
 ```markdown
 Usage:
@@ -29,6 +37,7 @@ dotnet Addml.CLI.dll generate
 dotnet Addml.CLI.dll generate (-h |--help)
 ```
 Language is using the language tag listed on [docs.microsoft.com](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c). Currently, English and Norwegian (Bokmal) is implemented. If no language argument is given, the system-language will apply.
+
 ### convert
 ```markdown
 Usage:
@@ -39,6 +48,7 @@ dotnet Addml.CLI.dll convert
     [(-l | --lang) (<Language>)]
 dotnet Addml.CLI.dll convert (-h |--help)
 ```
+
 ### appendProcesses
 ```markdown
 Usage:
@@ -67,6 +77,7 @@ Addml supports processes on four levels, with work done on three; file, record a
 - Analyse_CountChars
 - Control_AllFixedLength
 - Control_NumberOfRecords
+
 ### record
 - Analyse_FindExtremeRecords
 - Analyse_CountRecordDefinitionOccurences
@@ -76,6 +87,7 @@ Addml supports processes on four levels, with work done on three; file, record a
 - Control_NotUsedRecordDef
 - Control_Key
 - Control_ForeignKey
+
 ### field
 - Analyse_CountNULL
 - Analyse_FindExtremeValues
