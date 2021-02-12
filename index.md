@@ -11,8 +11,22 @@ Grouped support-functions, for manipulation of common objects like files, addml 
 
 ### Addml.Spreadsheet
 Supports the conversion of addml to and from Excel 2007+ (.xlsx, .xlsm), using the ClosedXML library from [github.com](https://github.com/ClosedXML/ClosedXML).
-Elements from addml not yet implemented:
-- processes
+Elements from addml:
+- [ ] context
+- [ ] content
+- [x] flatFile
+- [x] flatFileDefinition
+- [x] recordDefinition
+- [ ] keys - currently working on
+- [x] fieldDefinition
+- [x] flatFileType
+- [x] recordType
+- [x] fieldType
+- [ ] flatFileProcesses
+- [ ] recordProcesses
+- [ ] fieldProcesses
+- [ ] processes
+- [ ] dataObject
 
 ### Addml.API
 Common interface for all tools in AddmlPack.
