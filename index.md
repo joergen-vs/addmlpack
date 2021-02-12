@@ -1,37 +1,91 @@
-## Welcome to GitHub Pages
+## AddmlPack
+Verktøykasse under utvikling, for rask og enkel produksjon av arkivbeskrivelser som følger standarden ADDML. 
+#
+## Modules
+### Addml.Standard
+Contains the addml-classes, with various schemas (xml-schema and document-type definition).
+### Addml.Utils
+Grouped support-functions, for manipulation of common objects like files, addml and projects.
+### Addml.Spreadsheet
+Supports the conversion of addml to and from Excel 2007+ (.xlsx, .xlsm), using the ClosedXML library from [github.com](https://github.com/ClosedXML/ClosedXML).
+Elements from addml not yet implemented:
+- processes
+### Addml.API
+Common interface for all tools in AddmlPack.
+### Addml.CLI
+Fully portable command-line interface.
+#
+## Processes
+- generate: generate addml- or excel-file from template
+- convert: transforms addml to and from excel
+- help: shows documentation of and lists all implemented processes
 
-You can use the [editor on GitHub](https://github.com/joergen-vs/addmlpack/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
+All processes will show documentation with keyword -h or --help.
+### generate
 ```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+Usage:
+dotnet Addml.CLI.dll generate
+    (-t | --type) (addml | excel)
+    (-o | --output) (<output-file>)
+    [(-l | --lang) (<Language>)]
+dotnet Addml.CLI.dll generate (-h |--help)
 ```
+Language is using the language tag listed on [docs.microsoft.com](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c). Currently, English and Norwegian (Bokmal) is implemented. If no language argument is given, the system-language will apply.
+### convert
+```markdown
+Usage:
+dotnet Addml.CLI.dll convert
+    (-t | --type) (addml2excel | excel2addml)
+    (-i | --input) (<input-file>)
+    (-o | --output) (<output-file>)
+    [(-l | --lang) (<Language>)]
+dotnet Addml.CLI.dll convert (-h |--help)
+```
+### appendProcesses
+```markdown
+Usage:
+dotnet Addml.CLI.dll appendProcesses
+    (-t | --type) (addml | excel)
+    (-i | --input) (<input-file>)
+    (-o | --output) (<output-file>)
+    [(-l | --lang) (<Language>)]
+dotnet Addml.CLI.dll appendProcesses (-h |--help)
+```
+The keyword customoptions takes a string or filepath ot a json-structure, to apply some text-heavy options. If omitted, a standard set of processes is added. Currently uses following format:
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+```json
+{
+  "processes": {
+      "file": [
+          "Control_NumberOfRecords"
+      ]
+  }
+}
+```
+Addml supports processes on four levels, with work done on three; file, record and field. See below for complete list.
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/joergen-vs/addmlpack/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+### file
+- Analyse_CountRecords
+- Analyse_CountChars
+- Control_AllFixedLength
+- Control_NumberOfRecords
+### record
+- Analyse_FindExtremeRecords
+- Analyse_CountRecordDefinitionOccurences
+- Analyse_AllFrequenceList
+- Analyse_CrossTable
+- Control_FixedLength
+- Control_NotUsedRecordDef
+- Control_Key
+- Control_ForeignKey
+### field
+- Analyse_CountNULL
+- Analyse_FindExtremeValues
+- Analyse_FindMinMaxValue
+- Analyse_FrequenceList
+- Control_MinLength
+- Control_MaxLength
+- Control_DataFormat
+- Control_NotNull
+- Control_Uniqueness
+- Control_Codes
