@@ -57,6 +57,7 @@ Usage:
 dotnet Addml.CLI.dll generate
     (-t | --type) (addml | excel)
     (-o | --output) (<output-file>)
+    [(-at | --archivetype) (<"Noark-3" | "Noark 5" | "Fagsystem">)]
     [(-l | --lang) (<Language>)]
 dotnet Addml.CLI.dll generate (-h |--help)
 ```
