@@ -5,28 +5,37 @@ This is a toolbox under development, for quick and simple production of archival
 
 ### Addml.Standard
 Contains the addml-classes, with various schemas (xml-schema and document-type definition).
+- [x] class-objects
+    - [x] v8.3
+- [x] schemas
+    - [x] v7.3 (DTD)
+    - [x] v8.2 (XML-Schema)
+    - [x] v8.3 (XML-Schema)
 
 ### Addml.Utils
 Grouped support-functions, for manipulation of common objects like files, addml and projects.
 
 ### Addml.Spreadsheet
-Supports the conversion of addml to and from Excel 2007+ (.xlsx, .xlsm), using the ClosedXML library from [github.com](https://github.com/ClosedXML/ClosedXML).
-Elements from addml:
-- [ ] context
-- [ ] content
-- [x] flatFile
-- [x] flatFileDefinition
-- [x] recordDefinition
-- [ ] keys - currently working on
-- [x] fieldDefinition
-- [x] flatFileType
-- [x] recordType
-- [x] fieldType
-- [ ] flatFileProcesses
-- [ ] recordProcesses
-- [ ] fieldProcesses
-- [ ] processes
-- [ ] dataObject
+Supports the conversion of addml to and from Excel 2007+ (.xlsx), using the ClosedXML library from [github.com](https://github.com/ClosedXML/ClosedXML).
+- [ ] transforming
+    - [ ] context
+    - [ ] content
+    - [x] flatFile
+    - [x] flatFileDefinition
+    - [x] recordDefinition
+    - [ ] keys - currently working on
+    - [x] fieldDefinition
+    - [x] flatFileType
+    - [x] recordType
+    - [x] fieldType
+    - [ ] flatFileProcesses
+    - [ ] recordProcesses
+    - [ ] fieldProcesses
+    - [ ] processes
+    - [ ] dataObject
+- [ ] prosess
+    - [ ] checksums
+    - [ ] processes
 
 ### Addml.API
 Common interface for all tools in AddmlPack.
@@ -37,6 +46,7 @@ Fully portable command-line interface.
 ## Processes
 - generate: generate addml- or excel-file from template
 - convert: transforms addml to and from excel
+- appendProcesses: Append a given or standard set of processes to file
 - help: shows documentation of and lists all implemented processes
 
 All processes will show documentation with keyword -h or --help.
@@ -70,6 +80,7 @@ dotnet Addml.CLI.dll appendProcesses
     (-t | --type) (addml | excel)
     (-i | --input) (<input-file>)
     (-o | --output) (<output-file>)
+    [(-co | --customoptions) (<json-string> | <file-path>)]
     [(-l | --lang) (<Language>)]
 dotnet Addml.CLI.dll appendProcesses (-h |--help)
 ```
@@ -86,30 +97,28 @@ The keyword customoptions takes a string or filepath of a json-structure, to app
 ```
 Addml supports processes on four levels, with work done on three; file, record and field. See below for complete list.
 
-### file
-- Analyse_CountRecords
-- Analyse_CountChars
-- Control_AllFixedLength
-- Control_NumberOfRecords
+| Level | Name | Description | Part of standard set |
+| ----------- | ----------- | ----------- | ----------- |
+| file | Analyse_CountRecords | "Description" | Yes |
+| file | Analyse_CountChars | "Description" | No |
+| file | Control_AllFixedLength | "Description" | No |
+| file | Control_NumberOfRecords | "Description" | Yes |
+| record | Analyse_FindExtremeRecords | "Description" | No |
+| record | Analyse_CountRecordDefinitionOccurences | "Description" | Yes |
+| record | Analyse_AllFrequenceList | "Description" | No |
+| record | Analyse_CrossTable | "Description" | No |
+| record | Control_FixedLength | "Description" | Yes |
+| record | Control_NotUsedRecordDef | "Description" | Yes |
+| record | Control_Key | "Description" | Yes |
+| record | Control_ForeignKey | "Description" | Yes |
+| field | Analyse_CountNULL | "Description" | Yes |
+| field | Analyse_FindExtremeValues | "Description" | Yes |
+| field | Analyse_FindMinMaxValue | "Description" | Yes |
+| field | Analyse_FrequenceList | "Description" | Yes |
+| field | Control_MinLength | "Description" | Yes |
+| field | Control_MaxLength | "Description" | Yes |
+| field | Control_DataFormat | "Description" | Yes |
+| field | Control_NotNull | "Description" | Yes |
+| field | Control_Uniqueness | "Description" | Yes |
+| field | Control_Codes | "Description" | Yes |
 
-### record
-- Analyse_FindExtremeRecords
-- Analyse_CountRecordDefinitionOccurences
-- Analyse_AllFrequenceList
-- Analyse_CrossTable
-- Control_FixedLength
-- Control_NotUsedRecordDef
-- Control_Key
-- Control_ForeignKey
-
-### field
-- Analyse_CountNULL
-- Analyse_FindExtremeValues
-- Analyse_FindMinMaxValue
-- Analyse_FrequenceList
-- Control_MinLength
-- Control_MaxLength
-- Control_DataFormat
-- Control_NotNull
-- Control_Uniqueness
-- Control_Codes
