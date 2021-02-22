@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace Addml.CLI
+namespace AddmlPack.CLI
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Addml.API.API.Run(args);
-            Console.Read();
+            AddmlPack.API.API.Run(args);
         }
     }
 }
