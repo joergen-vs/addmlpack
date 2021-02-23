@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<addml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.arkivverket.no/standarder/addml AddmlPack.xsd" xmlns="http://www.arkivverket.no/standarder/addml" name="Arkivnavn">
+  <dataset name="Filarkiv">
+    <description>Arkivmateriale.</description>
+    <reference />
+    <flatFiles>
+      <flatFile definitionReference="FilarkivDef" name="Filarkiv-analyse">
+        <properties>
+          <property name="fileName">
+            <value>output.csv</value>
+          </property>
+          <property name="numberOfOccurrences">
+            <value>5190</value>
+          </property>
+          <property name="checksum">
+            <properties>
+              <property name="algorithm">
+                <value>SHA-256</value>
+              </property>
+              <property name="value">
+                <value>1E783E52D5A3717247E9C04286D75F2B304990D8542C8A95E59A7E98B9E65E2D</value>
+              </property>
+            </properties>
+          </property>
+        </properties>
+      </flatFile>
+      <flatFileDefinitions>
+        <flatFileDefinition name="FilarkivDef" typeReference="uttrekk_fil">
+          <recordDefinitions>
+            <recordDefinition name="siegfried_def">
+              <description>Siegfried-analyse av mappestruktur med sjekksum</description>
+              <properties>
+                <property name="numberOfOccurrences">
+                  <value>5190</value>
+                </property>
+              </properties>
+              <keys>
+                <key name="primary">
+                  <primaryKey />
+                  <fieldDefinitionReferences>
+                    <fieldDefinitionReference name="filename" />
+                  </fieldDefinitionReferences>
+                </key>
+              </keys>
+              <fieldDefinitions>
+                <fieldDefinition name="filename" typeReference="Tekst">
+                  <description>Relativ filsti til dokumenter</description>
+                </fieldDefinition>
+                <fieldDefinition name="filesize" typeReference="long">
+                  <description>Filstørrelse</description>
+                </fieldDefinition>
+                <fieldDefinition name="modified" typeReference="Datotid">
+                  <description>Datotid Sist endret</description>
+                </fieldDefinition>
+                <fieldDefinition name="errors" typeReference="Tekst">
+                  <description>Feilmeldinger</description>
+                </fieldDefinition>
+                <fieldDefinition name="sha256" typeReference="Tekst">
+                  <description>Sjekksum på fil, basert på SHA-256</description>
+                </fieldDefinition>
+                <fieldDefinition name="namespace" typeReference="Tekst">
+                  <description>Navnerom for filformat-id</description>
+                </fieldDefinition>
+                <fieldDefinition name="id" typeReference="Tekst">
+                  <description>ID på filformat</description>
+                </fieldDefinition>
+                <fieldDefinition name="format" typeReference="Tekst">
+                  <description>Navn på format</description>
+                </fieldDefinition>
+                <fieldDefinition name="version" typeReference="Tekst">
+                  <description>Versjon av format</description>
+                </fieldDefinition>
+                <fieldDefinition name="mime" typeReference="Tekst">
+                  <description>Mime-type av format</description>
+                </fieldDefinition>
+                <fieldDefinition name="basis" typeReference="Tekst">
+                  <description>Grunnlag for angivelse av format</description>
+                </fieldDefinition>
+                <fieldDefinition name="warning" typeReference="Tekst">
+                  <description>Avvik</description>
+                </fieldDefinition>
+              </fieldDefinitions>
+            </recordDefinition>
+          </recordDefinitions>
+        </flatFileDefinition>
+      </flatFileDefinitions>
+      <structureTypes>
+        <flatFileTypes>
+          <flatFileType name="uttrekk_fil">
+            <charset>ISO-8859-1</charset>
+            <delimFileFormat>
+              <recordSeparator>CRLF</recordSeparator>
+              <fieldSeparatingChar>;</fieldSeparatingChar>
+            </delimFileFormat>
+          </flatFileType>
+        </flatFileTypes>
+        <fieldTypes>
+          <fieldType name="Tekst">
+            <dataType>string</dataType>
+          </fieldType>
+          <fieldType name="long">
+            <dataType>integer</dataType>
+          </fieldType>
+          <fieldType name="Datotid">
+            <dataType>date</dataType>
+            <fieldFormat>yyyy-MM-ddTHH:mm:ss</fieldFormat>
+          </fieldType>
+        </fieldTypes>
+      </structureTypes>
+    </flatFiles>
+    <dataObjects>
+      <dataObject name="dokumenter">
+        <description>Dokumentmappen</description>
+        <properties>
+          <property name="folder">
+            <properties>
+              <property name="name">
+                <!-- navn på mappe-->
+                <value>dokumenter</value>
+              </property>
+            </properties>
+          </property>
+          <property name="info">
+            <properties>
+              <property name="numberOfOccurrences">
+                <value>dokumenter</value>
+                <properties>
+                  <property name="elementPath">
+                    <value>*.*</value>
+                  </property>
+                  <property name="value" dataType="integer">
+                    <value>5190</value>
+                  </property>
+                </properties>
+              </property>
+            </properties>
+          </property>
+        </properties>
+      </dataObject>
+    </dataObjects>
+  </dataset>
+</addml>

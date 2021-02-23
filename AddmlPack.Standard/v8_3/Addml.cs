@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Addml.Standard.v8_3
+namespace AddmlPack.Standard.v8_3
 {
     using System.Collections.Generic;
     //------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ namespace Addml.Standard.v8_3
         }
 
         [XmlAttribute(AttributeName = "schemaLocation", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
-        public string schemaLocation { get { return "http://www.arkivverket.no/standarder/addml addml.xsd"; } set { } }
+        public string schemaLocation { get { return "http://www.arkivverket.no/standarder/addml AddmlPack.xsd"; } set { } }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("dataset")]
@@ -674,6 +674,23 @@ namespace Addml.Standard.v8_3
             return null;
         }
 
+        public List<property> getProperties(string _name, bool recursive)
+        {
+            if (propertiesField == null)
+                return null;
+
+            List<property> list = new List<property>();
+            for (int i = 0; i < propertiesField.Length; i++)
+                if (propertiesField[i].name.Equals(_name))
+                    list.Add(propertiesField[i]);
+                else if (recursive && propertiesField[i].properties != null)
+                {
+                    list.AddRange(propertiesField[i].getProperties(_name, recursive));
+                }
+
+            return list;
+        }
+
         /// <remarks/>
         public string value
         {
@@ -1045,6 +1062,90 @@ namespace Addml.Standard.v8_3
             {
                 this.flatFileProcessesField = value;
             }
+        }
+
+        public process addProcess(string name)
+        {
+            process _process = new process();
+            _process.name = name;
+
+            if (processes == null)
+            {
+                processes = new process[]
+                {
+                    _process
+                };
+            }
+            else
+            {
+                foreach (process process in processes)
+                {
+                    if (process.name.Equals(name))
+                        return process;
+                }
+
+                process[] tmp = new process[processes.Length + 1];
+
+                for (int i = 0; i < processes.Length; i++)
+                    tmp[i] = processes[i];
+
+                this.processes = tmp;
+            }
+
+            return (processes[processes.Length - 1] = _process);
+        }
+
+        public flatFileProcesses addFlatFileProcesses(string flatFileReference)
+        {
+            flatFileProcesses _flatFileProcesses = new flatFileProcesses();
+            _flatFileProcesses.flatFileReference = flatFileReference;
+
+            if (flatFileProcesses == null)
+            {
+                flatFileProcesses = new flatFileProcesses[]
+                {
+                    _flatFileProcesses
+                };
+            }
+            else
+            {
+                foreach (flatFileProcesses flatFileProcesses in flatFileProcesses)
+                {
+                    if (flatFileProcesses.flatFileReference.Equals(flatFileReference))
+                        return flatFileProcesses;
+                }
+
+                flatFileProcesses[] tmp = new flatFileProcesses[flatFileProcesses.Length + 1];
+
+                for (int i = 0; i < flatFileProcesses.Length; i++)
+                    tmp[i] = flatFileProcesses[i];
+
+                this.flatFileProcesses = tmp;
+            }
+
+            return (flatFileProcesses[flatFileProcesses.Length - 1] = _flatFileProcesses);
+        }
+
+        public flatFileProcesses getFlatFileProcesses(string flatFileReference)
+        {
+            List<flatFileProcesses> list = new List<flatFileProcesses>();
+            foreach (flatFileProcesses _flatFileProcesses in flatFileProcesses)
+            {
+                if (_flatFileProcesses.flatFileReference.Equals(flatFileReference))
+                    return _flatFileProcesses;
+            }
+            return null;
+        }
+
+        public void remFlatFileProcesses(string flatFileReference)
+        {
+            List<flatFileProcesses> list = new List<flatFileProcesses>();
+            foreach (flatFileProcesses _flatFileProcesses in flatFileProcesses)
+            {
+                if (!_flatFileProcesses.flatFileReference.Equals(flatFileReference))
+                    list.Add(_flatFileProcesses);
+            }
+            flatFileProcesses = list.ToArray();
         }
     }
 
@@ -2284,6 +2385,18 @@ namespace Addml.Standard.v8_3
             return this.fieldTypes[fieldTypes.Length - 1];
         }
 
+        public fieldType getFieldType(string name)
+        {
+            if (fieldTypes == null)
+                return null;
+
+            for (int i = 0; i < fieldTypes.Length; i++)
+                if (fieldTypes[i].name != null && fieldTypes[i].name.Equals(name))
+                    return fieldTypes[i];
+
+            return null;
+        }
+
         public fieldType getFieldType(string description, string fieldformat)
         {
             if (fieldTypes == null)
@@ -2874,6 +2987,91 @@ namespace Addml.Standard.v8_3
                 this.flatFileReferenceField = value;
             }
         }
+
+        public process addProcess(string name)
+        {
+            process _process = new process();
+            _process.name = name;
+
+            if (processes == null)
+            {
+                processes = new process[]
+                {
+                    _process
+                };
+            }
+            else
+            {
+                foreach (process process in processes)
+                {
+                    if (process.name.Equals(name))
+                        return process;
+                }
+
+                process[] tmp = new process[processes.Length + 1];
+
+                for (int i = 0; i < processes.Length; i++)
+                    tmp[i] = processes[i];
+
+                this.processes = tmp;
+            }
+
+            return (processes[processes.Length - 1] = _process);
+        }
+
+        public recordProcesses addRecordProcesses(string definitionReference)
+        {
+            recordProcesses _recordProcesses = new recordProcesses();
+            _recordProcesses.definitionReference = definitionReference;
+
+            if (recordProcesses == null)
+            {
+                recordProcesses = new recordProcesses[]
+                {
+                    _recordProcesses
+                };
+            }
+            else
+            {
+                foreach (recordProcesses recordProcesses in recordProcesses)
+                {
+                    if (recordProcesses.definitionReference.Equals(definitionReference))
+                        return recordProcesses;
+                }
+
+                recordProcesses[] tmp = new recordProcesses[recordProcesses.Length + 1];
+
+                for (int i = 0; i < recordProcesses.Length; i++)
+                    tmp[i] = recordProcesses[i];
+
+                this.recordProcesses = tmp;
+            }
+
+            return (recordProcesses[recordProcesses.Length - 1] = _recordProcesses);
+        }
+
+        public recordProcesses getRecordProcesses(string definitionReference)
+        {
+            List<recordProcesses> list = new List<recordProcesses>();
+            foreach (recordProcesses _recordProcesses in recordProcesses)
+            {
+                if (_recordProcesses.definitionReference.Equals(definitionReference))
+                    return _recordProcesses;
+            }
+
+            return null;
+        }
+
+        public void remRecordProcesses(string definitionReference)
+        {
+            List<recordProcesses> list = new List<recordProcesses>();
+            foreach (recordProcesses _recordProcesses in recordProcesses)
+            {
+                if (!_recordProcesses.definitionReference.Equals(definitionReference))
+                    list.Add(_recordProcesses);
+            }
+            recordProcesses = list.ToArray();
+        }
     }
 
     /// <remarks/>
@@ -2933,6 +3131,91 @@ namespace Addml.Standard.v8_3
                 this.definitionReferenceField = value;
             }
         }
+
+        public process addProcess(string name)
+        {
+            process _process = new process();
+            _process.name = name;
+
+            if (processes == null)
+            {
+                processes = new process[]
+                {
+                    _process
+                };
+            }
+            else
+            {
+                foreach (process process in processes)
+                {
+                    if (process.name.Equals(name))
+                        return process;
+                }
+
+                process[] tmp = new process[processes.Length + 1];
+
+                for (int i = 0; i < processes.Length; i++)
+                    tmp[i] = processes[i];
+
+                this.processes = tmp;
+            }
+
+            return (processes[processes.Length - 1] = _process);
+        }
+
+        public fieldProcesses addFieldProcesses(string definitionReference)
+        {
+            fieldProcesses _fieldProcesses = new fieldProcesses();
+            _fieldProcesses.definitionReference = definitionReference;
+
+            if (fieldProcesses == null)
+            {
+                fieldProcesses = new fieldProcesses[]
+                {
+                    _fieldProcesses
+                };
+            }
+            else
+            {
+                foreach (fieldProcesses fieldProcesses in fieldProcesses)
+                {
+                    if (fieldProcesses.definitionReference.Equals(definitionReference))
+                        return fieldProcesses;
+                }
+
+                fieldProcesses[] tmp = new fieldProcesses[fieldProcesses.Length + 1];
+
+                for (int i = 0; i < fieldProcesses.Length; i++)
+                    tmp[i] = fieldProcesses[i];
+
+                this.fieldProcesses = tmp;
+            }
+
+            return (fieldProcesses[fieldProcesses.Length - 1] = _fieldProcesses);
+        }
+
+        public fieldProcesses getFieldProcesses(string definitionReference)
+        {
+            List<fieldProcesses> list = new List<fieldProcesses>();
+            foreach (fieldProcesses _fieldProcesses in fieldProcesses)
+            {
+                if (_fieldProcesses.definitionReference.Equals(definitionReference))
+                    return _fieldProcesses;
+            }
+
+            return null;
+        }
+
+        public void remFieldProcesses(string definitionReference)
+        {
+            List<fieldProcesses> list = new List<fieldProcesses>();
+            foreach (fieldProcesses _fieldProcesses in fieldProcesses)
+            {
+                if (!_fieldProcesses.definitionReference.Equals(definitionReference))
+                    list.Add(_fieldProcesses);
+            }
+            fieldProcesses = list.ToArray();
+        }
     }
 
     /// <remarks/>
@@ -2975,6 +3258,37 @@ namespace Addml.Standard.v8_3
             {
                 this.definitionReferenceField = value;
             }
+        }
+
+        public process addProcess(string name)
+        {
+            process _process = new process();
+            _process.name = name;
+
+            if (processes == null)
+            {
+                processes = new process[]
+                {
+                    _process
+                };
+            }
+            else
+            {
+                foreach (process process in processes)
+                {
+                    if (process.name.Equals(name))
+                        return process;
+                }
+
+                process[] tmp = new process[processes.Length + 1];
+
+                for (int i = 0; i < processes.Length; i++)
+                    tmp[i] = processes[i];
+
+                this.processes = tmp;
+            }
+
+            return (processes[processes.Length - 1] = _process);
         }
     }
 
@@ -3109,6 +3423,20 @@ namespace Addml.Standard.v8_3
                     r.Add(p);
             }
             return r;
+        }
+
+        public List<property> getProperties(string _name, bool recursive)
+        {
+            List<property> list = new List<property>();
+            for (int i = 0; i < properties.Length; i++)
+                if (properties[i].name.Equals(_name))
+                    list.Add(properties[i]);
+                else if (recursive)
+                {
+                    list.AddRange(properties[i].getProperties(_name, recursive));
+                }
+
+            return list;
         }
 
         /// <remarks/>

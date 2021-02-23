@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Agent_Contact" xml:space="preserve">
+    <value>Contactinformation</value>
+  </data>
+  <data name="Agent_ContactType" xml:space="preserve">
+    <value>Type of contact information</value>
+  </data>
+  <data name="Agent_IsSubjectTo" xml:space="preserve">
+    <value>Is Subject To</value>
+  </data>
+  <data name="Agent_Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Agent_Type" xml:space="preserve">
+    <value>Type of agent</value>
+  </data>
+  <data name="CharacterDefinitions_FromCharacter" xml:space="preserve">
+    <value>From character</value>
+  </data>
+  <data name="CharacterDefinitions_ToCharacter" xml:space="preserve">
+    <value>To character</value>
+  </data>
+  <data name="Code_Explanation" xml:space="preserve">
+    <value>Explanation</value>
+  </data>
+  <data name="Code_Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Commentaries</value>
+  </data>
+  <data name="DataObjects" xml:space="preserve">
+    <value>DataObjects</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Field_Definition_Codes" xml:space="preserve">
+    <value>Are codes defines?</value>
+  </data>
+  <data name="Field_Definition_EndPos" xml:space="preserve">
+    <value>End-position of field</value>
+  </data>
+  <data name="Field_Definition_Fieldparts" xml:space="preserve">
+    <value>Are fields nested?</value>
+  </data>
+  <data name="Field_Definition_FixedLength" xml:space="preserve">
+    <value>Fixed length of field</value>
+  </data>
+  <data name="Field_Definition_MaxLength" xml:space="preserve">
+    <value>Maximum length of field</value>
+  </data>
+  <data name="Field_Definition_MinLength" xml:space="preserve">
+    <value>Minimum length of field</value>
+  </data>
+  <data name="Field_Definition_NotNull" xml:space="preserve">
+    <value>Are empty fields allowed?</value>
+  </data>
+  <data name="Field_Definition_Reference" xml:space="preserve">
+    <value>Reference to field-definition</value>
+  </data>
+  <data name="Field_Definition_StartPos" xml:space="preserve">
+    <value>Start-position of field</value>
+  </data>
+  <data name="Field_Definition_Unique" xml:space="preserve">
+    <value>Are field-vaues unique</value>
+  </data>
+  <data name="Field_Processes" xml:space="preserve">
+    <value>Field-processes</value>
+  </data>
+  <data name="Field_Type_Alignment" xml:space="preserve">
+    <value>Alignment of value inside field</value>
+  </data>
+  <data name="Field_Type_Datatype" xml:space="preserve">
+    <value>Data-type of field</value>
+  </data>
+  <data name="Field_Type_FieldFormat" xml:space="preserve">
+    <value>Format of fieldvalue</value>
+  </data>
+  <data name="Field_Type_NullValues" xml:space="preserve">
+    <value>Null-values</value>
+  </data>
+  <data name="Field_Type_Packing" xml:space="preserve">
+    <value>If field is packed or packing-algorithm</value>
+  </data>
+  <data name="Field_Type_Padding" xml:space="preserve">
+    <value>Characters used for padding</value>
+  </data>
+  <data name="File_ChecksumAlgorithm" xml:space="preserve">
+    <value>Checksum-algorithm</value>
+  </data>
+  <data name="File_ChecksumValue" xml:space="preserve">
+    <value>Checksum-value</value>
+  </data>
+  <data name="File_Definition_Reference" xml:space="preserve">
+    <value>Reference to file-definition</value>
+  </data>
+  <data name="File_NumberOfRecords" xml:space="preserve">
+    <value>Number of records in file</value>
+  </data>
+  <data name="File_Processes" xml:space="preserve">
+    <value>File-processes</value>
+  </data>
+  <data name="File_Reference" xml:space="preserve">
+    <value>Reference to file</value>
+  </data>
+  <data name="File_Relative_Path" xml:space="preserve">
+    <value>Relative filepath</value>
+  </data>
+  <data name="File_Type_CharacterDefinitions" xml:space="preserve">
+    <value>Are character-definitions in use?</value>
+  </data>
+  <data name="File_Type_Charset" xml:space="preserve">
+    <value>Charset</value>
+  </data>
+  <data name="File_Type_FieldSeparator" xml:space="preserve">
+    <value>Field-separator</value>
+  </data>
+  <data name="File_Type_FixedOrDelimited" xml:space="preserve">
+    <value>Fixed-length or Delimited</value>
+  </data>
+  <data name="File_Type_FixedOrDelimited_Delimited" xml:space="preserve">
+    <value>Delimited</value>
+  </data>
+  <data name="File_Type_FixedOrDelimited_Fixed" xml:space="preserve">
+    <value>Fixed-length</value>
+  </data>
+  <data name="File_Type_QuotationSeparator" xml:space="preserve">
+    <value>Quotation-character</value>
+  </data>
+  <data name="File_Type_RecordSeparator" xml:space="preserve">
+    <value>Record-separator</value>
+  </data>
+  <data name="File_Type_Reference" xml:space="preserve">
+    <value>File-type reference</value>
+  </data>
+  <data name="InDataset" xml:space="preserve">
+    <value>{0} in dataset</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>Keys</value>
+  </data>
+  <data name="Keys_AlternateKey" xml:space="preserve">
+    <value>Alternate Key</value>
+  </data>
+  <data name="Keys_ForeignKey" xml:space="preserve">
+    <value>Foreign Key</value>
+  </data>
+  <data name="Keys_PrimaryKey" xml:space="preserve">
+    <value>Primary Key</value>
+  </data>
+  <data name="Keys_Relation" xml:space="preserve">
+    <value>Relation between two sets of referenced field(s)</value>
+  </data>
+  <data name="Key_PrimaryOrAlternate" xml:space="preserve">
+    <value>Primary or Alternate Key</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NumberInUse" xml:space="preserve">
+    <value>Number of {0} in use: {1}</value>
+  </data>
+  <data name="Object_Parent" xml:space="preserve">
+    <value>Parent</value>
+  </data>
+  <data name="Object_Type" xml:space="preserve">
+    <value>Type of DataObject</value>
+  </data>
+  <data name="Record_Definition_FieldValue" xml:space="preserve">
+    <value>Fieldvalue identifying record-definition</value>
+  </data>
+  <data name="Record_Definition_FixedLength" xml:space="preserve">
+    <value>Fixed length</value>
+  </data>
+  <data name="Record_Definition_Incomplete" xml:space="preserve">
+    <value>Is incomplete?</value>
+  </data>
+  <data name="Record_Definition_Keys" xml:space="preserve">
+    <value>Uses keys?</value>
+  </data>
+  <data name="Record_Definition_Reference" xml:space="preserve">
+    <value>Reference to record-definition</value>
+  </data>
+  <data name="Record_Definition_RepeatingGroups" xml:space="preserve">
+    <value>Uses repeating groups</value>
+  </data>
+  <data name="Record_Processes" xml:space="preserve">
+    <value>Record-processes</value>
+  </data>
+  <data name="Record_Type_Trimming" xml:space="preserve">
+    <value>Is record trimmed?</value>
+  </data>
+  <data name="Section_Agents" xml:space="preserve">
+    <value>Agents</value>
+  </data>
+  <data name="Section_CandidateKeys" xml:space="preserve">
+    <value>Candidate keys</value>
+  </data>
+  <data name="Section_CharacterDefinitions" xml:space="preserve">
+    <value>Character-definitions</value>
+  </data>
+  <data name="Section_Codes" xml:space="preserve">
+    <value>Codes</value>
+  </data>
+  <data name="Section_Field_Definitions" xml:space="preserve">
+    <value>Field-definitions</value>
+  </data>
+  <data name="Section_Field_Types" xml:space="preserve">
+    <value>Field-types</value>
+  </data>
+  <data name="Section_File" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="Section_File_Definitions" xml:space="preserve">
+    <value>File-definitions</value>
+  </data>
+  <data name="Section_File_Types" xml:space="preserve">
+    <value>File-types</value>
+  </data>
+  <data name="Section_ForeignKeys" xml:space="preserve">
+    <value>Foreign Keys</value>
+  </data>
+  <data name="Section_Objects" xml:space="preserve">
+    <value>Objects</value>
+  </data>
+  <data name="Section_Object_Xml_File" xml:space="preserve">
+    <value>File-info</value>
+  </data>
+  <data name="Section_Object_Xml_NumberOfOccurrences" xml:space="preserve">
+    <value>Info regarding number of occurrences</value>
+  </data>
+  <data name="Section_Object_Xml_Schema" xml:space="preserve">
+    <value>Schema-info</value>
+  </data>
+  <data name="Section_Processes" xml:space="preserve">
+    <value>Prosesses</value>
+  </data>
+  <data name="Section_Record_Definitions" xml:space="preserve">
+    <value>Record-definitions</value>
+  </data>
+  <data name="Section_Record_Types" xml:space="preserve">
+    <value>Record-types</value>
+  </data>
+  <data name="Sheet_Dataset" xml:space="preserve">
+    <value>Dataset</value>
+  </data>
+  <data name="Sheet_Definitions" xml:space="preserve">
+    <value>Definitions</value>
+  </data>
+  <data name="Sheet_FlatFiles" xml:space="preserve">
+    <value>Flat Files</value>
+  </data>
+  <data name="Sheet_FlatFiles_OtherOptions" xml:space="preserve">
+    <value>Flat Files Other Options</value>
+  </data>
+  <data name="Sheet_Keys" xml:space="preserve">
+    <value>Keys</value>
+  </data>
+  <data name="Sheet_Objects" xml:space="preserve">
+    <value>Objects</value>
+  </data>
+  <data name="Sheet_ObjectStructure" xml:space="preserve">
+    <value>Object-structure</value>
+  </data>
+  <data name="Sheet_Object_XML" xml:space="preserve">
+    <value>Objects - XML</value>
+  </data>
+  <data name="Sheet_Processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="Sheet_Types" xml:space="preserve">
+    <value>Types</value>
+  </data>
+  <data name="System_History" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="System_Name" xml:space="preserve">
+    <value>Name of system</value>
+  </data>
+  <data name="System_SystemType" xml:space="preserve">
+    <value>Type of system</value>
+  </data>
+  <data name="System_Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Type_Reference" xml:space="preserve">
+    <value>Reference to type</value>
+  </data>
+  <data name="Section_PrimaryKeys" xml:space="preserve">
+    <value>Candidate keys</value>
+  </data>
+  <data name="Object_TypeVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Objects" xml:space="preserve">
+    <value>Objects</value>
+  </data>
+  <data name="Object_Archive_Period_IngoingSeparation" xml:space="preserve">
+    <value>Ingoing separator for period</value>
+  </data>
+  <data name="Object_Archive_Period_OutgoingSeparation" xml:space="preserve">
+    <value>Outgoing separator for period</value>
+  </data>
+  <data name="Object_Archive_ContainsRestrictedEntries" xml:space="preserve">
+    <value>Contains restricted entries</value>
+  </data>
+  <data name="Object_Archive_IncludeDisposedDocuments" xml:space="preserve">
+    <value>Includes disposed documents</value>
+  </data>
+  <data name="Object_Archive_ContainsDisposalResolutionsForDocuments" xml:space="preserve">
+    <value>Contains disposal resolutions for documents</value>
+  </data>
+  <data name="Object_Archive_ContainsCompanySpecificMetadata" xml:space="preserve">
+    <value>Contains company-specific metadata</value>
+  </data>
+  <data name="Object_Archive_NumberOfDocuments" xml:space="preserve">
+    <value>Number of documents</value>
+  </data>
+  <data name="Object_Archive_TypeVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Object_Archive_Type" xml:space="preserve">
+    <value>Type of archive</value>
+  </data>
+  <data name="Section_Object_Archive" xml:space="preserve">
+    <value>Archive-level</value>
+  </data>
+  <data name="Section_Object_Structure" xml:space="preserve">
+    <value>Object-structure</value>
+  </data>
+</root>

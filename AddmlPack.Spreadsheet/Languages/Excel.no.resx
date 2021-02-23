@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Agent_Contact" xml:space="preserve">
+    <value>Kontaktinformasjon</value>
+  </data>
+  <data name="Agent_ContactType" xml:space="preserve">
+    <value>Type kontaktinformasjon</value>
+  </data>
+  <data name="Agent_IsSubjectTo" xml:space="preserve">
+    <value>Tilhører</value>
+  </data>
+  <data name="Agent_Role" xml:space="preserve">
+    <value>Rolle</value>
+  </data>
+  <data name="Agent_Type" xml:space="preserve">
+    <value>Type aktør</value>
+  </data>
+  <data name="CharacterDefinitions_FromCharacter" xml:space="preserve">
+    <value>Fra tegn</value>
+  </data>
+  <data name="CharacterDefinitions_ToCharacter" xml:space="preserve">
+    <value>Til tegn</value>
+  </data>
+  <data name="Code_Explanation" xml:space="preserve">
+    <value>Forklaring</value>
+  </data>
+  <data name="Code_Value" xml:space="preserve">
+    <value>Verdi</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Kommentarer</value>
+  </data>
+  <data name="DataObjects" xml:space="preserve">
+    <value>DataObjekt</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Beskrivelse</value>
+  </data>
+  <data name="Field_Definition_Codes" xml:space="preserve">
+    <value>Bruker feltet koder?</value>
+  </data>
+  <data name="Field_Definition_EndPos" xml:space="preserve">
+    <value>Slutt-posisjon for felt</value>
+  </data>
+  <data name="Field_Definition_Fieldparts" xml:space="preserve">
+    <value>Inneholder feltet mindre deler</value>
+  </data>
+  <data name="Field_Definition_FixedLength" xml:space="preserve">
+    <value>Fast lengde på felt</value>
+  </data>
+  <data name="Field_Definition_MaxLength" xml:space="preserve">
+    <value>Maksimumslengde på felt</value>
+  </data>
+  <data name="Field_Definition_MinLength" xml:space="preserve">
+    <value>Minimumslengde på felt</value>
+  </data>
+  <data name="Field_Definition_NotNull" xml:space="preserve">
+    <value>Skal alle felt ha verdi?</value>
+  </data>
+  <data name="Field_Definition_Reference" xml:space="preserve">
+    <value>Referanse til felt-definisjon</value>
+  </data>
+  <data name="Field_Definition_StartPos" xml:space="preserve">
+    <value>Start-posisjon for felt</value>
+  </data>
+  <data name="Field_Definition_Unique" xml:space="preserve">
+    <value>Er felt-verdiene unike?</value>
+  </data>
+  <data name="Field_Processes" xml:space="preserve">
+    <value>Felt-prosesser</value>
+  </data>
+  <data name="Field_Type_Alignment" xml:space="preserve">
+    <value>Angir justeringen for feltverdi</value>
+  </data>
+  <data name="Field_Type_Datatype" xml:space="preserve">
+    <value>Data-type for felt</value>
+  </data>
+  <data name="Field_Type_FieldFormat" xml:space="preserve">
+    <value>Format på feltverdi</value>
+  </data>
+  <data name="Field_Type_NullValues" xml:space="preserve">
+    <value>Null-verdier</value>
+  </data>
+  <data name="Field_Type_Packing" xml:space="preserve">
+    <value>Hvis felt er pakket, eventuelt pakke-agoritme</value>
+  </data>
+  <data name="Field_Type_Padding" xml:space="preserve">
+    <value>Tegn brukt for å fylle feltet</value>
+  </data>
+  <data name="File_ChecksumAlgorithm" xml:space="preserve">
+    <value>Sjekksum-algoritme</value>
+  </data>
+  <data name="File_ChecksumValue" xml:space="preserve">
+    <value>Sjekksum</value>
+  </data>
+  <data name="File_Definition_Reference" xml:space="preserve">
+    <value>Referanse til fil-definisjon</value>
+  </data>
+  <data name="File_NumberOfRecords" xml:space="preserve">
+    <value>Antall poster i fil</value>
+  </data>
+  <data name="File_Processes" xml:space="preserve">
+    <value>Fil-prosesser</value>
+  </data>
+  <data name="File_Reference" xml:space="preserve">
+    <value>Referanse til fil</value>
+  </data>
+  <data name="File_Relative_Path" xml:space="preserve">
+    <value>Relativ filsti</value>
+  </data>
+  <data name="File_Type_CharacterDefinitions" xml:space="preserve">
+    <value>Brukes tegn-definisjoner</value>
+  </data>
+  <data name="File_Type_Charset" xml:space="preserve">
+    <value>Tegnsett</value>
+  </data>
+  <data name="File_Type_FieldSeparator" xml:space="preserve">
+    <value>Felt-skille</value>
+  </data>
+  <data name="File_Type_FixedOrDelimited" xml:space="preserve">
+    <value>Fast-lengde eller tegnseparert</value>
+  </data>
+  <data name="File_Type_FixedOrDelimited_Delimited" xml:space="preserve">
+    <value>Tegnseparert</value>
+  </data>
+  <data name="File_Type_FixedOrDelimited_Fixed" xml:space="preserve">
+    <value>Fast-lengde</value>
+  </data>
+  <data name="File_Type_QuotationSeparator" xml:space="preserve">
+    <value>Tegn for innkapsling av feltverdi</value>
+  </data>
+  <data name="File_Type_RecordSeparator" xml:space="preserve">
+    <value>Post-skille</value>
+  </data>
+  <data name="File_Type_Reference" xml:space="preserve">
+    <value>Referanse til fil-type</value>
+  </data>
+  <data name="InDataset" xml:space="preserve">
+    <value>{0} i datasett</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>Nøkler</value>
+  </data>
+  <data name="Keys_AlternateKey" xml:space="preserve">
+    <value>Alternativ nøkkel</value>
+  </data>
+  <data name="Keys_ForeignKey" xml:space="preserve">
+    <value>Fremmednøkkel</value>
+  </data>
+  <data name="Keys_PrimaryKey" xml:space="preserve">
+    <value>Primærnøkkel</value>
+  </data>
+  <data name="Keys_Relation" xml:space="preserve">
+    <value>Forhold mellom to sett av felter</value>
+  </data>
+  <data name="Key_PrimaryOrAlternate" xml:space="preserve">
+    <value>Primær- eller alternativ nøkkel</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Navn</value>
+  </data>
+  <data name="NumberInUse" xml:space="preserve">
+    <value>Antall {0} i bruk: {1}</value>
+  </data>
+  <data name="Objects" xml:space="preserve">
+    <value>Objekter</value>
+  </data>
+  <data name="Record_Definition_FieldValue" xml:space="preserve">
+    <value>Feltverdi som identifiserer post-definisjon</value>
+  </data>
+  <data name="Record_Definition_FixedLength" xml:space="preserve">
+    <value>Fast lengde på post</value>
+  </data>
+  <data name="Record_Definition_Incomplete" xml:space="preserve">
+    <value>Er posten komplett</value>
+  </data>
+  <data name="Record_Definition_Keys" xml:space="preserve">
+    <value>Bruker posten nøkler</value>
+  </data>
+  <data name="Record_Definition_Reference" xml:space="preserve">
+    <value>Referanse til post-definisjon</value>
+  </data>
+  <data name="Record_Definition_RepeatingGroups" xml:space="preserve">
+    <value>Inneholder posten repererende grupper</value>
+  </data>
+  <data name="Record_Type_Trimming" xml:space="preserve">
+    <value>Er ledene blanke eller nuller fjernet?</value>
+  </data>
+  <data name="Section_Agents" xml:space="preserve">
+    <value>Aktører</value>
+  </data>
+  <data name="Section_CharacterDefinitions" xml:space="preserve">
+    <value>Tegn-definisjoner</value>
+  </data>
+  <data name="Section_Codes" xml:space="preserve">
+    <value>Koder</value>
+  </data>
+  <data name="Section_Field_Definitions" xml:space="preserve">
+    <value>Felt-definisjoner</value>
+  </data>
+  <data name="Section_Field_Types" xml:space="preserve">
+    <value>Felt-typer</value>
+  </data>
+  <data name="Section_File" xml:space="preserve">
+    <value>Filer</value>
+  </data>
+  <data name="Section_File_Definitions" xml:space="preserve">
+    <value>Fil-definisjoner</value>
+  </data>
+  <data name="Section_File_Types" xml:space="preserve">
+    <value>Fil-typer</value>
+  </data>
+  <data name="Section_ForeignKeys" xml:space="preserve">
+    <value>Fremmednøkler</value>
+  </data>
+  <data name="Section_PrimaryKeys" xml:space="preserve">
+    <value>Kandidat-nøkler</value>
+  </data>
+  <data name="Section_Record_Definitions" xml:space="preserve">
+    <value>Post-definisjoner</value>
+  </data>
+  <data name="Section_Record_Types" xml:space="preserve">
+    <value>Post-typer</value>
+  </data>
+  <data name="Sheet_Dataset" xml:space="preserve">
+    <value>Datasett</value>
+  </data>
+  <data name="Sheet_Definitions" xml:space="preserve">
+    <value>Definisjoner</value>
+  </data>
+  <data name="Sheet_FlatFiles" xml:space="preserve">
+    <value>Flate filer</value>
+  </data>
+  <data name="Sheet_FlatFiles_OtherOptions" xml:space="preserve">
+    <value>Flate Filer Andre Egenskaper</value>
+  </data>
+  <data name="Sheet_Keys" xml:space="preserve">
+    <value>Nøkler</value>
+  </data>
+  <data name="Sheet_Objects" xml:space="preserve">
+    <value>Objekter</value>
+  </data>
+  <data name="Sheet_Processes" xml:space="preserve">
+    <value>Prosesser</value>
+  </data>
+  <data name="Sheet_Types" xml:space="preserve">
+    <value>Typer</value>
+  </data>
+  <data name="System_History" xml:space="preserve">
+    <value>Historie</value>
+  </data>
+  <data name="System_Name" xml:space="preserve">
+    <value>Navn på system</value>
+  </data>
+  <data name="System_SystemType" xml:space="preserve">
+    <value>Type arkivsystem</value>
+  </data>
+  <data name="System_Version" xml:space="preserve">
+    <value>Versjon</value>
+  </data>
+  <data name="Type_Reference" xml:space="preserve">
+    <value>Referanse til type</value>
+  </data>
+  <data name="Object_Parent" xml:space="preserve">
+    <value>Forelder</value>
+  </data>
+  <data name="Object_Type" xml:space="preserve">
+    <value>Type DataObjekt</value>
+  </data>
+  <data name="Section_Objects" xml:space="preserve">
+    <value>Objekter</value>
+  </data>
+  <data name="Record_Processes" xml:space="preserve">
+    <value>Post-prosesser</value>
+  </data>
+  <data name="Section_CandidateKeys" xml:space="preserve">
+    <value>Kandidat-nøkler</value>
+  </data>
+  <data name="Section_Object_Xml_File" xml:space="preserve">
+    <value>Fil-info</value>
+  </data>
+  <data name="Section_Object_Xml_NumberOfOccurrences" xml:space="preserve">
+    <value>Informasjon om antall forekomster</value>
+  </data>
+  <data name="Section_Object_Xml_Schema" xml:space="preserve">
+    <value>Skjema-informasjon</value>
+  </data>
+  <data name="Section_Processes" xml:space="preserve">
+    <value>Prosesser</value>
+  </data>
+  <data name="Sheet_Object_XML" xml:space="preserve">
+    <value>Objekter - XML</value>
+  </data>
+  <data name="Sheet_ObjectStructure" xml:space="preserve">
+    <value>Objekt-struktur</value>
+  </data>
+  <data name="Object_TypeVersion" xml:space="preserve">
+    <value>Versjon</value>
+  </data>
+  <data name="Object_Archive_Period_IngoingSeparation" xml:space="preserve">
+    <value>Inngående skille for periode</value>
+  </data>
+  <data name="Object_Archive_Period_OutgoingSeparation" xml:space="preserve">
+    <value>Utgående skille for periode</value>
+  </data>
+  <data name="Object_Archive_ContainsRestrictedEntries" xml:space="preserve">
+    <value>Inneholder skjermet informasjon</value>
+  </data>
+  <data name="Object_Archive_IncludeDisposedDocuments" xml:space="preserve">
+    <value>Inneholder dokumenter som er kassert</value>
+  </data>
+  <data name="Object_Archive_ContainsDisposalResolutionsForDocuments" xml:space="preserve">
+    <value>Inneholder dokumenter som skal kasseres</value>
+  </data>
+  <data name="Object_Archive_ContainsCompanySpecificMetadata" xml:space="preserve">
+    <value>Inneholder virksomhetsspesifikke metadata</value>
+  </data>
+  <data name="Object_Archive_NumberOfDocuments" xml:space="preserve">
+    <value>Antall dokumentfiler</value>
+  </data>
+  <data name="Object_Archive_TypeVersion" xml:space="preserve">
+    <value>Versjon</value>
+  </data>
+  <data name="Object_Archive_Type" xml:space="preserve">
+    <value>Type arkiv</value>
+  </data>
+  <data name="Section_Object_Archive" xml:space="preserve">
+    <value>Arkiv-nivå</value>
+  </data>
+  <data name="Section_Object_Structure" xml:space="preserve">
+    <value>Objekt-struktur</value>
+  </data>
+</root>

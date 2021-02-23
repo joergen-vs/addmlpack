@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Addml.Standard {
+namespace AddmlPack.Standard {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Addml.Standard {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Addml.Standard.Schemas", typeof(Schemas).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AddmlPack.Standard.Schemas", typeof(Schemas).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

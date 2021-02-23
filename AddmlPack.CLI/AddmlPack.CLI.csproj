@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Remove="AddmlPack.CLI.sh" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="AddmlPack.CLI.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AddmlPack.API\AddmlPack.API.csproj" />
+  </ItemGroup>
+
+</Project>
