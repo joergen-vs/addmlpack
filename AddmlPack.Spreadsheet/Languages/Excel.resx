@@ -279,6 +279,12 @@
   <data name="NumberInUse" xml:space="preserve">
     <value>Number of {0} in use: {1}</value>
   </data>
+  <data name="Object_Parent" xml:space="preserve">
+    <value>Parent</value>
+  </data>
+  <data name="Object_Type" xml:space="preserve">
+    <value>Type of DataObject</value>
+  </data>
   <data name="Record_Definition_FieldValue" xml:space="preserve">
     <value>Fieldvalue identifying record-definition</value>
   </data>
@@ -336,6 +342,15 @@
   <data name="Section_Objects" xml:space="preserve">
     <value>Objects</value>
   </data>
+  <data name="Section_Object_Xml_File" xml:space="preserve">
+    <value>File-info</value>
+  </data>
+  <data name="Section_Object_Xml_NumberOfOccurrences" xml:space="preserve">
+    <value>Info regarding number of occurrences</value>
+  </data>
+  <data name="Section_Object_Xml_Schema" xml:space="preserve">
+    <value>Schema-info</value>
+  </data>
   <data name="Section_Processes" xml:space="preserve">
     <value>Prosesses</value>
   </data>
@@ -363,6 +378,12 @@
   <data name="Sheet_Objects" xml:space="preserve">
     <value>Objects</value>
   </data>
+  <data name="Sheet_ObjectStructure" xml:space="preserve">
+    <value>Object-structure</value>
+  </data>
+  <data name="Sheet_Object_XML" xml:space="preserve">
+    <value>Objects - XML</value>
+  </data>
   <data name="Sheet_Processes" xml:space="preserve">
     <value>Processes</value>
   </data>
@@ -383,5 +404,47 @@
   </data>
   <data name="Type_Reference" xml:space="preserve">
     <value>Reference to type</value>
+  </data>
+  <data name="Section_PrimaryKeys" xml:space="preserve">
+    <value>Candidate keys</value>
+  </data>
+  <data name="Object_TypeVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Objects" xml:space="preserve">
+    <value>Objects</value>
+  </data>
+  <data name="Object_Archive_Period_IngoingSeparation" xml:space="preserve">
+    <value>Ingoing separator for period</value>
+  </data>
+  <data name="Object_Archive_Period_OutgoingSeparation" xml:space="preserve">
+    <value>Outgoing separator for period</value>
+  </data>
+  <data name="Object_Archive_ContainsRestrictedEntries" xml:space="preserve">
+    <value>Contains restricted entries</value>
+  </data>
+  <data name="Object_Archive_IncludeDisposedDocuments" xml:space="preserve">
+    <value>Includes disposed documents</value>
+  </data>
+  <data name="Object_Archive_ContainsDisposalResolutionsForDocuments" xml:space="preserve">
+    <value>Contains disposal resolutions for documents</value>
+  </data>
+  <data name="Object_Archive_ContainsCompanySpecificMetadata" xml:space="preserve">
+    <value>Contains company-specific metadata</value>
+  </data>
+  <data name="Object_Archive_NumberOfDocuments" xml:space="preserve">
+    <value>Number of documents</value>
+  </data>
+  <data name="Object_Archive_TypeVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Object_Archive_Type" xml:space="preserve">
+    <value>Type of archive</value>
+  </data>
+  <data name="Section_Object_Archive" xml:space="preserve">
+    <value>Archive-level</value>
+  </data>
+  <data name="Section_Object_Structure" xml:space="preserve">
+    <value>Object-structure</value>
   </data>
 </root>

@@ -147,6 +147,9 @@
   <data name="Comments" xml:space="preserve">
     <value>Kommentarer</value>
   </data>
+  <data name="DataObjects" xml:space="preserve">
+    <value>DataObjekt</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Beskrivelse</value>
   </data>
@@ -180,6 +183,9 @@
   <data name="Field_Definition_Unique" xml:space="preserve">
     <value>Er felt-verdiene unike?</value>
   </data>
+  <data name="Field_Processes" xml:space="preserve">
+    <value>Felt-prosesser</value>
+  </data>
   <data name="Field_Type_Alignment" xml:space="preserve">
     <value>Angir justeringen for feltverdi</value>
   </data>
@@ -209,6 +215,9 @@
   </data>
   <data name="File_NumberOfRecords" xml:space="preserve">
     <value>Antall poster i fil</value>
+  </data>
+  <data name="File_Processes" xml:space="preserve">
+    <value>Fil-prosesser</value>
   </data>
   <data name="File_Reference" xml:space="preserve">
     <value>Referanse til fil</value>
@@ -368,5 +377,74 @@
   </data>
   <data name="Type_Reference" xml:space="preserve">
     <value>Referanse til type</value>
+  </data>
+  <data name="Object_Parent" xml:space="preserve">
+    <value>Forelder</value>
+  </data>
+  <data name="Object_Type" xml:space="preserve">
+    <value>Type DataObjekt</value>
+  </data>
+  <data name="Section_Objects" xml:space="preserve">
+    <value>Objekter</value>
+  </data>
+  <data name="Record_Processes" xml:space="preserve">
+    <value>Post-prosesser</value>
+  </data>
+  <data name="Section_CandidateKeys" xml:space="preserve">
+    <value>Kandidat-nøkler</value>
+  </data>
+  <data name="Section_Object_Xml_File" xml:space="preserve">
+    <value>Fil-info</value>
+  </data>
+  <data name="Section_Object_Xml_NumberOfOccurrences" xml:space="preserve">
+    <value>Informasjon om antall forekomster</value>
+  </data>
+  <data name="Section_Object_Xml_Schema" xml:space="preserve">
+    <value>Skjema-informasjon</value>
+  </data>
+  <data name="Section_Processes" xml:space="preserve">
+    <value>Prosesser</value>
+  </data>
+  <data name="Sheet_Object_XML" xml:space="preserve">
+    <value>Objekter - XML</value>
+  </data>
+  <data name="Sheet_ObjectStructure" xml:space="preserve">
+    <value>Objekt-struktur</value>
+  </data>
+  <data name="Object_TypeVersion" xml:space="preserve">
+    <value>Versjon</value>
+  </data>
+  <data name="Object_Archive_Period_IngoingSeparation" xml:space="preserve">
+    <value>Inngående skille for periode</value>
+  </data>
+  <data name="Object_Archive_Period_OutgoingSeparation" xml:space="preserve">
+    <value>Utgående skille for periode</value>
+  </data>
+  <data name="Object_Archive_ContainsRestrictedEntries" xml:space="preserve">
+    <value>Inneholder skjermet informasjon</value>
+  </data>
+  <data name="Object_Archive_IncludeDisposedDocuments" xml:space="preserve">
+    <value>Inneholder dokumenter som er kassert</value>
+  </data>
+  <data name="Object_Archive_ContainsDisposalResolutionsForDocuments" xml:space="preserve">
+    <value>Inneholder dokumenter som skal kasseres</value>
+  </data>
+  <data name="Object_Archive_ContainsCompanySpecificMetadata" xml:space="preserve">
+    <value>Inneholder virksomhetsspesifikke metadata</value>
+  </data>
+  <data name="Object_Archive_NumberOfDocuments" xml:space="preserve">
+    <value>Antall dokumentfiler</value>
+  </data>
+  <data name="Object_Archive_TypeVersion" xml:space="preserve">
+    <value>Versjon</value>
+  </data>
+  <data name="Object_Archive_Type" xml:space="preserve">
+    <value>Type arkiv</value>
+  </data>
+  <data name="Section_Object_Archive" xml:space="preserve">
+    <value>Arkiv-nivå</value>
+  </data>
+  <data name="Section_Object_Structure" xml:space="preserve">
+    <value>Objekt-struktur</value>
   </data>
 </root>

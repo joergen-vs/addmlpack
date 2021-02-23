@@ -674,6 +674,23 @@ namespace AddmlPack.Standard.v8_3
             return null;
         }
 
+        public List<property> getProperties(string _name, bool recursive)
+        {
+            if (propertiesField == null)
+                return null;
+
+            List<property> list = new List<property>();
+            for (int i = 0; i < propertiesField.Length; i++)
+                if (propertiesField[i].name.Equals(_name))
+                    list.Add(propertiesField[i]);
+                else if (recursive && propertiesField[i].properties != null)
+                {
+                    list.AddRange(propertiesField[i].getProperties(_name, recursive));
+                }
+
+            return list;
+        }
+
         /// <remarks/>
         public string value
         {
@@ -3406,6 +3423,20 @@ namespace AddmlPack.Standard.v8_3
                     r.Add(p);
             }
             return r;
+        }
+
+        public List<property> getProperties(string _name, bool recursive)
+        {
+            List<property> list = new List<property>();
+            for (int i = 0; i < properties.Length; i++)
+                if (properties[i].name.Equals(_name))
+                    list.Add(properties[i]);
+                else if (recursive)
+                {
+                    list.AddRange(properties[i].getProperties(_name, recursive));
+                }
+
+            return list;
         }
 
         /// <remarks/>

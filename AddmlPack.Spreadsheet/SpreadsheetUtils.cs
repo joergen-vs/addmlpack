@@ -53,6 +53,7 @@ namespace AddmlPack.Spreadsheet
                 Excel.Sheet_Types,
                 Excel.Sheet_Keys,
                 Excel.Sheet_FlatFiles_OtherOptions,
+                Excel.Sheet_ObjectStructure,
                 Excel.Sheet_Objects,
                 Excel.Sheet_Processes,
             };
@@ -132,29 +133,30 @@ namespace AddmlPack.Spreadsheet
 
             ws.Columns().AdjustToContents();
 
-            // Flat Files
-            ws = wb.AddWorksheet(sheetNames[1]);
-            row = 3;
-            column = 1;
-
-            ws.Cell(row, column).Value = Excel.Section_File;
-            row += 1;
-
-            AddRow(ws, row, column, new string[] {
-                Excel.Name,
-                Excel.File_Relative_Path,
-                Excel.File_Definition_Reference,
-                Excel.File_NumberOfRecords,
-                Excel.File_ChecksumAlgorithm,
-                Excel.File_ChecksumValue
-            });
-            row += 1;
-
-            indexes["Flat Files/Files"] = row;
-
             flatFiles files = aml.dataset[0].flatFiles;
+
+            // Flat Files
             if (files != null)
             {
+
+                ws = wb.AddWorksheet(sheetNames[1]);
+                row = 3;
+                column = 1;
+
+                ws.Cell(row, column).Value = Excel.Section_File;
+                row += 1;
+
+                AddRow(ws, row, column, new string[] {
+                    Excel.Name,
+                    Excel.File_Relative_Path,
+                    Excel.File_Definition_Reference,
+                    Excel.File_NumberOfRecords,
+                    Excel.File_ChecksumAlgorithm,
+                    Excel.File_ChecksumValue
+                });
+                row += 1;
+
+                indexes["Flat Files/Files"] = row;
 
                 for (int i = 0; i < files.flatFile.Length; i++)
                 {
@@ -185,7 +187,6 @@ namespace AddmlPack.Spreadsheet
                     indexes["Flat Files/Files/" + files.flatFile[i].name + "/Definition/" + files.flatFile[i].definitionReference] = row + i;
                 }
                 row += 1;
-            }
 
             ws.Columns().AdjustToContents();
 
@@ -753,14 +754,17 @@ namespace AddmlPack.Spreadsheet
 
             ws.Columns().AdjustToContents();
 
-            // Objects
+            }
+
+            // Object-structure and root-object [only if 'archive'-type]
+
             ws = wb.AddWorksheet(sheetNames[6]);
             row = 3;
             column = 1;
 
-            List<DataObjectTypes> dataObjects = aml.dataset[0].dataObjects != null ?
+            List<InternalDataObject> dataObjects = aml.dataset[0].dataObjects != null ?
                 GetDataObjects(aml.dataset[0].dataObjects, "") :
-                new List<DataObjectTypes>();
+                new List<InternalDataObject>();
 
             ws.Cell(row, column).Value = string.Format(
                 Excel.InDataset,
@@ -774,20 +778,146 @@ namespace AddmlPack.Spreadsheet
             );
             row += 2;
 
-            ws.Cell(row, column).Value = Excel.Section_Objects;
+            ws.Cell(row, column).Value = Excel.Section_Object_Structure;
             row += 1;
 
-            foreach (DataObjectTypes obj in dataObjects)
+            AddRow(ws, row, column, new string[]{
+                Excel.Name, Excel.Object_Parent, Excel.Object_Type
+            });
+            row += 1;
+
+            Dictionary<string, int> types = new Dictionary<string, int>();
+
+            foreach (string[] tuple in ListDataObjects(dataObjects))
             {
-                foreach (string[] tuple in obj.getTypes())
-                {
-                    AddRow(ws, row, column, tuple);
-                    row += 1;
-                }
+                AddRow(ws, row, column, tuple);
                 row += 1;
+                if (types.ContainsKey(tuple[2]))
+                    types[tuple[2]] += 1;
+                else
+                    types[tuple[2]] = 1;
+            }
+            row += 1;
+
+            if (types.ContainsKey("archive"))
+            {
+                foreach(InternalDataObject _dataObject in dataObjects)
+                {
+                    if(_dataObject.Type == "archive")
+                    {
+
+
+                        ws.Cell(row, column).Value = Excel.Section_Object_Archive;
+                        row += 1;
+
+                        AddSection(ws, row, column, new string[]{
+                            Excel.Name, Excel.Object_Archive_Type, Excel.Object_Archive_TypeVersion,
+                            Excel.Object_Archive_Period_IngoingSeparation, Excel.Object_Archive_Period_OutgoingSeparation,
+                            Excel.Object_Archive_ContainsRestrictedEntries, Excel.Object_Archive_IncludeDisposedDocuments,
+                            Excel.Object_Archive_ContainsDisposalResolutionsForDocuments,
+                            Excel.Object_Archive_ContainsCompanySpecificMetadata,
+                            Excel.Object_Archive_NumberOfDocuments
+                        });
+
+                        AddSection(ws, row, column+1, new string[]{
+                            _dataObject.Name,
+                            _dataObject.DataObject.getProperty("info")?.getProperty("type")?.value,
+                            _dataObject.DataObject.getProperty("info")?.getProperty("type")?
+                            .getProperty("version")?.value,
+                            _dataObject.DataObject.getProperty("info")?.getProperty("additionalInfo")?
+                            .getProperty("periode")?.getProperty("inngaaendeSkille")?.value,
+                            _dataObject.DataObject.getProperty("info")?.getProperty("additionalInfo")?
+                            .getProperty("periode")?.getProperty("utgaaendeSkille")?.value,
+                            _dataObject.DataObject.getProperty("info")?.getProperty("additionalInfo")?
+                            .getProperty("inneholderSkjermetInformasjon")?.value,
+                            _dataObject.DataObject.getProperty("info")?.getProperty("additionalInfo")?
+                            .getProperty("omfatterDokumenterSomErKassert")?.value,
+                            _dataObject.DataObject.getProperty("info")?.getProperty("additionalInfo")?
+                            .getProperty("inneholderDokumenterSomSkalKasseres")?.value,
+                            _dataObject.DataObject.getProperty("info")?.getProperty("additionalInfo")?
+                            .getProperty("inneholderVirksomhetsspesifikkeMetadata")?.value,
+                            _dataObject.DataObject.getProperty("info")?.getProperty("additionalInfo")?
+                            .getProperty("antallDokumentfiler")?.value
+                        });
+
+                        row += 1;
+                        break;
+                    }
+                }
             }
 
             ws.Columns().AdjustToContents();
+
+            // Objects - XML
+
+            if (types.ContainsKey("xml file"))
+            {
+                ws = wb.AddWorksheet(sheetNames[7]);
+                row = 3;
+                column = 1;
+
+                ws.Cell(row, column).Value = string.Format(
+                    Excel.InDataset,
+                    Excel.DataObjects);
+                row += 1;
+
+                ws.Cell(row, column).Value = string.Format(
+                    Excel.NumberInUse,
+                    Excel.DataObjects.ToLower(),
+                    "" + types["xml file"]
+                );
+                row += 2;
+
+                ws.Cell(row, column).Value = Excel.Section_Object_Xml_File;
+                row += 1;
+
+                AddRow(ws, row, column, TypeRepresentationHeader("file"));
+                row += 1;
+
+                foreach (InternalDataObject _dataObject in dataObjects)
+                {
+                    foreach (property _property in _dataObject.DataObject.getProperties("file", true))
+                    {
+                        AddRow(ws, row, column, TypeRepresentation(_dataObject.Name, _property));
+                        row += 1;
+                    }
+                }
+                row += 1;
+
+                ws.Cell(row, column).Value = Excel.Section_Object_Xml_Schema;
+                row += 1;
+
+                AddRow(ws, row, column, TypeRepresentationHeader("schema"));
+                row += 1;
+
+                foreach (InternalDataObject _dataObject in dataObjects)
+                {
+                    foreach (property _property in _dataObject.DataObject.getProperties("schema"))
+                    {
+                        AddRow(ws, row, column, TypeRepresentation(_dataObject.Name, _property));
+                        row += 1;
+                    }
+                }
+                row += 1;
+
+                ws.Cell(row, column).Value = Excel.Section_Object_Xml_NumberOfOccurrences;
+                row += 1;
+
+                AddRow(ws, row, column, TypeRepresentationHeader("numberOfOccurrences"));
+                row += 1;
+
+                foreach (InternalDataObject _dataObject in dataObjects)
+                {
+                    foreach (property _property in _dataObject.DataObject.getProperties("numberOfOccurrences", true))
+                    {
+                        AddRow(ws, row, column, TypeRepresentation(_dataObject.Name, _property));
+                        row += 1;
+                    }
+                }
+                row += 1;
+
+                ws.Columns().AdjustToContents();
+            }
 
             // Processes
 
@@ -808,40 +938,40 @@ namespace AddmlPack.Spreadsheet
                         });
                     }
 
-                    if(_flatFileProcesses.recordProcesses != null)
-                    foreach (recordProcesses _recordProcesses in _flatFileProcesses.recordProcesses)
-                    {
-                        if (_recordProcesses.processes != null)
-                            foreach (process _process in _recordProcesses.processes)
-                            {
-                                recordProcesses.Add(new string[]
+                    if (_flatFileProcesses.recordProcesses != null)
+                        foreach (recordProcesses _recordProcesses in _flatFileProcesses.recordProcesses)
+                        {
+                            if (_recordProcesses.processes != null)
+                                foreach (process _process in _recordProcesses.processes)
                                 {
+                                    recordProcesses.Add(new string[]
+                                    {
                                     _process.name,
                                     _flatFileProcesses.flatFileReference,
                                     _recordProcesses.definitionReference,
-                                });
-                            }
+                                    });
+                                }
 
                             if (_recordProcesses.fieldProcesses != null)
                                 foreach (fieldProcesses _fieldProcesses in _recordProcesses.fieldProcesses)
-                        {
-                            if (_fieldProcesses.processes != null)
-                                foreach (process _process in _fieldProcesses.processes)
                                 {
-                                    fieldProcesses.Add(new string[]
-                                    {
+                                    if (_fieldProcesses.processes != null)
+                                        foreach (process _process in _fieldProcesses.processes)
+                                        {
+                                            fieldProcesses.Add(new string[]
+                                            {
                                          _process.name,
                                         _flatFileProcesses.flatFileReference,
                                         _recordProcesses.definitionReference,
                                         _fieldProcesses.definitionReference,
-                                    });
+                                            });
+                                        }
                                 }
                         }
-                    }
                 }
             }
 
-            ws = wb.AddWorksheet(sheetNames[7]);
+            ws = wb.AddWorksheet(sheetNames[8]);
             row = 3;
             column = 1;
 
@@ -849,6 +979,7 @@ namespace AddmlPack.Spreadsheet
                 Excel.InDataset,
                 Excel.Section_Processes);
             row += 1;
+
             ws.Cell(row, column).Value = string.Format(
                 Excel.NumberInUse,
                 Excel.Section_Processes.ToLower(),
@@ -1172,7 +1303,7 @@ namespace AddmlPack.Spreadsheet
                 ws = wb.Worksheet(8);
 
                 flatFiles files = aml.dataset[0]?.flatFiles;
-                if(files != null)
+                if (files != null)
                 {
                     Console.WriteLine($"searchSheet(ws, {Excel.File_Processes}, {column}, 1) + 2 ={searchSheet(ws, Excel.File_Processes, column, 1) + 2}");
                     int fileProcessesIndex = searchSheet(ws, Excel.File_Processes, column, 1) + 2;
@@ -1260,6 +1391,17 @@ namespace AddmlPack.Spreadsheet
             );
         }
 
+        private static void AddSection(IXLWorksheet ws, int r, int c, string[] values)
+        {
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (values[i] != null)
+                {
+                    ws.Cell(r + i, c).Value = values[i];
+                }
+            }
+        }
+
         private static void AddRow(IXLWorksheet ws, int[] rc, string[] values)
         {
             AddRow(ws, rc[0], rc[1], values);
@@ -1276,96 +1418,134 @@ namespace AddmlPack.Spreadsheet
             }
         }
 
-        private static List<DataObjectTypes> GetDataObjects(dataObjects _dataObjects, string parent)
+        private static List<InternalDataObject> GetDataObjects(dataObjects _dataObjects, string parent)
         {
-            List<DataObjectTypes> objects = new List<DataObjectTypes>();
+            List<InternalDataObject> list = new List<InternalDataObject>();
+            foreach (dataObject _dataObject in _dataObjects.dataObject)
+            {
+                list.Add(new InternalDataObject(_dataObject, parent));
 
-            if (_dataObjects.dataObject != null)
-                foreach (dataObject _dataObject in _dataObjects.dataObject)
+                if (_dataObject.dataObjects != null)
+                    list.AddRange(GetDataObjects(_dataObject.dataObjects, list.Last().Name));
+            }
+            return list;
+        }
+
+        private class InternalDataObject
+        {
+            public InternalDataObject(dataObject dataObject, string parent)
+            {
+                DataObject = dataObject;
+                Parent = parent;
+            }
+
+            public dataObject DataObject { get; set; }
+            public string Parent { get; set; }
+            public string Name { get { return DataObject.name; } }
+            public string Type
+            {
+                get
                 {
-                    objects.Add(new DataObjectTypes(_dataObject.name));
-
-                    foreach (property type in _dataObject.properties)
+                    if (DataObject.getProperty("type")?.value != null)
                     {
-                        List<List<string>> _object = GetProperties(type.properties, "");
-
-                        if (type.value != null)
-                        {
-                            _object[0].Insert(0, $"type.value");
-                            _object[1].Add($"{type.value}");
-                        }
-
-                        _object[0].Insert(0, "type");
-                        _object[1].Insert(0, type.name);
-
-                        _object[0].Insert(0, "parent-object");
-                        _object[1].Insert(0, parent);
-
-                        _object[0].Insert(0, "object-name");
-                        _object[1].Insert(0, _dataObject.name);
-
-                        objects.Last().addType(_object);
+                        return DataObject.getProperty("type")?.value;
+                    }
+                    if (DataObject.getProperty("file") != null)
+                    {
+                        if (DataObject.getProperty("file")?.getProperty("format")?.value != null)
+                            return DataObject.getProperty("file")?.getProperty("format")?.value.ToLower() + " file";
                     }
 
-                    if (_dataObject.dataObjects != null)
-                        objects.AddRange(GetDataObjects(_dataObject.dataObjects, _dataObject.name));
+                    return "archive";
                 }
-
-            return objects;
+            }
         }
 
-        private static List<List<string>> GetProperties(property[] _properties, string parent)
+        private static string[] TypeRepresentation(string dataObject, property _property)
         {
-            List<List<string>> objects = new List<List<string>>{
-                new List<string>(),
-                new List<string>(),
-            };
-            List<List<string>> subs;
-
-            foreach (property _property in _properties)
+            switch (_property.name)
             {
-                if (_property.value != null)
-                {
-                    objects[0].Add($"{parent}/{_property.name}");
-                    objects[1].Add(_property.value);
-                }
-
-                if (_property.properties != null)
-                {
-                    subs = GetProperties(_property.properties, $"{parent}/{_property.name}");
-                    objects[0].AddRange(subs[0]);
-                    objects[1].AddRange(subs[1]);
-                }
+                case "file":
+                    return new string[]
+                    {
+                        dataObject,
+                        _property.getProperty("name").value,
+                        _property.getProperty("format")?.value,
+                        _property.getProperty("format")?.getProperty("version")?.value,
+                        _property.getProperty("checksum")?.getProperty("algorithm")?.value,
+                        _property.getProperty("checksum")?.getProperty("value")?.value,
+                    };
+                case "schema":
+                    return new string[]
+                    {
+                        dataObject,
+                        _property.value != null ? _property.value : null,
+                        _property.getProperty("file")?.getProperty("name")?.value,
+                        _property.getProperty("type")?.value,
+                        _property.getProperty("type")?.getProperty("version")?.value
+                    };
+                case "numberOfOccurrences":
+                    return new string[]
+                    {
+                        dataObject,
+                        _property.value,
+                        _property.properties[0].name,
+                        _property.properties[0].value,
+                        _property.properties[1].value
+                    };
+                default:
+                    return new string[] { };
             }
-
-            return objects;
         }
 
-        private class DataObjectTypes
+        private static string[] TypeRepresentationHeader(string _property)
         {
-            string name { get; set; }
-            List<List<List<string>>> properties { get; set; }
-            public DataObjectTypes(string n)
+            switch (_property)
             {
-                name = n;
-                properties = new List<List<List<string>>>();
+                case "file":
+                    return new string[]
+                    {
+                        "dataObject",
+                        "name",
+                        "format",
+                        "format-version",
+                        "checksum-algorithm",
+                        "checksum-value",
+                    };
+                case "schema":
+                    return new string[]
+                    {
+                        "dataObject",
+                        "value",
+                        "name",
+                        "type",
+                        "type-version"
+                    };
+                case "numberOfOccurrences":
+                    return new string[]
+                    {
+                        "dataObject",
+                        "value",
+                        "filter",
+                        "filter-value",
+                        "Count"
+                    };
+                default:
+                    return new string[] { };
             }
-            public void addType(List<List<string>> _properties)
+        }
+
+        private static List<string[]> ListDataObjects(List<InternalDataObject> objects)
+        {
+            List<string[]> list = new List<string[]>();
+            foreach (InternalDataObject _object in objects)
             {
-                properties.Add(
-                    _properties
-                );
-            }
-            public List<string[]> getTypes()
-            {
-                List<string[]> types = new List<string[]>();
-                foreach (List<List<string>> type in properties)
+                list.Add(new string[]
                 {
-                    types.Add(type[0].ToArray());
-                    types.Add(type[1].ToArray());
-                }
-                return types;
+                    _object.Name, _object.Parent, _object.Type
+                });
             }
+            return list;
         }
 
         // Addml 2 Excel

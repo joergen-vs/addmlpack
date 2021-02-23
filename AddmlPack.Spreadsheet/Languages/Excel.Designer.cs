@@ -547,6 +547,123 @@ namespace AddmlPack.Spreadsheet.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contains company-specific metadata.
+        /// </summary>
+        internal static string Object_Archive_ContainsCompanySpecificMetadata {
+            get {
+                return ResourceManager.GetString("Object_Archive_ContainsCompanySpecificMetadata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contains disposal resolutions for documents.
+        /// </summary>
+        internal static string Object_Archive_ContainsDisposalResolutionsForDocuments {
+            get {
+                return ResourceManager.GetString("Object_Archive_ContainsDisposalResolutionsForDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contains restricted entries.
+        /// </summary>
+        internal static string Object_Archive_ContainsRestrictedEntries {
+            get {
+                return ResourceManager.GetString("Object_Archive_ContainsRestrictedEntries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Includes disposed documents.
+        /// </summary>
+        internal static string Object_Archive_IncludeDisposedDocuments {
+            get {
+                return ResourceManager.GetString("Object_Archive_IncludeDisposedDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of documents.
+        /// </summary>
+        internal static string Object_Archive_NumberOfDocuments {
+            get {
+                return ResourceManager.GetString("Object_Archive_NumberOfDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingoing separator for period.
+        /// </summary>
+        internal static string Object_Archive_Period_IngoingSeparation {
+            get {
+                return ResourceManager.GetString("Object_Archive_Period_IngoingSeparation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outgoing separator for period.
+        /// </summary>
+        internal static string Object_Archive_Period_OutgoingSeparation {
+            get {
+                return ResourceManager.GetString("Object_Archive_Period_OutgoingSeparation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type of archive.
+        /// </summary>
+        internal static string Object_Archive_Type {
+            get {
+                return ResourceManager.GetString("Object_Archive_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        internal static string Object_Archive_TypeVersion {
+            get {
+                return ResourceManager.GetString("Object_Archive_TypeVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent.
+        /// </summary>
+        internal static string Object_Parent {
+            get {
+                return ResourceManager.GetString("Object_Parent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type of DataObject.
+        /// </summary>
+        internal static string Object_Type {
+            get {
+                return ResourceManager.GetString("Object_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        internal static string Object_TypeVersion {
+            get {
+                return ResourceManager.GetString("Object_TypeVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Objects.
+        /// </summary>
+        internal static string Objects {
+            get {
+                return ResourceManager.GetString("Objects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fieldvalue identifying record-definition.
         /// </summary>
         internal static string Record_Definition_FieldValue {
@@ -709,11 +826,65 @@ namespace AddmlPack.Spreadsheet.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archive-level.
+        /// </summary>
+        internal static string Section_Object_Archive {
+            get {
+                return ResourceManager.GetString("Section_Object_Archive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Object-structure.
+        /// </summary>
+        internal static string Section_Object_Structure {
+            get {
+                return ResourceManager.GetString("Section_Object_Structure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File-info.
+        /// </summary>
+        internal static string Section_Object_Xml_File {
+            get {
+                return ResourceManager.GetString("Section_Object_Xml_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info regarding number of occurrences.
+        /// </summary>
+        internal static string Section_Object_Xml_NumberOfOccurrences {
+            get {
+                return ResourceManager.GetString("Section_Object_Xml_NumberOfOccurrences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schema-info.
+        /// </summary>
+        internal static string Section_Object_Xml_Schema {
+            get {
+                return ResourceManager.GetString("Section_Object_Xml_Schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Objects.
         /// </summary>
         internal static string Section_Objects {
             get {
                 return ResourceManager.GetString("Section_Objects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Candidate keys.
+        /// </summary>
+        internal static string Section_PrimaryKeys {
+            get {
+                return ResourceManager.GetString("Section_PrimaryKeys", resourceCulture);
             }
         }
         
@@ -790,11 +961,29 @@ namespace AddmlPack.Spreadsheet.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Objects - XML.
+        /// </summary>
+        internal static string Sheet_Object_XML {
+            get {
+                return ResourceManager.GetString("Sheet_Object_XML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Objects.
         /// </summary>
         internal static string Sheet_Objects {
             get {
                 return ResourceManager.GetString("Sheet_Objects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Object-structure.
+        /// </summary>
+        internal static string Sheet_ObjectStructure {
+            get {
+                return ResourceManager.GetString("Sheet_ObjectStructure", resourceCulture);
             }
         }
         
