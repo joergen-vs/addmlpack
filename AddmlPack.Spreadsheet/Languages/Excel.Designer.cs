@@ -232,6 +232,15 @@ namespace AddmlPack.Spreadsheet.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Has process.
+        /// </summary>
+        internal static string Field_Definition_Process {
+            get {
+                return ResourceManager.GetString("Field_Definition_Process", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reference to field-definition.
         /// </summary>
         internal static string Field_Definition_Reference {
@@ -354,6 +363,15 @@ namespace AddmlPack.Spreadsheet.Languages {
         internal static string File_NumberOfRecords {
             get {
                 return ResourceManager.GetString("File_NumberOfRecords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Has process.
+        /// </summary>
+        internal static string File_Process {
+            get {
+                return ResourceManager.GetString("File_Process", resourceCulture);
             }
         }
         
@@ -700,6 +718,15 @@ namespace AddmlPack.Spreadsheet.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Has process?.
+        /// </summary>
+        internal static string Record_Definition_Process {
+            get {
+                return ResourceManager.GetString("Record_Definition_Process", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reference to record-definition.
         /// </summary>
         internal static string Record_Definition_Reference {
@@ -732,6 +759,51 @@ namespace AddmlPack.Spreadsheet.Languages {
         internal static string Record_Type_Trimming {
             get {
                 return ResourceManager.GetString("Record_Type_Trimming", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End-date of archival period.
+        /// </summary>
+        internal static string Reference_ArchivalPeriod_End {
+            get {
+                return ResourceManager.GetString("Reference_ArchivalPeriod_End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start-date of archival period.
+        /// </summary>
+        internal static string Reference_ArchivalPeriod_Start {
+            get {
+                return ResourceManager.GetString("Reference_ArchivalPeriod_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name of archive.
+        /// </summary>
+        internal static string Reference_Archive {
+            get {
+                return ResourceManager.GetString("Reference_Archive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name of system.
+        /// </summary>
+        internal static string Reference_System_Name {
+            get {
+                return ResourceManager.GetString("Reference_System_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type of system.
+        /// </summary>
+        internal static string Reference_System_Type {
+            get {
+                return ResourceManager.GetString("Reference_System_Type", resourceCulture);
             }
         }
         
@@ -961,15 +1033,6 @@ namespace AddmlPack.Spreadsheet.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Objects - XML.
-        /// </summary>
-        internal static string Sheet_Object_XML {
-            get {
-                return ResourceManager.GetString("Sheet_Object_XML", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Objects.
         /// </summary>
         internal static string Sheet_Objects {
@@ -981,9 +1044,18 @@ namespace AddmlPack.Spreadsheet.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Object-structure.
         /// </summary>
-        internal static string Sheet_ObjectStructure {
+        internal static string Sheet_Objects_Structure {
             get {
-                return ResourceManager.GetString("Sheet_ObjectStructure", resourceCulture);
+                return ResourceManager.GetString("Sheet_Objects_Structure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Objects - XML.
+        /// </summary>
+        internal static string Sheet_Objects_XML {
+            get {
+                return ResourceManager.GetString("Sheet_Objects_XML", resourceCulture);
             }
         }
         

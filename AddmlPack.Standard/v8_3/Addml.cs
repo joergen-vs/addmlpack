@@ -36,6 +36,26 @@ namespace AddmlPack.Standard.v8_3
 
         private string nameField;
 
+        public dataset addDataset(string _name)
+        {
+            dataset tmp = new dataset();
+            tmp.name = _name;
+
+            if (dataset == null)
+                dataset = new dataset[] { tmp };
+            else
+            {
+                dataset[] _tmp = new dataset[dataset.Length + 1];
+                for (int i = 0; i < dataset.Length; i++)
+                    _tmp[i] = dataset[i];
+                _tmp[_tmp.Length - 1] = tmp;
+
+                dataset = _tmp;
+            }
+
+            return tmp;
+        }
+
         public dataset addDataset(string _name, string archiveType)
         {
             dataset tmp = new dataset();
@@ -283,6 +303,24 @@ namespace AddmlPack.Standard.v8_3
             }
         }
 
+        public additionalElement addElement(string name)
+        {
+            if (additionalElementsField == null)
+            {
+                additionalElementsField = new additionalElements();
+            }
+            if (additionalElementsField.additionalElement == null)
+            {
+                additionalElementsField.additionalElement = new additionalElement[]{
+                    new additionalElement()
+                };
+                additionalElementsField.additionalElement[0].name = name;
+                return additionalElementsField.additionalElement[0];
+            }
+
+            return additionalElements.addElement(name);
+        }
+
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("process", IsNullable = false)]
         public process[] processes
@@ -316,6 +354,9 @@ namespace AddmlPack.Standard.v8_3
 
         public additionalElement getElement(string value)
         {
+            if (additionalElementField == null)
+                return null;
+
             foreach (additionalElement element in additionalElementField)
             {
                 if (element.name.Equals(value))
@@ -334,6 +375,21 @@ namespace AddmlPack.Standard.v8_3
             }
 
             return r;
+        }
+
+        public additionalElement addElement(string name)
+        {
+
+            additionalElement a = new additionalElement();
+            a.name = name;
+
+            additionalElement[] tmp = new additionalElement[additionalElementField.Length + 1];
+            for (int i = 0; i < additionalElementField.Length; i++)
+                tmp[i] = additionalElementField[i];
+            tmp[additionalElementField.Length] = a;
+            additionalElementField = tmp;
+
+            return a;
         }
 
         /// <remarks/>
@@ -455,6 +511,9 @@ namespace AddmlPack.Standard.v8_3
 
         public bool hasElement(string value)
         {
+            if (additionalElementsField == null)
+                return false;
+
             foreach (additionalElement element in additionalElementsField?.additionalElement)
             {
                 if (element.name.Equals(value))
@@ -465,6 +524,9 @@ namespace AddmlPack.Standard.v8_3
 
         public additionalElement getElement(string value)
         {
+            if (additionalElementsField == null)
+                return null;
+
             foreach (additionalElement element in additionalElementsField?.additionalElement)
             {
                 if (element.name.Equals(value))
@@ -476,6 +538,9 @@ namespace AddmlPack.Standard.v8_3
         public List<additionalElement> getElements(string value)
         {
             List<additionalElement> r = new List<additionalElement>();
+            if (additionalElementsField == null)
+                return r;
+
             foreach (additionalElement element in additionalElementsField?.additionalElement)
             {
                 if (element.name.Equals(value))
@@ -483,6 +548,13 @@ namespace AddmlPack.Standard.v8_3
             }
 
             return r;
+        }
+
+        public additionalElement addElement(string name)
+        {
+            if (additionalElementsField == null)
+                additionalElementsField = new additionalElements();
+            return additionalElementsField.addElement(name);
         }
 
         /// <remarks/>
@@ -1572,6 +1644,24 @@ namespace AddmlPack.Standard.v8_3
             }
         }
 
+        public key addKey(string name)
+        {
+            if (keysField == null)
+                keysField = new key[] { };
+
+            key[] tmp = new key[keysField.Length + 1];
+
+            for (int i = 0; i < keysField.Length; i++)
+                tmp[i] = keysField[i];
+
+            tmp[keysField.Length] = new key();
+            tmp[keysField.Length].name = name;
+
+            this.keysField = tmp;
+
+            return this.keysField[keysField.Length - 1];
+        }
+
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("fieldDefinition", IsNullable = false)]
         public fieldDefinition[] fieldDefinitions
@@ -1800,6 +1890,22 @@ namespace AddmlPack.Standard.v8_3
             }
         }
 
+        public void addFieldDefinitionReference(string name)
+        {
+            if (fieldDefinitionReferencesField == null)
+                fieldDefinitionReferencesField = new fieldDefinitionReference[] { };
+
+            fieldDefinitionReference[] tmp = new fieldDefinitionReference[fieldDefinitionReferencesField.Length + 1];
+
+            for (int i = 0; i < fieldDefinitionReferencesField.Length; i++)
+                tmp[i] = fieldDefinitionReferencesField[i];
+
+            tmp[fieldDefinitionReferencesField.Length] = new fieldDefinitionReference();
+            tmp[fieldDefinitionReferencesField.Length].name = name;
+
+            this.fieldDefinitionReferencesField = tmp;
+        }
+
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string name
@@ -1936,6 +2042,22 @@ namespace AddmlPack.Standard.v8_3
             {
                 this.fieldDefinitionReferencesField = value;
             }
+        }
+
+        public void addFieldDefinitionReference(string name)
+        {
+            if (fieldDefinitionReferencesField == null)
+                fieldDefinitionReferencesField = new fieldDefinitionReference[] { };
+
+            fieldDefinitionReference[] tmp = new fieldDefinitionReference[fieldDefinitionReferencesField.Length + 1];
+
+            for (int i = 0; i < fieldDefinitionReferencesField.Length; i++)
+                tmp[i] = fieldDefinitionReferencesField[i];
+
+            tmp[fieldDefinitionReferencesField.Length] = new fieldDefinitionReference();
+            tmp[fieldDefinitionReferencesField.Length].name = name;
+
+            this.fieldDefinitionReferencesField = tmp;
         }
 
         /// <remarks/>

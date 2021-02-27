@@ -2,7 +2,7 @@
   "profiles": {
     "AddmlPack.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "appendProcesses -t excel -i C:\\Me\\test2.xlsx -o C:\\Me\\test2.xlsx"
+      "commandLineArgs": "appendProcesses -t excel -i test3.xlsx -o test4.xlsx -l en"
     }
   }
 }

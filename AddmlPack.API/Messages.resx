@@ -177,7 +177,16 @@
   <data name="Generate_Help_Description" xml:space="preserve">
     <value>Shows the documentation of generate.</value>
   </data>
+  <data name="InvalidUseOfProcess" xml:space="preserve">
+    <value>Invalid use of process, try help to list implemented processes and usage.</value>
+  </data>
+  <data name="NoProcessFound" xml:space="preserve">
+    <value>No process found, use help to list implemented processes and usage.</value>
+  </data>
   <data name="Process_Type_Description_Format" xml:space="preserve">
     <value>{0,-16} {1,-16} :{2}</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
   </data>
 </root>
