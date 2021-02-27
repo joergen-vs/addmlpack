@@ -241,11 +241,38 @@ namespace AddmlPack.API {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid use of process, try help to list implemented processes and usage..
+        /// </summary>
+        internal static string InvalidUseOfProcess {
+            get {
+                return ResourceManager.GetString("InvalidUseOfProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No process found, use help to list implemented processes and usage..
+        /// </summary>
+        internal static string NoProcessFound {
+            get {
+                return ResourceManager.GetString("NoProcessFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0,-16} {1,-16} :{2}.
         /// </summary>
         internal static string Process_Type_Description_Format {
             get {
                 return ResourceManager.GetString("Process_Type_Description_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
     }

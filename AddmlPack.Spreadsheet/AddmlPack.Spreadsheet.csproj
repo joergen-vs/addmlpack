@@ -22,6 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Languages\Excel.no.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Languages\Excel.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Excel.Designer.cs</LastGenOutput>

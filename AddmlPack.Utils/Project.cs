@@ -391,7 +391,7 @@ namespace AddmlPack.Utils
 
             if (indexOfKeyword >= 0 && arguments.Count > indexOfKeyword + 1)
             {
-                if(File.Exists(Input))
+                if (File.Exists(Input))
                 {
                     documents = new DirectoryInfo(new FileInfo(Input).Directory.FullName + Path.PathSeparator + arguments[indexOfKeyword + 1]);
                 }
@@ -403,6 +403,21 @@ namespace AddmlPack.Utils
                 if (!documents.Exists)
                 {
                     System.Diagnostics.Debug.WriteLine($"Error on Project.documents: {documents.FullName} doesnt exist.");
+                }
+            }
+
+            // Folder with documents
+            indexOfKeyword = arguments.IndexOf("-mf") >= 0 ? arguments.IndexOf("-mf") : arguments.IndexOf("--metsfile");
+
+            if (indexOfKeyword >= 0 && arguments.Count > indexOfKeyword + 1)
+            {
+                if (File.Exists(arguments[indexOfKeyword + 1]))
+                {
+                    _parameters["metsfile"] = arguments[indexOfKeyword + 1];
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error on Project.metsfile: {arguments[indexOfKeyword + 1]} doesnt exist.");
                 }
             }
         }

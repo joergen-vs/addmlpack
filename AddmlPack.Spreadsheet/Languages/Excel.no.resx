@@ -405,10 +405,10 @@
   <data name="Section_Processes" xml:space="preserve">
     <value>Prosesser</value>
   </data>
-  <data name="Sheet_Object_XML" xml:space="preserve">
+  <data name="Sheet_Objects_XML" xml:space="preserve">
     <value>Objekter - XML</value>
   </data>
-  <data name="Sheet_ObjectStructure" xml:space="preserve">
+  <data name="Sheet_Objects_Structure" xml:space="preserve">
     <value>Objekt-struktur</value>
   </data>
   <data name="Object_TypeVersion" xml:space="preserve">
@@ -446,5 +446,29 @@
   </data>
   <data name="Section_Object_Structure" xml:space="preserve">
     <value>Objekt-struktur</value>
+  </data>
+  <data name="Reference_System_Name" xml:space="preserve">
+    <value>Navn på system</value>
+  </data>
+  <data name="Reference_System_Type" xml:space="preserve">
+    <value>Type system</value>
+  </data>
+  <data name="Reference_Archive" xml:space="preserve">
+    <value>Navn på arkivet</value>
+  </data>
+  <data name="Reference_ArchivalPeriod_Start" xml:space="preserve">
+    <value>Start-dato for arkivperiode</value>
+  </data>
+  <data name="Reference_ArchivalPeriod_End" xml:space="preserve">
+    <value>Slutt-dato for arkivperiode</value>
+  </data>
+  <data name="File_Process" xml:space="preserve">
+    <value>Har prosess</value>
+  </data>
+  <data name="Record_Definition_Process" xml:space="preserve">
+    <value>Har prosess?</value>
+  </data>
+  <data name="Field_Definition_Process" xml:space="preserve">
+    <value>Har porsess</value>
   </data>
 </root>

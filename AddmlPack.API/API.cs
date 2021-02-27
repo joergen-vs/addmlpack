@@ -12,7 +12,7 @@ namespace AddmlPack.API
         {
             if (P.Process == null)
             {
-                Console.WriteLine("No process found, use help to list implemented processes and usage.");
+                Console.WriteLine(Messages.NoProcessFound);
                 return;
             }
             else
@@ -45,7 +45,7 @@ namespace AddmlPack.API
                                     break;
                                 default:
                                     {
-                                        Console.WriteLine("Invalid process, use help to list implemented processes and usage.");
+                                        Console.WriteLine(Messages.InvalidUseOfProcess);
                                     }
                                     break;
                             }
@@ -73,7 +73,7 @@ namespace AddmlPack.API
                                     break;
                                 default:
                                     {
-                                        Console.WriteLine("Invalid process, use help to list implemented processes and usage.");
+                                        Console.WriteLine(Messages.InvalidUseOfProcess);
                                     }
                                     break;
                             }
@@ -90,16 +90,61 @@ namespace AddmlPack.API
                             {
                                 case "addml":
                                     {
+                                        Console.WriteLine("FileUtils.AddmlFromFile");
                                         addml aml = FileUtils.AddmlFromFile(P.Input);
                                         AddmlUtils.AppendProcesses(aml);
 
+                                        Console.WriteLine("FileUtils.AddmlToFile");
+                                        FileUtils.AddmlToFile(aml, P.Output);
+                                    }
+                                    break;
+                                case "excel":
+                                    {
+                                        Console.WriteLine("SpreadsheetUtils.Excel2Addml");
+                                        addml aml = SpreadsheetUtils.Excel2Addml(P.Input, null);
+
+                                        Console.WriteLine("AddmlUtils.AppendProcesses"); 
+                                        AddmlUtils.AppendProcesses(aml);
+
+                                        P.Language = SpreadsheetUtils.getLanguage(P.Input);
+
+                                        Console.WriteLine("SpreadsheetUtils.ToExcel"); 
+                                        SpreadsheetUtils.ToExcel(aml, P.Output, P.Language);
+                                    }
+                                    break;
+                                default:
+                                    {
+                                        Console.WriteLine(Messages.InvalidUseOfProcess);
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
+                    case "appendMetsInfo":
+                        if (P.Help)
+                        {
+                            help("appendMetsInfo");
+                        }
+                        else
+                        {
+                            switch (P.type)
+                            {
+                                case "addml":
+                                    {
+                                        addml aml = FileUtils.AddmlFromFile(P.Input);
+                                        
+                                        MetsHdr metsHdr = MetsUtils.getAgents((string)P.Parameters["metsfile"]);
+                                        AddmlUtils.AppendMetsInfo(aml, metsHdr);
+                                        
                                         FileUtils.AddmlToFile(aml, P.Output);
                                     }
                                     break;
                                 case "excel":
                                     {
                                         addml aml = SpreadsheetUtils.Excel2Addml(P.Input, null);
-                                        AddmlUtils.AppendProcesses(aml);
+                                        
+                                        MetsHdr metsHdr = MetsUtils.getAgents((string)P.Parameters["metsfile"]);
+                                        AddmlUtils.AppendMetsInfo(aml, metsHdr);
 
                                         P.Language = SpreadsheetUtils.getLanguage(P.Input);
                                         SpreadsheetUtils.ToExcel(aml, P.Output, P.Language);
@@ -107,7 +152,7 @@ namespace AddmlPack.API
                                     break;
                                 default:
                                     {
-                                        Console.WriteLine("Invalid process, use help to list implemented processes and usage.");
+                                        Console.WriteLine(Messages.InvalidUseOfProcess);
                                     }
                                     break;
                             }
@@ -117,7 +162,7 @@ namespace AddmlPack.API
                         help();
                         break;
                     default:
-                        Console.WriteLine("Invalid process, use help to list implemented processes and usage.");
+                        Console.WriteLine(Messages.InvalidUseOfProcess);
                         return;
                 }
         }

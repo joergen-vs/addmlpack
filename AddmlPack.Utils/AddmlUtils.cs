@@ -185,6 +185,7 @@ namespace AddmlPack.Utils
 
         public static void AppendProcesses(addml aml, Dictionary<string, List<string>> processesToAppend)
         {
+            Console.WriteLine("AppendProcesses");
             flatFiles _flatFiles = aml.dataset[0].flatFiles;
             if (_flatFiles == null)
                 return;
@@ -278,7 +279,7 @@ namespace AddmlPack.Utils
                             //Analyse_CountRecordDefinitionOccurences
                             if (processesToAppend["record"].Contains("Analyse_CountRecordDefinitionOccurences"))
                                 if (_recordDefinition.recordDefinitionFieldValue != null)
-                                _recordProcess.addProcess("Analyse_CountRecordDefinitionOccurences");
+                                    _recordProcess.addProcess("Analyse_CountRecordDefinitionOccurences");
 
                             //Analyse_AllFrequenceList
                             // Not necessary. Already added Control_Codes for each field.
@@ -292,30 +293,30 @@ namespace AddmlPack.Utils
                             // Control_FixedLength
                             if (processesToAppend["record"].Contains("Control_FixedLength"))
                                 if (_recordDefinition.fixedLength != null)
-                                _recordProcess.addProcess("Control_FixedLength");
+                                    _recordProcess.addProcess("Control_FixedLength");
 
                             // Control_NotUsedRecordDef
                             if (processesToAppend["record"].Contains("Control_NotUsedRecordDef"))
                                 if (_recordDefinition.recordDefinitionFieldValue != null)
-                                _recordProcess.addProcess("Control_NotUsedRecordDef");
+                                    _recordProcess.addProcess("Control_NotUsedRecordDef");
 
                             // Control_Key
                             if (processesToAppend["record"].Contains("Control_Key"))
                                 if (_recordDefinition.keys != null)
-                                _recordProcess.addProcess("Control_Key");
+                                    _recordProcess.addProcess("Control_Key");
 
                             // Control_ForeignKey
                             if (processesToAppend["record"].Contains("Control_ForeignKey"))
                                 if (_recordDefinition.keys != null)
-                            {
-                                foreach (key _key in _recordDefinition.keys)
                                 {
-                                    if (_key.Item.GetType().IsEquivalentTo(typeof(foreignKey)))
+                                    foreach (key _key in _recordDefinition.keys)
                                     {
-                                        _recordProcess.addProcess("Control_Key");
+                                        if (_key.Item.GetType().IsEquivalentTo(typeof(foreignKey)))
+                                        {
+                                            _recordProcess.addProcess("Control_Key");
+                                        }
                                     }
                                 }
-                            }
 
 
                             if (_recordProcess.processes == null &&
@@ -347,7 +348,7 @@ namespace AddmlPack.Utils
                 //Control_NumberOfRecords
                 if (processesToAppend["file"].Contains("Control_NumberOfRecords"))
                     if (_flatFile.getProperty("numberOfRecords")?.value != null)
-                    _flatFileProcess.addProcess("Control_NumberOfRecords");
+                        _flatFileProcess.addProcess("Control_NumberOfRecords");
 
 
                 if (_flatFileProcess.processes == null &&
@@ -442,6 +443,52 @@ namespace AddmlPack.Utils
                     }
                 }
             }
+        }
+
+        public static void AppendMetsInfo(addml aml, MetsHdr metsHdr)
+        {
+            context _context = aml.dataset[0].reference?.context;
+
+            if (_context == null)
+            {
+                if (aml.dataset == null || aml.dataset.Length == 0)
+                {
+                    aml.addDataset(GeneratorUtils.NewGUID());
+                }
+                if (aml.dataset[0].reference == null)
+                {
+                    aml.dataset[0].reference = new reference();
+                }
+
+                _context = aml.dataset[0].reference.context = new context();
+            }
+
+            additionalElement agentElements = _context.addElement("agents");
+            additionalElement agentElement = null;
+
+            foreach (Agent agent in metsHdr.Agent)
+            {
+                foreach (additionalElement element in agentElements.getElements("agent"))
+                {
+                    //if ()
+                }
+
+                if (agentElement == null)
+                    agentElement = agentElements.addElement("agent");
+
+                string type = agent.TYPE == "OTHER" ? agent.OTHERTYPE : agent.TYPE;
+                string role = agent.ROLE == "OTHER" ? agent.OTHERROLE : agent.ROLE;
+
+                agentElement.addProperty("type").value = type;
+                agentElement.addProperty("role").value = role;
+
+                agentElement.value = agent.Name;
+
+                Console.WriteLine($"name='{agent.Name}'");
+                foreach (string note in agent.Note)
+                    Console.WriteLine($"note='{note}'");
+            }
+            return;
         }
     }
 }

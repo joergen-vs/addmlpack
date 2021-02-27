@@ -14,8 +14,10 @@ namespace AddmlPack.Spreadsheet
 {
     public class SpreadsheetUtils
     {
-        private static string Horizontal { get { return ", "; } }
-        private static string Vertical { get { return "\r\n"; } }
+        private static string[] horizontal = new string[] { ", " };
+        private static string[] vertical = new string[] { "\r\n" };
+        private static string[] Horizontal { get { return horizontal; } }
+        private static string[] Vertical { get { return vertical; } }
 
         public static void Addml2Excel(string pathOfAddmlFile, string pathOfExcelFile)
         {
@@ -44,20 +46,6 @@ namespace AddmlPack.Spreadsheet
             List<string[]> allForeignKeys = new List<string[]>();
             List<string[]> allAlternateKeys = new List<string[]>();
 
-
-            string[] sheetNames = new string[]
-            {
-                Excel.Sheet_Dataset,
-                Excel.Sheet_FlatFiles,
-                Excel.Sheet_Definitions,
-                Excel.Sheet_Types,
-                Excel.Sheet_Keys,
-                Excel.Sheet_FlatFiles_OtherOptions,
-                Excel.Sheet_ObjectStructure,
-                Excel.Sheet_Objects,
-                Excel.Sheet_Processes,
-            };
-
             Dictionary<string, int> indexes = new Dictionary<string, int>();
             Dictionary<string, string> NameToId = new Dictionary<string, string>();
 
@@ -66,7 +54,7 @@ namespace AddmlPack.Spreadsheet
                 $"\"addml-version\":\"8.3\"}}";
 
             // Dataset
-            var ws = wb.AddWorksheet(sheetNames[0]);
+            var ws = wb.AddWorksheet(Excel.Sheet_Dataset);
             row = 3;
             column = 1;
 
@@ -130,6 +118,28 @@ namespace AddmlPack.Spreadsheet
                     row += 1;
                 }
             }
+            row += 1;
+            AddSection(ws, row, column, new string[]
+            {
+                Excel.Reference_System_Name,
+                Excel.Reference_System_Type,
+                Excel.Reference_Archive,
+                Excel.Reference_ArchivalPeriod_Start,
+                Excel.Reference_ArchivalPeriod_End,
+            }, new string[]
+            {
+                aml.dataset?[0].reference?.context?.additionalElements?
+                    .getElement("systemName")?.value,
+                aml.dataset?[0].reference?.context?.additionalElements?
+                .getElement("systemType")?.value,
+                aml.dataset?[0].reference?.context?.additionalElements?
+                .getElement("archive")?.value,
+                aml.dataset?[0].reference?.content?.additionalElements?
+                .getElement("archivalPeriod")?.getProperty("startDate")?.value,
+                aml.dataset?[0].reference?.content?.additionalElements?
+                .getElement("archivalPeriod")?.getProperty("endDate")?.value
+            });
+            row += 1;
 
             ws.Columns().AdjustToContents();
 
@@ -139,7 +149,7 @@ namespace AddmlPack.Spreadsheet
             if (files != null)
             {
 
-                ws = wb.AddWorksheet(sheetNames[1]);
+                ws = wb.AddWorksheet(Excel.Sheet_FlatFiles);
                 row = 3;
                 column = 1;
 
@@ -152,7 +162,8 @@ namespace AddmlPack.Spreadsheet
                     Excel.File_Definition_Reference,
                     Excel.File_NumberOfRecords,
                     Excel.File_ChecksumAlgorithm,
-                    Excel.File_ChecksumValue
+                    Excel.File_ChecksumValue,
+                    Excel.File_Process
                 });
                 row += 1;
 
@@ -188,161 +199,163 @@ namespace AddmlPack.Spreadsheet
                 }
                 row += 1;
 
-            ws.Columns().AdjustToContents();
+                ws.Columns().AdjustToContents();
 
-            // Definitions
-            ws = wb.AddWorksheet(sheetNames[2]);
-            row = 3;
-            column = 1;
+                // Definitions
+                ws = wb.AddWorksheet(Excel.Sheet_Definitions);
+                row = 3;
+                column = 1;
 
-            ws.Cell(row, column).Value = Excel.Section_File_Definitions;
-            row += 1;
+                ws.Cell(row, column).Value = Excel.Section_File_Definitions;
+                row += 1;
 
-            AddRow(ws, row, column, new string[] {
+                AddRow(ws, row, column, new string[] {
                 Excel.Name,
                 Excel.Description,
                 Excel.File_Reference,
                 Excel.Type_Reference,
             });
-            row += 1;
+                row += 1;
 
-            indexes["Definitions/Files"] = row;
-            if (files != null)
-            {
-                foreach (flatFileDefinition _flatFileDefinition in files.flatFileDefinitions)
+                indexes["Definitions/Files"] = row;
+                if (files != null)
                 {
-                    string description = _flatFileDefinition.description;
+                    foreach (flatFileDefinition _flatFileDefinition in files.flatFileDefinitions)
+                    {
+                        string description = _flatFileDefinition.description;
 
-                    string flatFileName;
-                    for (int j = 0; j < files.flatFile.Length; j++)
-                        if (files.flatFile[j].definitionReference.Equals(_flatFileDefinition.name))
-                        {
-                            flatFileName = files.flatFile[j].name;
+                        string flatFileName;
+                        for (int j = 0; j < files.flatFile.Length; j++)
+                            if (files.flatFile[j].definitionReference.Equals(_flatFileDefinition.name))
+                            {
+                                flatFileName = files.flatFile[j].name;
 
-                            AddRow(ws, row, column, new string[] {
+                                AddRow(ws, row, column, new string[] {
                             _flatFileDefinition.name,
                             description,
                             flatFileName,
                             _flatFileDefinition.typeReference,
                         });
 
-                            AddLink(ws, row, column + 2,
-                                Excel.Sheet_FlatFiles, indexes["Flat Files/Files/" + flatFileName + "/Definition/" + _flatFileDefinition.name], 1);
+                                AddLink(ws, row, column + 2,
+                                    Excel.Sheet_FlatFiles, indexes["Flat Files/Files/" + flatFileName + "/Definition/" + _flatFileDefinition.name], 1);
 
-                            indexes["Definitions/Files/" + _flatFileDefinition.name] = row;
-                            indexes["Definitions/Files/" + _flatFileDefinition.name + "/Type/" + _flatFileDefinition.typeReference] = row;
+                                indexes["Definitions/Files/" + _flatFileDefinition.name] = row;
+                                indexes["Definitions/Files/" + _flatFileDefinition.name + "/Type/" + _flatFileDefinition.typeReference] = row;
 
-                            for (int k = indexes["Flat Files/Files"]; !wb.Worksheet(Excel.Sheet_FlatFiles).Cell(k, 1).Value.Equals(string.Empty); k++)
+                                for (int k = indexes["Flat Files/Files"]; !wb.Worksheet(Excel.Sheet_FlatFiles).Cell(k, 1).Value.Equals(string.Empty); k++)
+                                {
+                                    if (wb.Worksheet(Excel.Sheet_FlatFiles).Cell(k, column + 2).Value.Equals(_flatFileDefinition.name))
+                                        AddLink(wb.Worksheet(Excel.Sheet_FlatFiles), k, column + 2,
+                                            Excel.Sheet_Definitions, row, 1);
+                                }
+
+                                row += 1;
+                            }
+                    }
+
+                }
+                row += +2;
+
+
+                ws.Cell(row, column).Value = Excel.Section_Record_Definitions;
+                row += 1;
+
+                AddRow(ws, row, column, new string[] {
+                    Excel.Name,
+                    Excel.Description,
+                    Excel.File_Definition_Reference,
+                    Excel.Type_Reference,
+                    Excel.Record_Definition_FieldValue,
+                    Excel.Record_Definition_Incomplete,
+                    Excel.Record_Definition_FixedLength,
+                    Excel.Record_Definition_RepeatingGroups,
+                    Excel.Record_Definition_Keys,
+                    Excel.Record_Definition_Process
+                });
+                row += 1;
+
+                indexes["Definitions/Records"] = row;
+                if (files != null)
+                {
+                    foreach (flatFileDefinition _flatFileDefinition in files.flatFileDefinitions)
+                    {
+                        foreach (recordDefinition _recordDefinition in _flatFileDefinition.recordDefinitions)
+                        {
+                            AddRow(ws, row, column, new string[] {
+                                _recordDefinition.name,
+                                _recordDefinition.description,
+                                _flatFileDefinition.name,
+                                _recordDefinition.typeReference,
+                            });
+
+                            if (_recordDefinition.keys != null)
                             {
-                                if (wb.Worksheet(Excel.Sheet_FlatFiles).Cell(k, column + 2).Value.Equals(_flatFileDefinition.name))
-                                    AddLink(wb.Worksheet(Excel.Sheet_FlatFiles), k, column + 2,
-                                        Excel.Sheet_Definitions, row, 1);
+                                Console.WriteLine($"_recordDefinition.keys.Length={_recordDefinition.keys.Length}");
+                                foreach (key _key in _recordDefinition.keys)
+                                {
+                                    Console.WriteLine(_key.Item.GetType().Name);
+                                    if (_key.Item.GetType().IsEquivalentTo(typeof(primaryKey)))
+                                    {
+                                        allPrimaryKeys.Add(new string[]
+                                        {
+                                            _key.name,
+                                            _flatFileDefinition.name,
+                                            _recordDefinition.name,
+                                            Excel.Keys_PrimaryKey,
+                                            string.Join(Horizontal[0], _key.fieldDefinitionReferences.Select(
+                                                c => c.name).ToList())
+                                        });
+                                    }
+                                    else if (_key.Item.GetType().IsEquivalentTo(typeof(foreignKey)))
+                                    {
+                                        foreignKey _foreignKey = (foreignKey)_key.Item;
+                                        allForeignKeys.Add(new string[]
+                                        {
+                                            _key.name,
+                                            _flatFileDefinition.name,
+                                            _recordDefinition.name,
+                                            string.Join(Horizontal[0], _key.fieldDefinitionReferences.Select(
+                                                c => c.name).ToList()),
+                                            _foreignKey.relationType,
+                                            _foreignKey.flatFileDefinitionReference.name,
+                                            _foreignKey.flatFileDefinitionReference.recordDefinitionReferences[0].name,
+                                            string.Join(Horizontal[0], _foreignKey.flatFileDefinitionReference
+                                                .recordDefinitionReferences[0].fieldDefinitionReferences.Select(
+                                                c => c.name).ToList())
+                                        });
+                                    }
+                                    else if (_key.Item.GetType().IsEquivalentTo(typeof(alternateKey)))
+                                    {
+                                        allPrimaryKeys.Add(new string[]
+                                        {
+                                            _key.name,
+                                            _flatFileDefinition.name,
+                                            _recordDefinition.name,
+                                            Excel.Keys_AlternateKey,
+                                            string.Join(Horizontal[0], _key.fieldDefinitionReferences.Select(
+                                                c => c.name).ToList())
+                                        });
+                                    }
+                                }
                             }
 
+                            AddLink(ws, row, 3, Excel.Sheet_Definitions, indexes["Definitions/Files/" +
+                                _flatFileDefinition.name], 1);
+
+                            indexes["Definitions/Records/" +
+                                _flatFileDefinition.name + "." +
+                                _recordDefinition.name] = row;
                             row += 1;
                         }
-                }
-
-            }
-            row += +2;
-
-
-            ws.Cell(row, column).Value = Excel.Section_Record_Definitions;
-            row += 1;
-
-            AddRow(ws, row, column, new string[] {
-                Excel.Name,
-                Excel.Description,
-                Excel.File_Definition_Reference,
-                Excel.Type_Reference,
-                Excel.Record_Definition_FieldValue,
-                Excel.Record_Definition_Incomplete,
-                Excel.Record_Definition_FixedLength,
-                Excel.Record_Definition_RepeatingGroups,
-                Excel.Record_Definition_Keys,
-            });
-            row += 1;
-
-            indexes["Definitions/Records"] = row;
-            if (files != null)
-            {
-                foreach (flatFileDefinition _flatFileDefinition in files.flatFileDefinitions)
-                {
-                    foreach (recordDefinition _recordDefinition in _flatFileDefinition.recordDefinitions)
-                    {
-                        AddRow(ws, row, column, new string[] {
-                        _recordDefinition.name,
-                        _recordDefinition.description,
-                        _flatFileDefinition.name,
-                        _recordDefinition.typeReference,
-                    });
-
-                        if (_recordDefinition.keys != null)
-                        {
-                            foreach (key _key in _recordDefinition.keys)
-                            {
-                                if (_key.Item.GetType().IsEquivalentTo(typeof(primaryKey)))
-                                {
-                                    allPrimaryKeys.Add(new string[]
-                                    {
-                                    _flatFileDefinition.name,
-                                    _key.name,
-                                    _recordDefinition.name,
-                                    Excel.Keys_PrimaryKey,
-                                    string.Join(Horizontal, _key.fieldDefinitionReferences.Select(
-                                        c => c.name).ToList())
-                                    });
-                                }
-                                else if (_key.Item.GetType().IsEquivalentTo(typeof(foreignKey)))
-                                {
-                                    foreignKey _foreignKey = (foreignKey)_key.Item;
-                                    allForeignKeys.Add(new string[]
-                                    {
-                                    _flatFileDefinition.name,
-                                    _key.name,
-                                    _recordDefinition.name,
-                                    string.Join(Horizontal, _key.fieldDefinitionReferences.Select(
-                                        c => c.name).ToList()),
-                                    _foreignKey.relationType,
-                                    _foreignKey.flatFileDefinitionReference.name,
-                                    _foreignKey.flatFileDefinitionReference.recordDefinitionReferences[0].name,
-                                    string.Join(Horizontal, _foreignKey.flatFileDefinitionReference
-                                        .recordDefinitionReferences[0].fieldDefinitionReferences.Select(
-                                        c => c.name).ToList())
-
-                                    });
-                                }
-                                else if (_key.Item.GetType().IsEquivalentTo(typeof(alternateKey)))
-                                {
-                                    allPrimaryKeys.Add(new string[]
-                                    {
-                                    _flatFileDefinition.name,
-                                    _key.name,
-                                    _recordDefinition.name,
-                                    Excel.Keys_AlternateKey,
-                                    string.Join(Horizontal, _key.fieldDefinitionReferences.Select(
-                                        c => c.name).ToList())
-                                    });
-                                }
-                            }
-                        }
-
-                        AddLink(ws, row, 3, Excel.Sheet_Definitions, indexes["Definitions/Files/" +
-                            _flatFileDefinition.name], 1);
-
-                        indexes["Definitions/Records/" +
-                            _flatFileDefinition.name + "." +
-                            _recordDefinition.name] = row;
-                        row += 1;
                     }
                 }
-            }
-            row += +2;
+                row += +2;
 
-            ws.Cell(row, column).Value = Excel.Section_Field_Definitions;
-            row += 1;
+                ws.Cell(row, column).Value = Excel.Section_Field_Definitions;
+                row += 1;
 
-            AddRow(ws, row, column, new string[] {
+                AddRow(ws, row, column, new string[] {
                 Excel.Name,
                 Excel.Description,
                 Excel.Record_Definition_Reference,
@@ -356,25 +369,26 @@ namespace AddmlPack.Spreadsheet
                 Excel.Field_Definition_NotNull,
                 Excel.Field_Definition_Fieldparts,
                 Excel.Field_Definition_Codes,
+                Excel.Field_Definition_Process
             });
-            row += 1;
+                row += 1;
 
-            indexes["Definitions/Fields"] = row;
-            if (files != null)
-            {
-                foreach (flatFileDefinition _flatFileDefinition in files.flatFileDefinitions)
+                indexes["Definitions/Fields"] = row;
+                if (files != null)
                 {
-                    foreach (recordDefinition _recordDefinition in _flatFileDefinition.recordDefinitions)
+                    foreach (flatFileDefinition _flatFileDefinition in files.flatFileDefinitions)
                     {
-                        foreach (fieldDefinition _fieldDefinition in _recordDefinition.fieldDefinitions)
+                        foreach (recordDefinition _recordDefinition in _flatFileDefinition.recordDefinitions)
                         {
-                            // Check for codes
-                            if (_fieldDefinition.codes != null)
+                            foreach (fieldDefinition _fieldDefinition in _recordDefinition.fieldDefinitions)
                             {
-                                foreach (code _code in _fieldDefinition.codes)
+                                // Check for codes
+                                if (_fieldDefinition.codes != null)
                                 {
-                                    allCodes.Add(new string[]
+                                    foreach (code _code in _fieldDefinition.codes)
                                     {
+                                        allCodes.Add(new string[]
+                                        {
                                     _flatFileDefinition.name+"."+
                                     _recordDefinition.name + "." +
                                     _fieldDefinition.name,
@@ -382,11 +396,11 @@ namespace AddmlPack.Spreadsheet
                                     _fieldDefinition.name,
                                     _code.codeValue,
                                     _code.explan,
-                                    });
+                                        });
+                                    }
                                 }
-                            }
 
-                            AddRow(ws, row, column, new string[] {
+                                AddRow(ws, row, column, new string[] {
                             _fieldDefinition.name,
                             _fieldDefinition.description,
                             _recordDefinition.name,
@@ -402,31 +416,31 @@ namespace AddmlPack.Spreadsheet
                             $"{_fieldDefinition.codes != null}".ToUpper(),
                         });
 
-                            AddLink(ws, row, 3, Excel.Sheet_Definitions, indexes["Definitions/Records/" +
-                                _flatFileDefinition.name + "." +
-                                _recordDefinition.name], 1);
+                                AddLink(ws, row, 3, Excel.Sheet_Definitions, indexes["Definitions/Records/" +
+                                    _flatFileDefinition.name + "." +
+                                    _recordDefinition.name], 1);
 
-                            indexes["Definitions/Fields/" +
-                                _flatFileDefinition.name + "." +
-                                _recordDefinition.name + "." +
-                                _fieldDefinition.name] = row;
-                            row += 1;
+                                indexes["Definitions/Fields/" +
+                                    _flatFileDefinition.name + "." +
+                                    _recordDefinition.name + "." +
+                                    _fieldDefinition.name] = row;
+                                row += 1;
+                            }
                         }
                     }
                 }
-            }
 
-            ws.Columns().AdjustToContents();
+                ws.Columns().AdjustToContents();
 
-            // Types
-            ws = wb.AddWorksheet(sheetNames[3]);
-            row = 3;
-            column = 1;
+                // Types
+                ws = wb.AddWorksheet(Excel.Sheet_Types);
+                row = 3;
+                column = 1;
 
-            ws.Cell(row, column).Value = Excel.Section_File_Types;
-            row += 1;
+                ws.Cell(row, column).Value = Excel.Section_File_Types;
+                row += 1;
 
-            AddRow(ws, row, column, new string[] {
+                AddRow(ws, row, column, new string[] {
                 Excel.Name,
                 Excel.Description,
                 Excel.File_Type_Charset,
@@ -436,41 +450,41 @@ namespace AddmlPack.Spreadsheet
                 Excel.File_Type_FieldSeparator,
                 Excel.File_Type_QuotationSeparator,
             });
-            row += 1;
+                row += 1;
 
-            if (files != null)
-            {
-                foreach (flatFileType _flatFileType in files.structureTypes.flatFileTypes)
+                if (files != null)
                 {
-                    string description = _flatFileType.description;
-                    description = description == null ? "" : description;
+                    foreach (flatFileType _flatFileType in files.structureTypes.flatFileTypes)
+                    {
+                        string description = _flatFileType.description;
+                        description = description == null ? "" : description;
 
-                    string recordSeparator = "";
-                    string fieldSeparator = "";
-                    string quotingChar = "";
-                    var fileformat = _flatFileType.Item;
-                    if (fileformat.GetType().Equals(typeof(fixedFileFormat)))
-                    {
-                        recordSeparator = AddmlUtils.fromSeparator(((fixedFileFormat)fileformat).recordSeparator);
-                    }
-                    else
-                    {
-                        recordSeparator = AddmlUtils.fromSeparator(((delimFileFormat)fileformat).recordSeparator);
-                        fieldSeparator = AddmlUtils.fromSeparator(((delimFileFormat)fileformat).fieldSeparatingChar);
-                        quotingChar = AddmlUtils.fromSeparator(((delimFileFormat)fileformat).quotingChar);
-                    }
-
-                    if (_flatFileType.charDefinitions != null)
-                    {
-                        characterDefinitions.Add(new string[]
+                        string recordSeparator = "";
+                        string fieldSeparator = "";
+                        string quotingChar = "";
+                        var fileformat = _flatFileType.Item;
+                        if (fileformat.GetType().Equals(typeof(fixedFileFormat)))
                         {
+                            recordSeparator = AddmlUtils.fromSeparator(((fixedFileFormat)fileformat).recordSeparator);
+                        }
+                        else
+                        {
+                            recordSeparator = AddmlUtils.fromSeparator(((delimFileFormat)fileformat).recordSeparator);
+                            fieldSeparator = AddmlUtils.fromSeparator(((delimFileFormat)fileformat).fieldSeparatingChar);
+                            quotingChar = AddmlUtils.fromSeparator(((delimFileFormat)fileformat).quotingChar);
+                        }
+
+                        if (_flatFileType.charDefinitions != null)
+                        {
+                            characterDefinitions.Add(new string[]
+                            {
                         _flatFileType.name,
                         _flatFileType.charDefinitions[0].fromChar,
                         _flatFileType.charDefinitions[0].toChar,
-                        });
-                    }
+                            });
+                        }
 
-                    AddRow(ws, row, column, new string[] {
+                        AddRow(ws, row, column, new string[] {
                             _flatFileType.name,
                             _flatFileType.description,
                             _flatFileType.charset,
@@ -484,81 +498,82 @@ namespace AddmlPack.Spreadsheet
 
                         });
 
-                    indexes["Types/Files/" + _flatFileType.name] = row;
+                        indexes["Types/Files/" + _flatFileType.name] = row;
 
-                    for (int k = indexes["Definitions/Files"]; !wb.Worksheet(Excel.Sheet_Definitions).Cell(k, 1).Value.Equals(string.Empty); k++)
-                    {
-                        if (wb.Worksheet(Excel.Sheet_Definitions).Cell(k, column + 3).Value.Equals(_flatFileType.name))
-                            AddLink(wb.Worksheet(Excel.Sheet_Definitions), k, column + 3,
-                                Excel.Sheet_Types, row, 1);
+                        for (int k = indexes["Definitions/Files"]; !wb.Worksheet(Excel.Sheet_Definitions).Cell(k, 1).Value.Equals(string.Empty); k++)
+                        {
+                            if (wb.Worksheet(Excel.Sheet_Definitions).Cell(k, column + 3).Value.Equals(_flatFileType.name))
+                                AddLink(wb.Worksheet(Excel.Sheet_Definitions), k, column + 3,
+                                    Excel.Sheet_Types, row, 1);
+                        }
+
+                        row += 1;
                     }
-
-                    row += 1;
                 }
-            }
 
-            if (files != null)
-            {
-                if (files.structureTypes.recordTypes != null)
+                if (files != null)
                 {
-                    row += 2;
+                    if (files.structureTypes.recordTypes != null)
+                    {
+                        row += 2;
 
-                    ws.Cell(row, column).Value = Excel.Section_Record_Types;
-                    row += 1;
+                        ws.Cell(row, column).Value = Excel.Section_Record_Types;
+                        row += 1;
 
-                    AddRow(ws, row, column, new string[] {
+                        AddRow(ws, row, column, new string[] {
                 Excel.Name,
                 Excel.Description,
                 Excel.Record_Type_Trimming,
             });
-                    row += 1;
+                        row += 1;
 
-                    foreach (recordType _recordType in files.structureTypes.recordTypes)
-                    {
-                        foreach (flatFileDefinition _flatFileDefinition in files.flatFileDefinitions)
+                        foreach (recordType _recordType in files.structureTypes.recordTypes)
                         {
-                            foreach (recordDefinition _recordDefinition in _flatFileDefinition.recordDefinitions)
+                            foreach (flatFileDefinition _flatFileDefinition in files.flatFileDefinitions)
                             {
-                                if (_recordDefinition.typeReference.Equals(_recordType.name))
+                                foreach (recordDefinition _recordDefinition in _flatFileDefinition.recordDefinitions)
                                 {
-                                    AddRow(ws, row, column, new string[] {
+                                    if (_recordDefinition.typeReference != null &&
+                                        _recordDefinition.typeReference.Equals(_recordType.name))
+                                    {
+                                        AddRow(ws, row, column, new string[] {
                                     _recordType.name,
                                     _recordType.description,
                                     $"{_recordType.trimmed != null}"
                                 });
 
-                                    // Link recordDefinition to recordType
-                                    AddLink(
-                                        wb.Worksheet(Excel.Sheet_Definitions),
-                                        indexes[
-                                            "Definitions/Records/" +
-                                            _flatFileDefinition.name + "." +
-                                            _recordDefinition.name
-                                        ],
-                                        column + 2, Excel.Sheet_Definitions, row, 1
-                                    );
+                                        // Link recordDefinition to recordType
+                                        AddLink(
+                                            wb.Worksheet(Excel.Sheet_Definitions),
+                                            indexes[
+                                                "Definitions/Records/" +
+                                                _flatFileDefinition.name + "." +
+                                                _recordDefinition.name
+                                            ],
+                                            column + 2, Excel.Sheet_Definitions, row, 1
+                                        );
 
-                                    indexes["Types/Records/" + _recordType.name] = row;
+                                        indexes["Types/Records/" + _recordType.name] = row;
 
-                                    row += 1;
+                                        row += 1;
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
 
 
-            if (files != null)
-            {
-                if (files.structureTypes.fieldTypes != null)
+                if (files != null)
                 {
-                    row += 1;
+                    if (files.structureTypes.fieldTypes != null)
+                    {
+                        row += 1;
 
-                    ws.Cell(row, column).Value = Excel.Section_Field_Types;
-                    row += 1;
+                        ws.Cell(row, column).Value = Excel.Section_Field_Types;
+                        row += 1;
 
-                    AddRow(ws, row, column, new string[] {
+                        AddRow(ws, row, column, new string[] {
                     Excel.Name,
                     Excel.Description,
                     Excel.Field_Type_Datatype,
@@ -568,14 +583,14 @@ namespace AddmlPack.Spreadsheet
                     Excel.Field_Type_Packing,
                     Excel.Field_Type_NullValues,
                 });
-                    row += 1;
+                        row += 1;
 
 
-                    foreach (fieldType _fieldType in files.structureTypes.fieldTypes)
-                    {
-                        string description = _fieldType.description;
+                        foreach (fieldType _fieldType in files.structureTypes.fieldTypes)
+                        {
+                            string description = _fieldType.description;
 
-                        AddRow(ws, row, column, new string[] {
+                            AddRow(ws, row, column, new string[] {
                         _fieldType.name,
                         _fieldType.description,
                         _fieldType.dataType,
@@ -584,76 +599,74 @@ namespace AddmlPack.Spreadsheet
                         _fieldType.padChar,
                         _fieldType.packType,
                         _fieldType.nullValues == null ? "" :
-                            string.Join(Horizontal, _fieldType.nullValues)
+                            string.Join(Horizontal[0], _fieldType.nullValues)
 
                     });
 
-                        for (int k = indexes["Definitions/Fields"]; !wb.Worksheet(Excel.Sheet_Definitions).Cell(k, 1).Value.Equals(string.Empty); k++)
-                        {
-                            if (wb.Worksheet(Excel.Sheet_Definitions).Cell(k, column + 3).Value.Equals(_fieldType.name))
-                                AddLink(wb.Worksheet(Excel.Sheet_Definitions), k, column + 3,
-                                    Excel.Sheet_Types, row, 1);
+                            for (int k = indexes["Definitions/Fields"]; !wb.Worksheet(Excel.Sheet_Definitions).Cell(k, 1).Value.Equals(string.Empty); k++)
+                            {
+                                if (wb.Worksheet(Excel.Sheet_Definitions).Cell(k, column + 3).Value.Equals(_fieldType.name))
+                                    AddLink(wb.Worksheet(Excel.Sheet_Definitions), k, column + 3,
+                                        Excel.Sheet_Types, row, 1);
+                            }
+
+                            indexes["Types/Fields/" + _fieldType.name] = row;
+
+                            row += 1;
                         }
-
-                        indexes["Types/Fields/" + _fieldType.name] = row;
-
-                        row += 1;
                     }
                 }
-            }
 
-            ws.Columns().AdjustToContents();
+                ws.Columns().AdjustToContents();
 
-            // Keys
-            ws = wb.AddWorksheet(sheetNames[4]);
-            row = 3;
-            column = 1;
+                // Keys
+                ws = wb.AddWorksheet(Excel.Sheet_Keys);
+                row = 3;
+                column = 1;
 
-            ws.Cell(row, column).Value = Excel.Keys;
-            row += 1;
-            ws.Cell(row, column).Value = string.Format(
-                Excel.NumberInUse,
-                Excel.Section_CandidateKeys.ToLower(),
-                allPrimaryKeys.Count);
-            row += 1;
-            ws.Cell(row, column).Value = string.Format(
-                Excel.NumberInUse,
-                Excel.Section_ForeignKeys.ToLower(),
-                allForeignKeys.Count);
-            row += 2;
+                ws.Cell(row, column).Value = Excel.Keys;
+                row += 1;
+                ws.Cell(row, column).Value = string.Format(
+                    Excel.NumberInUse,
+                    Excel.Section_CandidateKeys.ToLower(),
+                    allPrimaryKeys.Count);
+                row += 1;
+                ws.Cell(row, column).Value = string.Format(
+                    Excel.NumberInUse,
+                    Excel.Section_ForeignKeys.ToLower(),
+                    allForeignKeys.Count);
+                row += 2;
 
-            ws.Cell(row, column).Value = Excel.Section_CandidateKeys;
-            row += 1;
+                ws.Cell(row, column).Value = Excel.Section_CandidateKeys;
+                row += 1;
 
-            AddRow(ws, row, column, new string[] {
+                AddRow(ws, row, column, new string[] {
                 Excel.Name,
+                Excel.File_Definition_Reference,
                 Excel.Record_Definition_Reference,
                 Excel.Key_PrimaryOrAlternate,
                 Excel.Field_Definition_Reference
             });
-            row += 1;
-
-            string[] tmp = new string[4];
-
-            foreach (string[] tuple in allPrimaryKeys)
-            {
-                AddRow(ws, row, column, new string[]{
-                    tuple[1],
-                    tuple[2],
-                    tuple[3],
-                    tuple[4]
-                });
-                AddLink(ws, row, column + 1, Excel.Sheet_Definitions, indexes[$"Definitions/Records/{tuple[0]}.{tuple[2]}"], column);
-
                 row += 1;
-            }
-            row += 1;
 
-            ws.Cell(row, column).Value = Excel.Section_ForeignKeys;
-            row += 1;
+                string[] tmp = new string[4];
 
-            AddRow(ws, row, column, new string[] {
+                foreach (string[] tuple in allPrimaryKeys)
+                {
+                    AddRow(ws, row, column, tuple);
+                    AddLink(ws, row, column + 1, Excel.Sheet_Definitions, indexes[$"Definitions/Files/{tuple[1]}"], column);
+                    AddLink(ws, row, column + 2, Excel.Sheet_Definitions, indexes[$"Definitions/Records/{tuple[1]}.{tuple[2]}"], column);
+
+                    row += 1;
+                }
+                row += 1;
+
+                ws.Cell(row, column).Value = Excel.Section_ForeignKeys;
+                row += 1;
+
+                AddRow(ws, row, column, new string[] {
                 Excel.Name,
+                Excel.File_Definition_Reference,
                 Excel.Record_Definition_Reference,
                 Excel.Field_Definition_Reference,
                 Excel.Keys_Relation,
@@ -661,108 +674,102 @@ namespace AddmlPack.Spreadsheet
                 Excel.Record_Definition_Reference,
                 Excel.Field_Definition_Reference
             });
-            row += 1;
-
-            foreach (string[] tuple in allForeignKeys)
-            {
-                AddRow(ws, row, column, new string[]{
-                    tuple[1],
-                    tuple[2],
-                    tuple[3],
-                    tuple[4],
-                    tuple[5],
-                    tuple[6],
-                    tuple[7]
-                });
-                AddLink(ws, row, column + 1, Excel.Sheet_Definitions, indexes[$"Definitions/Records/{tuple[0]}.{tuple[2]}"], column);
-                AddLink(ws, row, column + 5, Excel.Sheet_Definitions, indexes[$"Definitions/Records/{tuple[5]}.{tuple[6]}"], column);
-
                 row += 1;
-            }
 
-            ws.Columns().AdjustToContents();
+                foreach (string[] tuple in allForeignKeys)
+                {
+                    AddRow(ws, row, column, tuple);
+                    AddLink(ws, row, column + 1, Excel.Sheet_Definitions, indexes[$"Definitions/Files/{tuple[1]}"], column);
+                    AddLink(ws, row, column + 2, Excel.Sheet_Definitions, indexes[$"Definitions/Records/{tuple[1]}.{tuple[2]}"], column);
+                    AddLink(ws, row, column + 5, Excel.Sheet_Definitions, indexes[$"Definitions/Files/{tuple[5]}"], column);
+                    AddLink(ws, row, column + 6, Excel.Sheet_Definitions, indexes[$"Definitions/Records/{tuple[5]}.{tuple[6]}"], column);
 
-            // Flat File Other Options
-            ws = wb.AddWorksheet(sheetNames[5]);
-            row = 3;
-            column = 1;
+                    row += 1;
+                }
 
-            ws.Cell(row, column).Value = string.Format(
-                Excel.InDataset,
-                Excel.Section_Codes);
-            row += 1;
-            ws.Cell(row, column).Value = string.Format(
-                Excel.NumberInUse,
-                Excel.Section_Codes.ToLower(),
-                allCodes.Count);
-            row += 2;
+                ws.Columns().AdjustToContents();
 
-            ws.Cell(row, column).Value = Excel.Section_Codes;
-            row += 1;
+                // Flat File Other Options
+                ws = wb.AddWorksheet(Excel.Sheet_FlatFiles_OtherOptions);
+                row = 3;
+                column = 1;
 
-            AddRow(ws, row, column, new string[] {
+                ws.Cell(row, column).Value = string.Format(
+                    Excel.InDataset,
+                    Excel.Section_Codes);
+                row += 1;
+                ws.Cell(row, column).Value = string.Format(
+                    Excel.NumberInUse,
+                    Excel.Section_Codes.ToLower(),
+                    allCodes.Count);
+                row += 2;
+
+                ws.Cell(row, column).Value = Excel.Section_Codes;
+                row += 1;
+
+                AddRow(ws, row, column, new string[] {
                 Excel.Record_Definition_Reference,
                 Excel.Field_Definition_Reference,
                 Excel.Code_Value,
                 Excel.Code_Explanation
             });
-            row += 1;
+                row += 1;
 
-            foreach (string[] tuple in allCodes)
-            {
-                AddRow(ws, row, column, new string[] {
+                foreach (string[] tuple in allCodes)
+                {
+                    AddRow(ws, row, column, new string[] {
                     tuple[1],
                     tuple[2],
                     tuple[3],
                     tuple[4],
                 });
-                AddLink(ws, row, column + 1, Excel.Sheet_Definitions, indexes[$"Definitions/Fields/{tuple[0]}"], 1);
+                    AddLink(ws, row, column + 1, Excel.Sheet_Definitions, indexes[$"Definitions/Fields/{tuple[0]}"], 1);
 
+                    row += 1;
+                }
+
+                row += 2;
+
+                // Character-definitions
+                ws.Cell(row, column).Value = string.Format(
+                    Excel.InDataset,
+                    Excel.Section_CharacterDefinitions);
                 row += 1;
-            }
+                ws.Cell(row, column).Value = string.Format(
+                    Excel.NumberInUse,
+                    Excel.Section_CharacterDefinitions.ToLower(),
+                    characterDefinitions.Count);
 
-            row += 2;
+                row += 2;
 
-            // Character-definitions
-            ws.Cell(row, column).Value = string.Format(
-                Excel.InDataset,
-                Excel.Section_CharacterDefinitions);
-            row += 1;
-            ws.Cell(row, column).Value = string.Format(
-                Excel.NumberInUse,
-                Excel.Section_CharacterDefinitions.ToLower(),
-                characterDefinitions.Count);
+                ws.Cell(row, column).Value = Excel.Section_CharacterDefinitions;
+                row += 1;
 
-            row += 2;
-
-            ws.Cell(row, column).Value = Excel.Section_CharacterDefinitions;
-            row += 1;
-
-            AddRow(ws, row, column, new string[] {
+                AddRow(ws, row, column, new string[] {
                     Excel.File_Type_Reference,
                     Excel.CharacterDefinitions_FromCharacter,
                     Excel.CharacterDefinitions_ToCharacter
                 });
-            row += 1;
-
-            foreach (string[] tuple in characterDefinitions)
-            {
-                AddRow(ws, row, column, tuple);
-
                 row += 1;
-            }
 
-            ws.Columns().AdjustToContents();
+                foreach (string[] tuple in characterDefinitions)
+                {
+                    AddRow(ws, row, column, tuple);
+
+                    row += 1;
+                }
+
+                ws.Columns().AdjustToContents();
 
             }
 
             // Object-structure and root-object [only if 'archive'-type]
 
-            ws = wb.AddWorksheet(sheetNames[6]);
+            ws = wb.AddWorksheet(Excel.Sheet_Objects_Structure);
             row = 3;
             column = 1;
 
-            List<InternalDataObject> dataObjects = aml.dataset[0].dataObjects != null ?
+            List<InternalDataObject> dataObjects = aml.dataset[0].dataObjects?.dataObject != null ?
                 GetDataObjects(aml.dataset[0].dataObjects, "") :
                 new List<InternalDataObject>();
 
@@ -801,9 +808,9 @@ namespace AddmlPack.Spreadsheet
 
             if (types.ContainsKey("archive"))
             {
-                foreach(InternalDataObject _dataObject in dataObjects)
+                foreach (InternalDataObject _dataObject in dataObjects)
                 {
-                    if(_dataObject.Type == "archive")
+                    if (_dataObject.Type == "archive")
                     {
 
 
@@ -811,15 +818,17 @@ namespace AddmlPack.Spreadsheet
                         row += 1;
 
                         AddSection(ws, row, column, new string[]{
-                            Excel.Name, Excel.Object_Archive_Type, Excel.Object_Archive_TypeVersion,
-                            Excel.Object_Archive_Period_IngoingSeparation, Excel.Object_Archive_Period_OutgoingSeparation,
-                            Excel.Object_Archive_ContainsRestrictedEntries, Excel.Object_Archive_IncludeDisposedDocuments,
+                            Excel.Name,
+                            Excel.Object_Archive_Type,
+                            Excel.Object_Archive_TypeVersion,
+                            Excel.Object_Archive_Period_IngoingSeparation,
+                            Excel.Object_Archive_Period_OutgoingSeparation,
+                            Excel.Object_Archive_ContainsRestrictedEntries,
+                            Excel.Object_Archive_IncludeDisposedDocuments,
                             Excel.Object_Archive_ContainsDisposalResolutionsForDocuments,
                             Excel.Object_Archive_ContainsCompanySpecificMetadata,
                             Excel.Object_Archive_NumberOfDocuments
-                        });
-
-                        AddSection(ws, row, column+1, new string[]{
+                        }, new string[]{
                             _dataObject.Name,
                             _dataObject.DataObject.getProperty("info")?.getProperty("type")?.value,
                             _dataObject.DataObject.getProperty("info")?.getProperty("type")?
@@ -852,7 +861,7 @@ namespace AddmlPack.Spreadsheet
 
             if (types.ContainsKey("xml file"))
             {
-                ws = wb.AddWorksheet(sheetNames[7]);
+                ws = wb.AddWorksheet(Excel.Sheet_Objects_XML);
                 row = 3;
                 column = 1;
 
@@ -921,6 +930,10 @@ namespace AddmlPack.Spreadsheet
 
             // Processes
 
+            ws = wb.AddWorksheet(Excel.Sheet_Processes);
+            row = 3;
+            column = 1;
+
             List<string[]> fileProcesses = new List<string[]>();
             List<string[]> recordProcesses = new List<string[]>();
             List<string[]> fieldProcesses = new List<string[]>();
@@ -936,6 +949,7 @@ namespace AddmlPack.Spreadsheet
                             _process.name,
                             _flatFileProcesses.flatFileReference,
                         });
+
                     }
 
                     if (_flatFileProcesses.recordProcesses != null)
@@ -971,10 +985,6 @@ namespace AddmlPack.Spreadsheet
                 }
             }
 
-            ws = wb.AddWorksheet(sheetNames[8]);
-            row = 3;
-            column = 1;
-
             ws.Cell(row, column).Value = string.Format(
                 Excel.InDataset,
                 Excel.Section_Processes);
@@ -995,10 +1005,20 @@ namespace AddmlPack.Spreadsheet
                     Excel.Name,
                     Excel.File_Reference
                 });
+            indexes["Processes/File"] = row;
             row += 1;
 
             foreach (string[] tuple in fileProcesses)
             {
+                wb.Worksheet(Excel.Sheet_FlatFiles).Cell(
+                    indexes[$"Flat Files/Files/{tuple[1]}"],
+                    column + 6).Value = true;
+                AddLink(
+                    wb.Worksheet(Excel.Sheet_FlatFiles),
+                    indexes[$"Flat Files/Files/{tuple[1]}"],
+                    column + 6, Excel.Sheet_Processes,
+                    indexes["Processes/File"], column);
+
                 AddRow(ws, row, column, tuple);
 
                 row += 1;
@@ -1014,10 +1034,18 @@ namespace AddmlPack.Spreadsheet
                     Excel.File_Reference,
                     Excel.Record_Definition_Reference
                 });
+            indexes["Processes/Record"] = row;
             row += 1;
 
             foreach (string[] tuple in recordProcesses)
             {
+                AddLink(
+                    wb.Worksheet(Excel.Sheet_Definitions),
+                    indexes[$"Definitions/Records/{tuple[1]}.{tuple[2]}"],
+                    column + 9, Excel.Sheet_Definitions,
+                    indexes["Processes/Record"], column
+                );
+
                 AddRow(ws, row, column, tuple);
 
                 row += 1;
@@ -1026,6 +1054,7 @@ namespace AddmlPack.Spreadsheet
             row += 2;
 
             ws.Cell(row, column).Value = Excel.Field_Processes;
+            indexes["Processes/Field"] = row;
             row += 1;
 
             AddRow(ws, row, column, new string[] {
@@ -1038,6 +1067,10 @@ namespace AddmlPack.Spreadsheet
 
             foreach (string[] tuple in fieldProcesses)
             {
+                AddLink(
+                    wb.Worksheet(Excel.Sheet_Definitions),
+                    indexes[$"Definitions/Fields/{tuple[1]}.{tuple[2]}.{tuple[3]}"],
+                    column + 3, Excel.Sheet_Types, indexes["Processes/Field"], column);
                 AddRow(ws, row, column, tuple);
 
                 row += 1;
@@ -1064,12 +1097,14 @@ namespace AddmlPack.Spreadsheet
             Thread.CurrentThread.CurrentCulture = new CultureInfo(values["lang"]);
 
             // Reference-information
-            ws = wb.Worksheet(1);
+            Console.WriteLine($"Worksheet({Excel.Sheet_Dataset})");
+            ws = wb.Worksheet(Excel.Sheet_Dataset);
 
             dataset _dataset = aml.addDataset(GeneratorUtils.NewGUID(), "Fagsystem");
             _dataset.reference = new reference();
 
-            ws = wb.Worksheet(2);
+            Console.WriteLine($"Worksheet({Excel.Sheet_FlatFiles})");
+            ws = wb.Worksheet(Excel.Sheet_FlatFiles);
             int flatFileIndex = searchSheet(ws, Excel.Section_File, column, 1) + 2;
 
             if (!ws.Cell(flatFileIndex, column).IsEmpty())
@@ -1115,7 +1150,8 @@ namespace AddmlPack.Spreadsheet
                 }
 
                 // Flat File Definitions
-                ws = wb.Worksheet(3);
+                Console.WriteLine($"Worksheet({Excel.Sheet_Definitions})");
+                ws = wb.Worksheet(Excel.Sheet_Definitions);
                 string TRUE;
 
                 int fileDefinitionsIndex = searchSheet(ws, Excel.Section_File_Definitions, column, 1) + 2;
@@ -1180,7 +1216,9 @@ namespace AddmlPack.Spreadsheet
                                     TRUE = getCellValue(ws, fieldDefinitionsIndex, column + 12);
                                     if (TRUE != null && TRUE.Equals("True"))
                                     {
-                                        _fieldDefinition.codes = getCodes(wb.Worksheet(6), column, _recordDefinition.name, _fieldDefinition.name);
+                                        _fieldDefinition.codes = getCodes(
+                                            wb.Worksheet(Excel.Sheet_FlatFiles_OtherOptions),
+                                            column, _recordDefinition.name, _fieldDefinition.name);
                                     }
                                     else
                                     {
@@ -1199,7 +1237,8 @@ namespace AddmlPack.Spreadsheet
                 }
 
                 // Flat File Types
-                ws = wb.Worksheet(4);
+                Console.WriteLine($"Worksheet({Excel.Sheet_Types})");
+                ws = wb.Worksheet(Excel.Sheet_Types);
 
                 int fileTypeIndex = searchSheet(ws, Excel.Section_File_Types, column, 1) + 2;
                 while (!ws.Cell(fileTypeIndex, column).IsEmpty())
@@ -1260,7 +1299,7 @@ namespace AddmlPack.Spreadsheet
                     _fieldType.packType = getCellValue(ws, fieldTypeIndex, column + 6);
                     _fieldType.nullValues = getCellValue(ws, fieldTypeIndex, column + 7) == null ? null :
                         getCellValue(ws, fieldTypeIndex, column + 7).
-                        Split(new string[] { Horizontal }, StringSplitOptions.None);
+                        Split( Horizontal, StringSplitOptions.None);
 
                     fieldTypeIndex += 1;
                 }
@@ -1268,16 +1307,86 @@ namespace AddmlPack.Spreadsheet
 
                 // Flat Files Keys
                 {
-                    ws = wb.Worksheet(4);
+                    //Console.WriteLine($"Worksheet({Excel.Sheet_Keys})");
+                    ws = wb.Worksheet(Excel.Sheet_Keys);
 
-
-                    int candidateKeyIndex = searchSheet(ws, Excel.Section_CandidateKeys, column, fileTypeIndex) + 2;
-                    while (!ws.Cell(candidateKeyIndex, column).IsEmpty())
+                    int keyIndex = searchSheet(ws, Excel.Section_CandidateKeys, column, 1) + 2;
+                    while (keyIndex > 1 && !ws.Cell(keyIndex, column).IsEmpty())
                     {
-                        recordType _recordType = _flatFiles.structureTypes.addRecordType(
-                            ws.Cell(recordTypeIndex, column).Value.ToString()
-                        );
-                        recordTypeIndex += 1;
+                        foreach (flatFileDefinition flatFileDefinition_ in _flatFiles.flatFileDefinitions)
+                        {
+                            if (flatFileDefinition_.name.Equals(getCellValue(ws, keyIndex, column + 1)))
+                            {
+                                foreach (recordDefinition recordDefinition_ in flatFileDefinition_.recordDefinitions)
+                                {
+                                    if (recordDefinition_.name.Equals(getCellValue(ws, keyIndex, column + 2)))
+                                    {
+                                        key key_ = recordDefinition_.addKey(getCellValue(ws, keyIndex, column));
+                                        if (getCellValue(ws, keyIndex, column + 3).Equals(Excel.Keys_PrimaryKey))
+                                        {
+                                            key_.Item = new primaryKey();
+                                        }
+                                        else
+                                        {
+                                            key_.Item = new alternateKey();
+                                        }
+
+                                        foreach (string fieldReference in getCellValue(ws, keyIndex, column + 4).
+                                            Split(Horizontal, StringSplitOptions.None))
+                                        {
+                                            key_.addFieldDefinitionReference(fieldReference);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        keyIndex += 1;
+                    }
+
+                    keyIndex = searchSheet(ws, Excel.Section_ForeignKeys, column, 1) + 2;
+                    while (keyIndex > 1 && !ws.Cell(keyIndex, column).IsEmpty())
+                    {
+                        foreach (flatFileDefinition flatFileDefinition_ in _flatFiles.flatFileDefinitions)
+                        {
+                            if (flatFileDefinition_.name.Equals(getCellValue(ws, keyIndex, column + 1)))
+                            {
+                                foreach (recordDefinition recordDefinition_ in flatFileDefinition_.recordDefinitions)
+                                {
+                                    if (recordDefinition_.name.Equals(getCellValue(ws, keyIndex, column + 2)))
+                                    {
+                                        key key_ = recordDefinition_.addKey(getCellValue(ws, keyIndex, column));
+
+                                        foreignKey foreignKey_ = new foreignKey();
+                                        foreignKey_.relationType = getCellValue(ws, keyIndex, column + 4);
+                                        foreignKey_.flatFileDefinitionReference = new flatFileDefinitionReference();
+                                        foreignKey_.flatFileDefinitionReference.name = getCellValue(ws, keyIndex, column + 5);
+
+                                        recordDefinitionReference recordDefinitionReference_ = new recordDefinitionReference();
+                                        recordDefinitionReference_.name = getCellValue(ws, keyIndex, column + 6);
+                                        foreach (string fieldReference in getCellValue(ws, keyIndex, column + 7).
+                                            Split(Horizontal, StringSplitOptions.None))
+                                        {
+                                            recordDefinitionReference_.addFieldDefinitionReference(fieldReference);
+                                        }
+
+                                        foreignKey_.flatFileDefinitionReference.recordDefinitionReferences =
+                                            new recordDefinitionReference[] { recordDefinitionReference_ };
+
+                                        key_.Item = foreignKey_;
+
+
+                                        foreach (string fieldReference in getCellValue(ws, keyIndex, column + 3).
+                                            Split(Horizontal, StringSplitOptions.None))
+                                        {
+                                            key_.addFieldDefinitionReference(fieldReference);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        keyIndex += 1;
                     }
                 }
 
@@ -1285,8 +1394,9 @@ namespace AddmlPack.Spreadsheet
             }
 
             // Objects
-            ws = wb.Worksheet(7);
-            int objectIndex = searchSheet(ws, "Objects", column, 1);
+            //Console.WriteLine($"Worksheet({Excel.Sheet_Objects_Structure})");
+            ws = wb.Worksheet(Excel.Sheet_Objects_Structure);
+            int objectIndex = searchSheet(ws, Excel.Section_Object_Structure, column, 1);
 
 
             if (objectIndex > 1)
@@ -1300,12 +1410,13 @@ namespace AddmlPack.Spreadsheet
 
             // Processes
             {
-                ws = wb.Worksheet(8);
+                //Console.WriteLine($"Worksheet({Excel.Sheet_Processes})");
+                ws = wb.Worksheet(Excel.Sheet_Processes);
 
                 flatFiles files = aml.dataset[0]?.flatFiles;
                 if (files != null)
                 {
-                    Console.WriteLine($"searchSheet(ws, {Excel.File_Processes}, {column}, 1) + 2 ={searchSheet(ws, Excel.File_Processes, column, 1) + 2}");
+                    //Console.WriteLine($"searchSheet(ws, {Excel.File_Processes}, {column}, 1) + 2 ={searchSheet(ws, Excel.File_Processes, column, 1) + 2}");
                     int fileProcessesIndex = searchSheet(ws, Excel.File_Processes, column, 1) + 2;
                     flatFileProcesses _flatFileProcesses;
                     while (!ws.Cell(fileProcessesIndex, column).IsEmpty())
@@ -1316,7 +1427,7 @@ namespace AddmlPack.Spreadsheet
                         fileProcessesIndex += 1;
                     }
 
-                    Console.WriteLine($"searchSheet(ws, {Excel.Record_Processes}, {column}, 1) + 2 ={searchSheet(ws, Excel.Record_Processes, column, 1) + 2}");
+                    //Console.WriteLine($"searchSheet(ws, {Excel.Record_Processes}, {column}, 1) + 2 ={searchSheet(ws, Excel.Record_Processes, column, 1) + 2}");
                     int recordProcessesIndex = searchSheet(ws, Excel.Record_Processes, column, 1) + 2;
                     recordProcesses _recordProcesses;
                     while (!ws.Cell(recordProcessesIndex, column).IsEmpty())
@@ -1328,7 +1439,7 @@ namespace AddmlPack.Spreadsheet
                         recordProcessesIndex += 1;
                     }
 
-                    Console.WriteLine($"searchSheet(ws, {Excel.Field_Processes}, {column}, 1) + 2 ={searchSheet(ws, Excel.Field_Processes, column, 1) + 2}");
+                    //Console.WriteLine($"searchSheet(ws, {Excel.Field_Processes}, {column}, 1) + 2 ={searchSheet(ws, Excel.Field_Processes, column, 1) + 2}");
                     int fieldProcessesIndex = searchSheet(ws, Excel.Field_Processes, column, 1) + 2;
                     fieldProcesses _fieldProcesses;
                     while (!ws.Cell(fieldProcessesIndex, column).IsEmpty())
@@ -1338,10 +1449,10 @@ namespace AddmlPack.Spreadsheet
                         _fieldProcesses = _recordProcesses.addFieldProcesses(getCellValue(ws, fieldProcessesIndex, column + 3));
                         _fieldProcesses.addProcess(getCellValue(ws, fieldProcessesIndex, column));
 
-                        Console.WriteLine($"Added field-process {getCellValue(ws, fieldProcessesIndex, column)} to" +
-                            $"{getCellValue(ws, fieldProcessesIndex, column + 1)}/" +
-                            $"{getCellValue(ws, fieldProcessesIndex, column + 2)}/" +
-                            $"{getCellValue(ws, fieldProcessesIndex, column + 3)}");
+                        //Console.WriteLine($"Added field-process {getCellValue(ws, fieldProcessesIndex, column)} to" +
+                        //    $"{getCellValue(ws, fieldProcessesIndex, column + 1)}/" +
+                        //    $"{getCellValue(ws, fieldProcessesIndex, column + 2)}/" +
+                        //    $"{getCellValue(ws, fieldProcessesIndex, column + 3)}");
 
                         fieldProcessesIndex += 1;
                     }
@@ -1367,7 +1478,7 @@ namespace AddmlPack.Spreadsheet
                     agentElement.getElement("name")?.value,
                     agentElement.getProperty("type")?.value,
                     agentElement.getProperty("role")?.value,
-                    string.Join(Vertical, agentElement.getElements("contact").Select(
+                    string.Join(Vertical[0], agentElement.getElements("contact").Select(
                         c => c.getProperty("type").value + ": " + c.value
                     ).ToList())
                 });
@@ -1387,7 +1498,7 @@ namespace AddmlPack.Spreadsheet
         private static void AddLink(IXLWorksheet source, int sourceRow, int sourceColumn, string target, int targetRow, int targetColumn)
         {
             source.Cell(sourceRow, sourceColumn).Hyperlink = new XLHyperlink(
-                $"'{target}'!{columnIndex[targetColumn]}{targetRow}"
+                $"'{target}'!{columnIndex[targetColumn - 1]}{targetRow}"
             );
         }
 
@@ -1398,6 +1509,24 @@ namespace AddmlPack.Spreadsheet
                 if (values[i] != null)
                 {
                     ws.Cell(r + i, c).Value = values[i];
+                }
+            }
+        }
+
+        private static void AddSection(IXLWorksheet ws, int r, int c, string[] keys, string[] values)
+        {
+            for (int i = 0; i < keys.Length; i++)
+            {
+                if (keys[i] != null)
+                {
+                    ws.Cell(r + i, c).Value = keys[i];
+                }
+            }
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (values[i] != null)
+                {
+                    ws.Cell(r + i, c + 1).Value = values[i];
                 }
             }
         }
