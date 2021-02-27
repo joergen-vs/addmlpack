@@ -18,24 +18,26 @@ Grouped support-functions, for manipulation of common objects like files, addml 
 ### Addml.Spreadsheet
 Supports the conversion of addml to and from Excel 2007+ (.xlsx), using the ClosedXML library from [github.com](https://github.com/ClosedXML/ClosedXML).
 - [ ] transforming
-    - [ ] context
-    - [ ] content
+    - [ ] context - currently working on
+    - [ ] content - currently working on
     - [x] flatFile
     - [x] flatFileDefinition
     - [x] recordDefinition
-    - [ ] keys - currently working on
+    - [x] keys
     - [x] fieldDefinition
     - [x] flatFileType
     - [x] recordType
     - [x] fieldType
-    - [ ] flatFileProcesses
-    - [ ] recordProcesses
-    - [ ] fieldProcesses
+    - [x] flatFileProcesses
+    - [x] recordProcesses
+    - [x] fieldProcesses
     - [ ] processes
-    - [ ] dataObject
+    - [ ] dataObject - currently working on
 - [ ] prosess
     - [ ] checksums
     - [ ] processes
+          - [x] flat files
+          - [ ] data objects
 
 ### Addml.API
 Common interface for all tools in AddmlPack.
@@ -47,6 +49,7 @@ Fully portable command-line interface.
 - generate: generate addml- or excel-file from template
 - convert: transforms addml to and from excel
 - appendProcesses: Append a given or standard set of processes to file
+- appendMetsInfo: Append agents from at DIAS-METS-file to file
 - help: shows documentation of and lists all implemented processes
 
 All processes will show documentation with keyword -h or --help.
@@ -72,6 +75,18 @@ dotnet Addml.CLI.dll convert
     (-o | --output) (<output-file>)
     [(-l | --lang) (<Language>)]
 dotnet Addml.CLI.dll convert (-h |--help)
+```
+
+### appendMetsInfo
+```markdown
+Usage:
+dotnet Addml.CLI.dll appendMetsInfo
+    (-t | --type) (addml | excel)
+    (-i | --input) (<input-file>)
+    (-o | --output) (<output-file>)
+    (-mf | --metsfile) (<file-path>)
+    [(-l | --lang) (<Language>)]
+dotnet Addml.CLI.dll appendMetsInfo (-h |--help)
 ```
 
 ### appendProcesses
