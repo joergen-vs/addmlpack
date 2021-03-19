@@ -1,9 +1,11 @@
 ## AddmlPack
 This is a toolbox under development, for quick and simple production of archival descriptions which follows the archival standard ADDML. 
 
+[Releaseses](https://github.com/joergen-vs/addmlpack/releases)
+
 ## Modules
 
-### Addml.Standard
+### AddmlPack.Standard
 Contains the addml-classes, with various schemas (xml-schema and document-type definition).
 - [x] class-objects
     - [x] v8.3
@@ -12,10 +14,10 @@ Contains the addml-classes, with various schemas (xml-schema and document-type d
     - [x] v8.2 (XML-Schema)
     - [x] v8.3 (XML-Schema)
 
-### Addml.Utils
+### AddmlPack.Utils
 Grouped support-functions, for manipulation of common objects like files, addml and projects.
 
-### Addml.Spreadsheet
+### AddmlPack.Spreadsheet
 Supports the conversion of addml to and from Excel 2007+ (.xlsx), using the ClosedXML library from [github.com](https://github.com/ClosedXML/ClosedXML).
 - [ ] transforming
     - [ ] context - currently working on
@@ -39,10 +41,10 @@ Supports the conversion of addml to and from Excel 2007+ (.xlsx), using the Clos
           - [x] flat files
           - [ ] data objects
 
-### Addml.API
+### AddmlPack.API
 Common interface for all tools in AddmlPack.
 
-### Addml.CLI
+### AddmlPack.CLI
 Fully portable command-line interface.
 
 ## Processes
