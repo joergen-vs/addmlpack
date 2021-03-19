@@ -1,7 +1,7 @@
 ## AddmlPack
 This is a toolbox under development, for quick and simple production of archival descriptions which follows the archival standard ADDML. 
 
-[Releaseses](https://github.com/joergen-vs/addmlpack/releases)
+[Releases](https://github.com/joergen-vs/addmlpack/releases)
 
 ## Modules
 
