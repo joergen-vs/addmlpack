@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AddmlPack.Utils
+namespace AddmlPack.Objects
 {
     public class Timing
     {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AddmlPack.Utils {
+namespace AddmlPack.Templates {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace AddmlPack.Utils {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Files {
+    public class Files {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace AddmlPack.Utils {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AddmlPack.Utils.Files", typeof(Files).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AddmlPack.Templates.Files", typeof(Files).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace AddmlPack.Utils {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -62,17 +62,16 @@ namespace AddmlPack.Utils {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;no&quot;?&gt;
-        ///&lt;addml xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://www.arkivverket.no/standarder/addml addml.xsd&quot; xmlns=&quot;http://www.arkivverket.no/standarder/addml&quot; name=&quot;Arkivnavn&quot;&gt;
+        ///&lt;addml xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://www.arkivverket.no/standarder/addml AddmlPack.xsd&quot; xmlns=&quot;http://www.arkivverket.no/standarder/addml&quot; name=&quot;Arkivnavn&quot;&gt;
         ///  &lt;dataset name=&quot;Filarkiv&quot;&gt;
         ///    &lt;description&gt;Arkivmateriale.&lt;/description&gt;
         ///    &lt;reference /&gt;
         ///    &lt;flatFiles&gt;
         ///      &lt;flatFile definitionReference=&quot;FilarkivDef&quot; name=&quot;Filarkiv-analyse&quot;&gt;
         ///        &lt;properties&gt;
-        ///          &lt;property name=&quot;fileName&quot;&gt;
-        ///   [rest of string was truncated]&quot;;.
+        ///          &lt;property name=&quot;fileName&quot;&gt; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Addml_for_FF {
+        public static string Addml_for_FF {
             get {
                 return ResourceManager.GetString("Addml_for_FF", resourceCulture);
             }
@@ -83,16 +82,16 @@ namespace AddmlPack.Utils {
         ///&lt;addml xmlns=&quot;http://www.arkivverket.no/standarder/addml&quot;
         ///   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
         ///   name=&quot;Mal for arkivuttrekk som følger Noark 3&quot;
-        ///   xsi:schemaLocation=&quot;http://www.arkivverket.no/standarder/addml addml.xsd&quot;&gt;
+        ///   xsi:schemaLocation=&quot;http://www.arkivverket.no/standarder/addml AddmlPack.xsd&quot;&gt;
         ///   &lt;dataset name=&quot;Noark_3&quot;&gt;
         ///      &lt;reference&gt;
         ///         &lt;context&gt;
         ///            &lt;additionalElements&gt;
         ///               &lt;additionalElement name=&quot;systemType&quot;&gt;
         ///                  &lt;value&gt;Journalsystem (Noark-3)&lt;/value&gt;
-        ///            [rest of string was truncated]&quot;;.
+        ///        [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Addml_for_N3 {
+        public static string Addml_for_N3 {
             get {
                 return ResourceManager.GetString("Addml_for_N3", resourceCulture);
             }
@@ -100,7 +99,7 @@ namespace AddmlPack.Utils {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        ///&lt;addml xmlns=&quot;http://www.arkivverket.no/standarder/addml&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://www.arkivverket.no/standarder/addml addml.xsd&quot; name=&quot;Noark 5-arkivuttrekk&quot;&gt;
+        ///&lt;addml xmlns=&quot;http://www.arkivverket.no/standarder/addml&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://www.arkivverket.no/standarder/addml AddmlPack.xsd&quot; name=&quot;Noark 5-arkivuttrekk&quot;&gt;
         ///  &lt;dataset&gt;
         ///    &lt;description&gt;Noark 5-arkivuttrekk&lt;/description&gt;
         ///    &lt;reference&gt;
@@ -108,9 +107,9 @@ namespace AddmlPack.Utils {
         ///        &lt;additionalElements&gt;
         ///          &lt;additionalElement name=&quot;recordCreators&quot;&gt;
         ///            &lt;additionalElements&gt;
-        ///              &lt;additionalElement name=&quot; [rest of string was truncated]&quot;;.
+        ///              &lt;additionalElement na [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Addml_for_N5 {
+        public static string Addml_for_N5 {
             get {
                 return ResourceManager.GetString("Addml_for_N5", resourceCulture);
             }

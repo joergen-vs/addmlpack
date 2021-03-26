@@ -1,4 +1,5 @@
-﻿using AddmlPack.Standard.v8_3;
+﻿using AddmlPack.Standards.Addml.Classes.v8_3;
+using AddmlPack.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,9 +7,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 
-namespace AddmlPack.Utils
+namespace AddmlPack.Objects
 {
-
     public class Project
     {
         private addml _aml { get; set; }
@@ -16,7 +16,7 @@ namespace AddmlPack.Utils
         private Timing timing { get; set; }
         public static List<string> types { get; set; }
         private Dictionary<string, object> _parameters { get; set; }
-        public Dictionary<string,object> Parameters { get { return _parameters; } }
+        public Dictionary<string, object> Parameters { get { return _parameters; } }
         public string Process
         {
             get { return (string)_parameters["process"]; }
@@ -31,11 +31,12 @@ namespace AddmlPack.Utils
         public bool Help { get; set; }
         public string Input
         {
-            get {
+            get
+            {
 
                 if (_parameters.ContainsKey("input"))
                     return (string)_parameters["input"];
-                else 
+                else
                     return null;
             }
             set { _parameters["input"] = value; }
@@ -118,7 +119,7 @@ namespace AddmlPack.Utils
         {
             get
             {
-                return (CustomOptions) Get("CustomOptions");
+                return (CustomOptions)Get("CustomOptions");
             }
             set
             {
@@ -198,19 +199,9 @@ namespace AddmlPack.Utils
         public string GetString(string key)
         {
             if (_parameters.ContainsKey(key))
-                return (string) _parameters[key];
+                return (string)_parameters[key];
             else
                 return null;
-        }
-
-        public string addmlToString()
-        {
-            return AddmlUtils.FromAddml(Addml);
-        }
-
-        public string addmlToFile()
-        {
-            return FileUtils.AddmlToFile(Addml, Output);
         }
 
         public void Start()
@@ -235,7 +226,8 @@ namespace AddmlPack.Utils
             if (arguments.Count > 0)
             {
                 Process = arguments[0];
-            } else
+            }
+            else
             {
                 Process = null;
                 return;
@@ -301,7 +293,8 @@ namespace AddmlPack.Utils
             if (indexOfKeyword >= 0 && arguments.Count > indexOfKeyword + 1)
             {
                 Language = arguments[indexOfKeyword + 1];
-            } else
+            }
+            else
             {
                 Language = Thread.CurrentThread.CurrentCulture.Name;
             }
@@ -312,12 +305,12 @@ namespace AddmlPack.Utils
             if (indexOfKeyword >= 0 && arguments.Count > indexOfKeyword + 1)
             {
                 RecordSeparator = arguments[indexOfKeyword + 1];
-                RecordSeparator = AddmlUtils.toSeparator(RecordSeparator);
+                RecordSeparator = TextUtils.toSeparator(RecordSeparator);
             }
             else
             {
                 // System-spesific newline
-                RecordSeparator = AddmlUtils.toSeparator(Environment.NewLine);
+                RecordSeparator = TextUtils.toSeparator(Environment.NewLine);
             }
 
             // Field-separator for files
@@ -326,7 +319,7 @@ namespace AddmlPack.Utils
             if (indexOfKeyword >= 0 && arguments.Count > indexOfKeyword + 1)
             {
                 FieldSeparator = arguments[indexOfKeyword + 1];
-                FieldSeparator = AddmlUtils.toSeparator(FieldSeparator);
+                FieldSeparator = TextUtils.toSeparator(FieldSeparator);
             }
 
             // Quotation-characters for files
@@ -335,7 +328,7 @@ namespace AddmlPack.Utils
             if (indexOfKeyword >= 0 && arguments.Count > indexOfKeyword + 1)
             {
                 QuotationText = arguments[indexOfKeyword + 1];
-                QuotationText = AddmlUtils.toSeparator(QuotationText);
+                QuotationText = TextUtils.toSeparator(QuotationText);
             }
             else
             {
@@ -485,7 +478,7 @@ namespace AddmlPack.Utils
         public void printHelp()
         {
             Console.WriteLine("List of implemented processes");
-            foreach(string processName in implementedProcesses)
+            foreach (string processName in implementedProcesses)
             {
                 switch (processName)
                 {

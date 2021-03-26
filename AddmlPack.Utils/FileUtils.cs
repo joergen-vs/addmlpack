@@ -1,5 +1,4 @@
-﻿using AddmlPack.Standard.v8_3;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
@@ -9,36 +8,34 @@ namespace AddmlPack.Utils
 {
     public class FileUtils
     {
-        public static addml AddmlFromFile(string path)
+        public static string FromFile(string path)
         {
             if (File.Exists(path))
-                return AddmlUtils.ToAddml(File.ReadAllText(path));
+                return File.ReadAllText(path);
             else
                 Console.WriteLine($"File {path} doesnt exist.");
             return null;
         }
-        public static addml AddmlFromFile(FileInfo file)
+        public static string FromFile(FileInfo file)
         {
             if (file.Exists)
-                AddmlUtils.ToAddml(File.ReadAllText(file.FullName));
+                File.ReadAllText(file.FullName);
             else
                 Console.WriteLine($"File {file.FullName} doesnt exist.");
             return null;
         }
 
-        public static string AddmlToFile(addml _aml, string path)
+        public static string ToFile(string _aml, string path)
         {
-            string objectData = AddmlUtils.FromAddml(_aml);
             if (path == null)
             {
-                Console.WriteLine(objectData);
-                return objectData;
+                Console.WriteLine(_aml);
             }
             else
             {
-                File.WriteAllText(path, objectData, Encoding.UTF8);
-                return objectData;
+                File.WriteAllText(path, _aml, Encoding.UTF8);
             }
+            return _aml;
         }
 
         public static string GenerateChecksum(string pathToFile)

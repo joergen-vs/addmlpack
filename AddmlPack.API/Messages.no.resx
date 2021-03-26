@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,79 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppendProcesses_Addml_Description" xml:space="preserve">
-    <value>Append defined processes to addml-file</value>
-  </data>
-  <data name="AppendProcesses_Excel_Description" xml:space="preserve">
-    <value>Append defined processes to excel-file</value>
-  </data>
-  <data name="AppendProcesses_Help_Description" xml:space="preserve">
-    <value>Shows the documentation of appendProcesses.</value>
-  </data>
-  <data name="ArgShort_ArgLong_Description" xml:space="preserve">
-    <value>    {0,-5} {1,-12} :{2}</value>
-  </data>
-  <data name="Arg_CustomOptions" xml:space="preserve">
-    <value>-co, --customoptions</value>
-  </data>
-  <data name="Arg_CustomOptions_Description" xml:space="preserve">
-    <value>Either a json-structure or filepath to json-file</value>
-  </data>
-  <data name="Arg_Input" xml:space="preserve">
-    <value>-i, --input</value>
-  </data>
-  <data name="Arg_Input_Description" xml:space="preserve">
-    <value>specify input filepath</value>
-  </data>
-  <data name="Arg_Language" xml:space="preserve">
-    <value>-l, --lang</value>
-  </data>
-  <data name="Arg_Language_Description" xml:space="preserve">
-    <value>language used for excel-text.</value>
-  </data>
-  <data name="Arg_Output" xml:space="preserve">
-    <value>-o, --output</value>
-  </data>
-  <data name="Arg_Output_Description" xml:space="preserve">
-    <value>specify output filepath</value>
-  </data>
-  <data name="Arg_Type" xml:space="preserve">
-    <value>-t, --type</value>
-  </data>
-  <data name="Arg_Type_Description" xml:space="preserve">
-    <value>subprocess, </value>
-  </data>
-  <data name="Convert_A2E_Description" xml:space="preserve">
-    <value>convert addml-file to excel-file.</value>
-  </data>
-  <data name="Convert_E2A_Description" xml:space="preserve">
-    <value>convert excel-file to addml-file.</value>
-  </data>
-  <data name="Convert_Help_Description" xml:space="preserve">
-    <value>Shows the documentation of convert.</value>
-  </data>
-  <data name="Generate_Addml_Description" xml:space="preserve">
-    <value>generate addml-file from template included in library AddmlPack.Utils.</value>
-  </data>
-  <data name="Generate_Excel_Description" xml:space="preserve">
-    <value>generate excel-file from template included in library AddmlPack.Utils.</value>
-  </data>
-  <data name="Generate_Help_Description" xml:space="preserve">
-    <value>Shows the documentation of generate.</value>
-  </data>
-  <data name="InvalidUseOfProcess" xml:space="preserve">
-    <value>Invalid use of process, try help to list implemented processes and usage.</value>
-  </data>
-  <data name="NoProcessFound" xml:space="preserve">
-    <value>No process found, use help to list implemented processes and usage.</value>
-  </data>
-  <data name="Process_Type_Description_Format" xml:space="preserve">
-    <value>{0,-16} {1,-16} :{2}</value>
-  </data>
-  <data name="AppendMetsInfo_Addml_Description" xml:space="preserve">
-    <value>Append information from mets-file to addml-file</value>
-  </data>
-  <data name="AppendMetsInfo_Excel_Description" xml:space="preserve">
-    <value>Append information from mets-file to excel-file</value>
-  </data>
 </root>

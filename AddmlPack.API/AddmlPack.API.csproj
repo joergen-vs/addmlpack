@@ -17,8 +17,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AddmlPack.Spreadsheet\AddmlPack.Spreadsheet.csproj" />
-    <ProjectReference Include="..\AddmlPack.Standard\AddmlPack.Standard.csproj" />
+    <ProjectReference Include="..\AddmlPack.Objects\AddmlPack.Objects.csproj" />
+    <ProjectReference Include="..\AddmlPack.Templates\AddmlPack.Templates.csproj" />
+    <ProjectReference Include="..\AddmlPack.Utils.Addml\AddmlPack.Utils.Addml.csproj" />
+    <ProjectReference Include="..\AddmlPack.Utils.Mets\AddmlPack.Utils.Mets.csproj" />
+    <ProjectReference Include="..\AddmlPack.Utils.Spreadsheet\AddmlPack.Utils.Spreadsheet.csproj" />
     <ProjectReference Include="..\AddmlPack.Utils\AddmlPack.Utils.csproj" />
   </ItemGroup>
 
@@ -32,7 +35,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Messages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

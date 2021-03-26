@@ -1,6 +1,11 @@
-﻿using AddmlPack.Spreadsheet;
-using AddmlPack.Standard.v8_3;
+﻿using AddmlPack.Objects;
+using AddmlPack.Standards.Addml.Classes.v8_3;
+using AddmlPack.Standards.Mets;
+using AddmlPack.Templates;
 using AddmlPack.Utils;
+using AddmlPack.Utils.Addml;
+using AddmlPack.Utils.Mets;
+using AddmlPack.Utils.SpreadsheetUtils;
 using System;
 using System.Collections.Generic;
 
@@ -29,18 +34,23 @@ namespace AddmlPack.API
                             {
                                 case "addml":
                                     {
-                                        addml aml = AddmlUtils.ToAddml(
-                                            GeneratorUtils.GetTemplate(P.GetString("archivetype"))
-                                        );
-                                        FileUtils.AddmlToFile(aml, P.Output);
+                                        string _aml = P.GetString("archivetype");
+                                        _aml = Template.GetTemplate(_aml);
+
+                                        addml aml = AddmlUtils.ToAddml(_aml);
+                                        _aml = AddmlUtils.FromAddml(aml);
+
+                                        FileUtils.ToFile(_aml, P.Output);
                                     }
                                     break;
                                 case "excel":
                                     {
-                                        addml aml = AddmlUtils.ToAddml(
-                                            GeneratorUtils.GetTemplate(P.GetString("archivetype"))
-                                        );
-                                        SpreadsheetUtils.ToExcel(aml, P.Output, P.Language);
+                                        string _aml = P.GetString("archivetype");
+                                        _aml = Template.GetTemplate(_aml);
+
+                                        addml aml = AddmlUtils.ToAddml(_aml);
+
+                                        SpreadsheetUtils.ToSpreadsheet(aml, P.Output, P.Language);
                                     }
                                     break;
                                 default:
@@ -62,13 +72,20 @@ namespace AddmlPack.API
                             {
                                 case "addml2excel":
                                     {
-                                        addml aml = FileUtils.AddmlFromFile(P.Input);
-                                        SpreadsheetUtils.ToExcel(aml, P.Output, P.Language);
+                                        string _aml = FileUtils.FromFile(P.Input);
+
+                                        addml aml = AddmlUtils.ToAddml(_aml);
+
+                                        SpreadsheetUtils.ToSpreadsheet(aml, P.Output, P.Language);
                                     }
                                     break;
                                 case "excel2addml":
                                     {
-                                        SpreadsheetUtils.Excel2Addml(P.Input, P.Output);
+                                        addml aml = SpreadsheetUtils.FromSpreadsheet(P.Input);
+
+                                        string _aml = AddmlUtils.FromAddml(aml);
+
+                                        FileUtils.ToFile(_aml, P.Output);
                                     }
                                     break;
                                 default:
@@ -90,26 +107,26 @@ namespace AddmlPack.API
                             {
                                 case "addml":
                                     {
-                                        Console.WriteLine("FileUtils.AddmlFromFile");
-                                        addml aml = FileUtils.AddmlFromFile(P.Input);
+                                        string _aml = FileUtils.FromFile(P.Input);
+
+                                        addml aml = AddmlUtils.ToAddml(_aml);
+
                                         AddmlUtils.AppendProcesses(aml);
 
-                                        Console.WriteLine("FileUtils.AddmlToFile");
-                                        FileUtils.AddmlToFile(aml, P.Output);
+                                        _aml = AddmlUtils.FromAddml(aml);
+
+                                        FileUtils.ToFile(_aml, P.Output);
                                     }
                                     break;
                                 case "excel":
                                     {
-                                        Console.WriteLine("SpreadsheetUtils.Excel2Addml");
-                                        addml aml = SpreadsheetUtils.Excel2Addml(P.Input, null);
+                                        addml aml = SpreadsheetUtils.FromSpreadsheet(P.Input);
 
-                                        Console.WriteLine("AddmlUtils.AppendProcesses"); 
                                         AddmlUtils.AppendProcesses(aml);
 
                                         P.Language = SpreadsheetUtils.getLanguage(P.Input);
 
-                                        Console.WriteLine("SpreadsheetUtils.ToExcel"); 
-                                        SpreadsheetUtils.ToExcel(aml, P.Output, P.Language);
+                                        SpreadsheetUtils.ToSpreadsheet(aml, P.Output, P.Language);
                                     }
                                     break;
                                 default:
@@ -131,23 +148,25 @@ namespace AddmlPack.API
                             {
                                 case "addml":
                                     {
-                                        addml aml = FileUtils.AddmlFromFile(P.Input);
-                                        
-                                        MetsHdr metsHdr = MetsUtils.getAgents((string)P.Parameters["metsfile"]);
-                                        AddmlUtils.AppendMetsInfo(aml, metsHdr);
-                                        
-                                        FileUtils.AddmlToFile(aml, P.Output);
+                                        string _aml = FileUtils.FromFile(P.Input);
+                                        addml aml = AddmlUtils.ToAddml(_aml);
+
+                                        var metsHdr = MetsUtils.getAgents((string)P.Parameters["metsfile"]);
+                                        MetsUtils.AppendMetsInfo(aml, metsHdr);
+
+                                        _aml = AddmlUtils.FromAddml(aml);
+                                        FileUtils.ToFile(_aml, P.Output);
                                     }
                                     break;
                                 case "excel":
                                     {
-                                        addml aml = SpreadsheetUtils.Excel2Addml(P.Input, null);
-                                        
-                                        MetsHdr metsHdr = MetsUtils.getAgents((string)P.Parameters["metsfile"]);
-                                        AddmlUtils.AppendMetsInfo(aml, metsHdr);
+                                        addml aml = SpreadsheetUtils.FromSpreadsheet(P.Input);
+
+                                        var metsHdr = MetsUtils.getAgents((string)P.Parameters["metsfile"]);
+                                        MetsUtils.AppendMetsInfo(aml, metsHdr);
 
                                         P.Language = SpreadsheetUtils.getLanguage(P.Input);
-                                        SpreadsheetUtils.ToExcel(aml, P.Output, P.Language);
+                                        SpreadsheetUtils.ToSpreadsheet(aml, P.Output, P.Language);
                                     }
                                     break;
                                 default:
@@ -177,9 +196,11 @@ namespace AddmlPack.API
             Console.WriteLine(Messages.Process_Type_Description_Format, "convert", "addml2excel", Messages.Convert_A2E_Description);
             Console.WriteLine(Messages.Process_Type_Description_Format, "convert", "excel2addml", Messages.Convert_E2A_Description);
             Console.WriteLine(Messages.Process_Type_Description_Format, "convert", "help", Messages.Convert_Help_Description);
-            Console.WriteLine(Messages.Process_Type_Description_Format, "generate", "addml", Messages.AppendProcesses_Addml_Description);
-            Console.WriteLine(Messages.Process_Type_Description_Format, "generate", "excel", Messages.AppendProcesses_Excel_Description);
-            Console.WriteLine(Messages.Process_Type_Description_Format, "generate", "help", Messages.AppendProcesses_Help_Description);
+            Console.WriteLine(Messages.Process_Type_Description_Format, "appendProcesses", "addml", Messages.AppendProcesses_Addml_Description);
+            Console.WriteLine(Messages.Process_Type_Description_Format, "appendProcesses", "excel", Messages.AppendProcesses_Excel_Description);
+            Console.WriteLine(Messages.Process_Type_Description_Format, "appendProcesses", "help", Messages.AppendProcesses_Help_Description);
+            Console.WriteLine(Messages.Process_Type_Description_Format, "appendMetsInfo", "addml", Messages.AppendMetsInfo_Addml_Description);
+            Console.WriteLine(Messages.Process_Type_Description_Format, "appendMetsInfo", "excel", Messages.AppendMetsInfo_Excel_Description);
         }
 
         public void help(string process)

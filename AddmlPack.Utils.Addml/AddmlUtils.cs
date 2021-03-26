@@ -1,4 +1,4 @@
-﻿using AddmlPack.Standard.v8_3;
+﻿using AddmlPack.Standards.Addml.Classes.v8_3;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace AddmlPack.Utils
+namespace AddmlPack.Utils.Addml
 {
     public class AddmlUtils
     {
@@ -55,38 +55,6 @@ namespace AddmlPack.Utils
             return aml;
         }
 
-        public static string toSeparator(string text)
-        {
-            if (text == null)
-                return text;
-            if (text.Contains("CRLF"))
-                text = text.Replace("CRLF", "\r\n");
-            if (text.Contains("CR"))
-                text = text.Replace("CR", "\r");
-            if (text.Contains("LF"))
-                text = text.Replace("LF", "\n");
-            if (text.Contains("TAB"))
-                text = text.Replace("TAB", "\t");
-
-            return text;
-        }
-
-        public static string fromSeparator(string text)
-        {
-            if (text == null)
-                return text;
-            if (text.Contains("\r\n"))
-                text = text.Replace("\r\n", "CRLF");
-            if (text.Contains("\r"))
-                text = text.Replace("\r", "CR");
-            if (text.Contains("\n"))
-                text = text.Replace("\n", "LF");
-            if (text.Contains("\t"))
-                text = text.Replace("\t", "\\t");
-
-            return text;
-        }
-
         public static string PrettyPrintXML(string xml)
         {
             MemoryStream mStream = new MemoryStream();
@@ -127,17 +95,6 @@ namespace AddmlPack.Utils
 
                 return null;
             }
-        }
-
-        public static void GenerateAddmlTemplate(string pathOfAddmlFile)
-        {
-            GenerateAddmlTemplate(Files.Addml_for_N3, pathOfAddmlFile);
-        }
-
-        public static void GenerateAddmlTemplate(string template, string pathOfAddmlFile)
-        {
-            addml aml = AddmlUtils.ToAddml(GeneratorUtils.GetTemplate(template));
-            FileUtils.AddmlToFile(aml, pathOfAddmlFile);
         }
 
         public static void AppendProcesses(addml aml)
@@ -443,52 +400,6 @@ namespace AddmlPack.Utils
                     }
                 }
             }
-        }
-
-        public static void AppendMetsInfo(addml aml, MetsHdr metsHdr)
-        {
-            context _context = aml.dataset[0].reference?.context;
-
-            if (_context == null)
-            {
-                if (aml.dataset == null || aml.dataset.Length == 0)
-                {
-                    aml.addDataset(GeneratorUtils.NewGUID());
-                }
-                if (aml.dataset[0].reference == null)
-                {
-                    aml.dataset[0].reference = new reference();
-                }
-
-                _context = aml.dataset[0].reference.context = new context();
-            }
-
-            additionalElement agentElements = _context.addElement("agents");
-            additionalElement agentElement = null;
-
-            foreach (Agent agent in metsHdr.Agent)
-            {
-                foreach (additionalElement element in agentElements.getElements("agent"))
-                {
-                    //if ()
-                }
-
-                if (agentElement == null)
-                    agentElement = agentElements.addElement("agent");
-
-                string type = agent.TYPE == "OTHER" ? agent.OTHERTYPE : agent.TYPE;
-                string role = agent.ROLE == "OTHER" ? agent.OTHERROLE : agent.ROLE;
-
-                agentElement.addProperty("type").value = type;
-                agentElement.addProperty("role").value = role;
-
-                agentElement.value = agent.Name;
-
-                Console.WriteLine($"name='{agent.Name}'");
-                foreach (string note in agent.Note)
-                    Console.WriteLine($"note='{note}'");
-            }
-            return;
         }
     }
 }

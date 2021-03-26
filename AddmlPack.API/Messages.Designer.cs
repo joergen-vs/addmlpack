@@ -22,7 +22,7 @@ namespace AddmlPack.API {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Messages {
+    public class Messages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace AddmlPack.API {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AddmlPack.API.Messages", typeof(Messages).Assembly);
@@ -51,7 +51,7 @@ namespace AddmlPack.API {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,27 @@ namespace AddmlPack.API {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Append information from mets-file to addml-file.
+        /// </summary>
+        public static string AppendMetsInfo_Addml_Description {
+            get {
+                return ResourceManager.GetString("AppendMetsInfo_Addml_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Append information from mets-file to excel-file.
+        /// </summary>
+        public static string AppendMetsInfo_Excel_Description {
+            get {
+                return ResourceManager.GetString("AppendMetsInfo_Excel_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Append defined processes to addml-file.
         /// </summary>
-        internal static string AppendProcesses_Addml_Description {
+        public static string AppendProcesses_Addml_Description {
             get {
                 return ResourceManager.GetString("AppendProcesses_Addml_Description", resourceCulture);
             }
@@ -72,7 +90,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to Append defined processes to excel-file.
         /// </summary>
-        internal static string AppendProcesses_Excel_Description {
+        public static string AppendProcesses_Excel_Description {
             get {
                 return ResourceManager.GetString("AppendProcesses_Excel_Description", resourceCulture);
             }
@@ -81,7 +99,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to Shows the documentation of appendProcesses..
         /// </summary>
-        internal static string AppendProcesses_Help_Description {
+        public static string AppendProcesses_Help_Description {
             get {
                 return ResourceManager.GetString("AppendProcesses_Help_Description", resourceCulture);
             }
@@ -90,7 +108,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to -co, --customoptions.
         /// </summary>
-        internal static string Arg_CustomOptions {
+        public static string Arg_CustomOptions {
             get {
                 return ResourceManager.GetString("Arg_CustomOptions", resourceCulture);
             }
@@ -99,7 +117,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to Either a json-structure or filepath to json-file.
         /// </summary>
-        internal static string Arg_CustomOptions_Description {
+        public static string Arg_CustomOptions_Description {
             get {
                 return ResourceManager.GetString("Arg_CustomOptions_Description", resourceCulture);
             }
@@ -108,7 +126,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to -i, --input.
         /// </summary>
-        internal static string Arg_Input {
+        public static string Arg_Input {
             get {
                 return ResourceManager.GetString("Arg_Input", resourceCulture);
             }
@@ -117,7 +135,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to specify input filepath.
         /// </summary>
-        internal static string Arg_Input_Description {
+        public static string Arg_Input_Description {
             get {
                 return ResourceManager.GetString("Arg_Input_Description", resourceCulture);
             }
@@ -126,7 +144,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to -l, --lang.
         /// </summary>
-        internal static string Arg_Language {
+        public static string Arg_Language {
             get {
                 return ResourceManager.GetString("Arg_Language", resourceCulture);
             }
@@ -135,7 +153,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to language used for excel-text..
         /// </summary>
-        internal static string Arg_Language_Description {
+        public static string Arg_Language_Description {
             get {
                 return ResourceManager.GetString("Arg_Language_Description", resourceCulture);
             }
@@ -144,7 +162,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to -o, --output.
         /// </summary>
-        internal static string Arg_Output {
+        public static string Arg_Output {
             get {
                 return ResourceManager.GetString("Arg_Output", resourceCulture);
             }
@@ -153,7 +171,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to specify output filepath.
         /// </summary>
-        internal static string Arg_Output_Description {
+        public static string Arg_Output_Description {
             get {
                 return ResourceManager.GetString("Arg_Output_Description", resourceCulture);
             }
@@ -162,7 +180,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to -t, --type.
         /// </summary>
-        internal static string Arg_Type {
+        public static string Arg_Type {
             get {
                 return ResourceManager.GetString("Arg_Type", resourceCulture);
             }
@@ -171,7 +189,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to subprocess, .
         /// </summary>
-        internal static string Arg_Type_Description {
+        public static string Arg_Type_Description {
             get {
                 return ResourceManager.GetString("Arg_Type_Description", resourceCulture);
             }
@@ -180,7 +198,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to     {0,-5} {1,-12} :{2}.
         /// </summary>
-        internal static string ArgShort_ArgLong_Description {
+        public static string ArgShort_ArgLong_Description {
             get {
                 return ResourceManager.GetString("ArgShort_ArgLong_Description", resourceCulture);
             }
@@ -189,7 +207,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to convert addml-file to excel-file..
         /// </summary>
-        internal static string Convert_A2E_Description {
+        public static string Convert_A2E_Description {
             get {
                 return ResourceManager.GetString("Convert_A2E_Description", resourceCulture);
             }
@@ -198,7 +216,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to convert excel-file to addml-file..
         /// </summary>
-        internal static string Convert_E2A_Description {
+        public static string Convert_E2A_Description {
             get {
                 return ResourceManager.GetString("Convert_E2A_Description", resourceCulture);
             }
@@ -207,7 +225,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to Shows the documentation of convert..
         /// </summary>
-        internal static string Convert_Help_Description {
+        public static string Convert_Help_Description {
             get {
                 return ResourceManager.GetString("Convert_Help_Description", resourceCulture);
             }
@@ -216,7 +234,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to generate addml-file from template included in library AddmlPack.Utils..
         /// </summary>
-        internal static string Generate_Addml_Description {
+        public static string Generate_Addml_Description {
             get {
                 return ResourceManager.GetString("Generate_Addml_Description", resourceCulture);
             }
@@ -225,7 +243,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to generate excel-file from template included in library AddmlPack.Utils..
         /// </summary>
-        internal static string Generate_Excel_Description {
+        public static string Generate_Excel_Description {
             get {
                 return ResourceManager.GetString("Generate_Excel_Description", resourceCulture);
             }
@@ -234,7 +252,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to Shows the documentation of generate..
         /// </summary>
-        internal static string Generate_Help_Description {
+        public static string Generate_Help_Description {
             get {
                 return ResourceManager.GetString("Generate_Help_Description", resourceCulture);
             }
@@ -243,7 +261,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to Invalid use of process, try help to list implemented processes and usage..
         /// </summary>
-        internal static string InvalidUseOfProcess {
+        public static string InvalidUseOfProcess {
             get {
                 return ResourceManager.GetString("InvalidUseOfProcess", resourceCulture);
             }
@@ -252,7 +270,7 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to No process found, use help to list implemented processes and usage..
         /// </summary>
-        internal static string NoProcessFound {
+        public static string NoProcessFound {
             get {
                 return ResourceManager.GetString("NoProcessFound", resourceCulture);
             }
@@ -261,18 +279,9 @@ namespace AddmlPack.API {
         /// <summary>
         ///   Looks up a localized string similar to {0,-16} {1,-16} :{2}.
         /// </summary>
-        internal static string Process_Type_Description_Format {
+        public static string Process_Type_Description_Format {
             get {
                 return ResourceManager.GetString("Process_Type_Description_Format", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        internal static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
     }

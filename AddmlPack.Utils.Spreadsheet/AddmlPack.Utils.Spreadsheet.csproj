@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -9,14 +9,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AddmlPack.Standards.Addml\AddmlPack.Standards.Addml.csproj" />
     <ProjectReference Include="..\AddmlPack.Utils\AddmlPack.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Languages\Excel.Designer.cs">
+      <DependentUpon>Excel.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Excel.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -25,8 +26,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Languages\Excel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Excel.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

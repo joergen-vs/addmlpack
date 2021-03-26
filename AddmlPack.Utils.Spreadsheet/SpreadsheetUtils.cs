@@ -1,5 +1,5 @@
-﻿using AddmlPack.Spreadsheet.Languages;
-using AddmlPack.Utils;
+﻿using AddmlPack.Standards.Addml.Classes.v8_3;
+using AddmlPack.Utils.Spreadsheet.Languages;
 using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 
-namespace AddmlPack.Spreadsheet
+namespace AddmlPack.Utils.SpreadsheetUtils
 {
     public class SpreadsheetUtils
     {
@@ -18,20 +18,13 @@ namespace AddmlPack.Spreadsheet
         private static string[] Horizontal { get { return horizontal; } }
         private static string[] Vertical { get { return vertical; } }
 
-        public static void Addml2Excel(string pathOfAddmlFile, string pathOfExcelFile)
-        {
-            addml aml = FileUtils.AddmlFromFile(pathOfAddmlFile);
-            ToExcel(aml, pathOfExcelFile, Thread.CurrentThread.CurrentCulture.Name);
-        }
-
-        public static addml Excel2Addml(string pathOfExcelFile, string pathOfAddmlFile)
+        public static addml FromSpreadsheet(string pathOfExcelFile)
         {
             var workbook = new XLWorkbook(pathOfExcelFile);
-            return ToAddml(workbook, pathOfAddmlFile, pathOfExcelFile);
+            return ToAddml(workbook, pathOfExcelFile);
         }
 
-
-        public static void ToExcel(addml aml, string path, string lang)
+        public static object ToSpreadsheet(addml aml, string path, string lang)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(lang);
 
@@ -464,13 +457,13 @@ namespace AddmlPack.Spreadsheet
                         var fileformat = _flatFileType.Item;
                         if (fileformat.GetType().Equals(typeof(fixedFileFormat)))
                         {
-                            recordSeparator = AddmlUtils.fromSeparator(((fixedFileFormat)fileformat).recordSeparator);
+                            recordSeparator = TextUtils.fromSeparator(((fixedFileFormat)fileformat).recordSeparator);
                         }
                         else
                         {
-                            recordSeparator = AddmlUtils.fromSeparator(((delimFileFormat)fileformat).recordSeparator);
-                            fieldSeparator = AddmlUtils.fromSeparator(((delimFileFormat)fileformat).fieldSeparatingChar);
-                            quotingChar = AddmlUtils.fromSeparator(((delimFileFormat)fileformat).quotingChar);
+                            recordSeparator = TextUtils.fromSeparator(((delimFileFormat)fileformat).recordSeparator);
+                            fieldSeparator = TextUtils.fromSeparator(((delimFileFormat)fileformat).fieldSeparatingChar);
+                            quotingChar = TextUtils.fromSeparator(((delimFileFormat)fileformat).quotingChar);
                         }
 
                         if (_flatFileType.charDefinitions != null)
@@ -1083,9 +1076,11 @@ namespace AddmlPack.Spreadsheet
 
 
             wb.SaveAs(path);
+
+            return wb;
         }
 
-        public static addml ToAddml(XLWorkbook wb, string path, string source)
+        public static addml ToAddml(XLWorkbook wb, string source)
         {
             IXLWorksheet ws;
             addml aml = new addml();
@@ -1302,7 +1297,7 @@ namespace AddmlPack.Spreadsheet
                     _fieldType.packType = getCellValue(ws, fieldTypeIndex, column + 6);
                     _fieldType.nullValues = getCellValue(ws, fieldTypeIndex, column + 7) == null ? null :
                         getCellValue(ws, fieldTypeIndex, column + 7).
-                        Split( Horizontal, StringSplitOptions.None);
+                        Split(Horizontal, StringSplitOptions.None);
 
                     fieldTypeIndex += 1;
                 }
@@ -1462,10 +1457,6 @@ namespace AddmlPack.Spreadsheet
                 }
             }
 
-
-            // Write to file
-            if (path != null)
-                FileUtils.AddmlToFile(aml, path);
             return aml;
         }
 
@@ -1747,19 +1738,6 @@ namespace AddmlPack.Spreadsheet
             var values = JsonSerializer.Deserialize<Dictionary<string, string>>(wb.Properties.Comments);
 
             return values["lang"];
-        }
-
-        // Generator for templates
-
-        public static void GenerateExcelTemplate(string pathOfExcelFile, string lang)
-        {
-            GenerateExcelTemplate("Noark-3", pathOfExcelFile, lang);
-        }
-
-        public static void GenerateExcelTemplate(string template, string pathOfExcelFile, string lang)
-        {
-            addml aml = AddmlUtils.ToAddml(GeneratorUtils.GetTemplate(template));
-            ToExcel(aml, pathOfExcelFile, lang);
         }
     }
 }
