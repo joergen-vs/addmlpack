@@ -60,6 +60,7 @@ namespace AddmlPack.Utils.SpreadsheetUtils
                 Excel.Agent_Contact,
                 Excel.Agent_ContactType
             });
+            row += 1;
 
             if (aml.dataset?[0].reference?.context?.additionalElements.getElement("recordCreators") != null)
             {
@@ -100,14 +101,27 @@ namespace AddmlPack.Utils.SpreadsheetUtils
                     aml.dataset?[0].reference?.context?.additionalElements?.getElement("agents")?
                     .additionalElements?.getElements("agent"))
                 {
-                    AddRow(ws, row, column, new string[] {
-                            agent.value,
+                    if (agent.hasElement("contact"))
+                    {
+                        foreach(additionalElement e in agent.getElements("contact"))
+                        {
+                            AddRow(ws, row, column, new string[] {
+                            agent.getElement("name")?.value,
                             agent.getProperty("type")?.value,
                             agent.getProperty("role")?.value,
-                            "recordCreator",
+                            e.value,
+                            e.getProperty("type")?.value,
                         });
-
-                    row += 1;
+                            row += 1;
+                        }
+                    }else { 
+                        AddRow(ws, row, column, new string[] {
+                            agent.getElement("name").value,
+                            agent.getProperty("type")?.value,
+                            agent.getProperty("role")?.value
+                        });
+                        row += 1;
+                    }
                 }
             }
             row += 2;
