@@ -303,6 +303,19 @@ namespace AddmlPack.Standards.Addml.Classes.v8_3
             }
         }
 
+        public bool hasElement(string _name)
+        {
+            if (additionalElementsField == null)
+                return false;
+
+            foreach (additionalElement a in additionalElementsField.additionalElement)
+            {
+                if (a.name.Equals(_name))
+                    return true;
+            }
+            return false;
+        }
+
         public additionalElement addElement(string name)
         {
             if (additionalElementsField == null)
@@ -383,11 +396,20 @@ namespace AddmlPack.Standards.Addml.Classes.v8_3
             additionalElement a = new additionalElement();
             a.name = name;
 
-            additionalElement[] tmp = new additionalElement[additionalElementField.Length + 1];
-            for (int i = 0; i < additionalElementField.Length; i++)
-                tmp[i] = additionalElementField[i];
-            tmp[additionalElementField.Length] = a;
-            additionalElementField = tmp;
+            if (additionalElementField == null)
+            {
+                additionalElementField = new additionalElement[] {
+                    a
+                };
+            }
+            else
+            {
+                additionalElement[] tmp = new additionalElement[additionalElementField.Length + 1];
+                for (int i = 0; i < additionalElementField.Length; i++)
+                    tmp[i] = additionalElementField[i];
+                tmp[additionalElementField.Length] = a;
+                additionalElementField = tmp;
+            }
 
             return a;
         }
@@ -399,11 +421,20 @@ namespace AddmlPack.Standards.Addml.Classes.v8_3
             a.name = name;
             a.value = value;
 
-            additionalElement[] tmp = new additionalElement[additionalElementField.Length + 1];
-            for (int i = 0; i < additionalElementField.Length; i++)
-                tmp[i] = additionalElementField[i];
-            tmp[additionalElementField.Length] = a;
-            additionalElementField = tmp;
+            if (additionalElementField == null)
+            {
+                additionalElementField = new additionalElement[] {
+                    a
+                };
+            }
+            else
+            {
+                additionalElement[] tmp = new additionalElement[additionalElementField.Length + 1];
+                for (int i = 0; i < additionalElementField.Length; i++)
+                    tmp[i] = additionalElementField[i];
+                tmp[additionalElementField.Length] = a;
+                additionalElementField = tmp;
+            }
 
             return a;
         }
@@ -476,33 +507,60 @@ namespace AddmlPack.Standards.Addml.Classes.v8_3
 
         public property addProperty(string _name)
         {
-            property[] tmp = new property[propertiesField.Length + 1];
-            for (int i = 0; i < propertiesField.Length; i++)
-                tmp[i] = propertiesField[i];
-            tmp[propertiesField.Length] = new property(_name);
-            propertiesField = tmp;
+            property a = new property(_name);
 
-            return tmp[properties.Length - 1];
+            if (propertiesField == null)
+            {
+                propertiesField = new property[] { a };
+            }
+            else
+            {
+                property[] tmp = new property[propertiesField.Length + 1];
+                for (int i = 0; i < propertiesField.Length; i++)
+                    tmp[i] = propertiesField[i];
+                tmp[propertiesField.Length] = a;
+                propertiesField = tmp;
+            }
+
+            return a;
         }
         public property addProperty(string _name, string _value)
         {
-            property[] tmp = new property[propertiesField.Length + 1];
-            for (int i = 0; i < propertiesField.Length; i++)
-                tmp[i] = propertiesField[i];
-            tmp[propertiesField.Length] = new property(_name, _value);
-            propertiesField = tmp;
+            property a = new property(_name, _value);
 
-            return tmp[properties.Length - 1];
+            if (propertiesField == null)
+            {
+                propertiesField = new property[] { a };
+            }
+            else
+            {
+                property[] tmp = new property[propertiesField.Length + 1];
+                for (int i = 0; i < propertiesField.Length; i++)
+                    tmp[i] = propertiesField[i];
+                tmp[propertiesField.Length] = a;
+                propertiesField = tmp;
+            }
+
+            return a;
         }
         public property addProperty(string _name, string _value, string _datatype)
         {
-            property[] tmp = new property[propertiesField.Length + 1];
-            for (int i = 0; i < propertiesField.Length; i++)
-                tmp[i] = propertiesField[i];
-            tmp[propertiesField.Length] = new property(_name, _value, _datatype);
-            propertiesField = tmp;
+            property a = new property(_name, _value, _datatype);
 
-            return tmp[propertiesField.Length - 1];
+            if (propertiesField == null)
+            {
+                propertiesField = new property[] { a };
+            }
+            else
+            {
+                property[] tmp = new property[propertiesField.Length + 1];
+                for (int i = 0; i < propertiesField.Length; i++)
+                    tmp[i] = propertiesField[i];
+                tmp[propertiesField.Length] = new property(_name, _value, _datatype);
+                propertiesField = tmp;
+            }
+
+            return a;
         }
 
         public bool hasProperty(string _name)

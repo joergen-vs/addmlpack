@@ -1,8 +1,7 @@
 {
   "profiles": {
     "AddmlPack.CLI": {
-      "commandName": "Project",
-      "commandLineArgs": "convert  -t addml2excel -i C:\\Me\\Jobb\\testing\\1234\\1g\\A1\\A\\addml.xml -o C:\\Me\\Jobb\\testing\\1234\\1g\\A1\\addml.xlsx"
+      "commandName": "Project"
     }
   }
 }

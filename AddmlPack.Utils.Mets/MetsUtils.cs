@@ -26,11 +26,13 @@ namespace AddmlPack.Utils.Mets
                 _context = aml.dataset[0].reference.context = new context();
             }
 
-            additionalElement agentElements = _context.addElement("agents");
-            additionalElement agentElement = null;
+            additionalElement agentElements = null;
+            if (!_context.hasElement("agents"))
+                agentElements = _context.addElement("agents");
 
             foreach (metsTypeMetsHdrAgent agent in metsHdr.agent)
             {
+                additionalElement agentElement = null;
                 string roleType = agent.TYPE == metsTypeMetsHdrAgentTYPE.OTHER ?
                     agent.OTHERTYPE.ToString() : agent.TYPE.ToString();
                 string role = agent.ROLE == metsTypeMetsHdrAgentROLE.OTHER ?
@@ -40,7 +42,7 @@ namespace AddmlPack.Utils.Mets
                 {
                     if (element.getProperty("role").value == role &&
                         element.getProperty("type").value == roleType &&
-                        element.value == agent.name)
+                        element.getElement("name").value == agent.name)
                     {
                         agentElement = element;
                         break;
@@ -50,50 +52,58 @@ namespace AddmlPack.Utils.Mets
                 if (agentElement != null)
                 {
                     Console.WriteLine($"name='{agent.name}'");
-                    foreach (metsTypeMetsHdrAgentNote note in agent.note)
-                        Console.WriteLine($"note='{note.Value}'");
+                    if (agent.note != null)
+                        foreach (metsTypeMetsHdrAgentNote note in agent.note)
+                            Console.WriteLine($"note='{note.Value}'");
                 }
                 else
                 {
                     agentElement = agentElements.addElement("agent");
 
-                    agentElement.getElement("name").value = agent.name;
+                    agentElement.addElement("name").value = agent.name;
                     agentElement.addProperty("type").value = roleType;
                     agentElement.addProperty("role").value = role;
                 }
 
-                string notescontent = agent.note[agent.note.Length - 1].Value;
-                if (notescontent.StartsWith("notescontent:"))
+                if (agent.note != null)
                 {
-                    var noteTypes = notescontent
-                        .Replace("notescontent:", "")
-                        .Split(',');
-
-                    if (agentElement.hasElement("contact"))
+                    string notescontent = agent.note[agent.note.Length - 1].Value;
+                    if (notescontent.StartsWith("notescontent:"))
                     {
-                        for (int i = 0; i < noteTypes.Length; i++)
+                        var noteTypes = notescontent
+                            .Replace("notescontent:", "")
+                            .Split(',');
+
+                        if (agentElement.hasElement("contact"))
                         {
-                            bool exists = false;
-                            foreach(additionalElement contact in agentElement.getElements("contact"))
+                            for (int i = 0; i < noteTypes.Length; i++)
                             {
+                                bool exists = false;
+                                foreach (additionalElement contact in agentElement.getElements("contact"))
+                                {
 
-                                if (contact.getProperty("type").value == noteTypes[i] &&
-                                    contact.value == agent.note[i].Value)
-                                { exists = true; break; }
+                                    if (contact.getProperty("type").value == noteTypes[i] &&
+                                        contact.value == agent.note[i].Value)
+                                    { exists = true; break; }
+                                }
+
+                                if (!exists)
+                                {
+                                    agentElement.addElement("contact", agent.note[i].Value)
+                                        .addProperty("type").value = noteTypes[i];
+                                }
                             }
-
-                            if (!exists)
+                        }
+                        else
+                        {
+                            for (int i = 0; i < noteTypes.Length; i++)
                             {
                                 agentElement.addElement("contact", agent.note[i].Value)
                                     .addProperty("type").value = noteTypes[i];
                             }
                         }
-                    }
-                    else
-                    {
 
                     }
-
                 }
 
             }
@@ -111,8 +121,9 @@ namespace AddmlPack.Utils.Mets
                     agent.OTHERROLE.ToString() : agent.ROLE.ToString();
 
                 System.Diagnostics.Debug.WriteLine($"name='{agent.name}', role='{role}', type='{type}'");
-                foreach (metsTypeMetsHdrAgentNote note in agent.note)
-                    System.Diagnostics.Debug.WriteLine($"note='{note.Value}'");
+                if (agent.note != null)
+                    foreach (metsTypeMetsHdrAgentNote note in agent.note)
+                        System.Diagnostics.Debug.WriteLine($"note='{note.Value}'");
             }
 
             return metsHdr;
