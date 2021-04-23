@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AddmlPack.FileTypes.Text\AddmlPack.FileTypes.Text.csproj" />
+    <ProjectReference Include="..\AddmlPack.Objects\AddmlPack.Objects.csproj" />
+  </ItemGroup>
+
+</Project>

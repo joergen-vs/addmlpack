@@ -274,6 +274,22 @@ namespace AddmlPack.Objects
                 Output = arguments[indexOfKeyword + 1].Replace("\\", "/");
             }
 
+            // Addml project-file
+            indexOfKeyword = arguments.IndexOf("-a") >= 0 ? arguments.IndexOf("-a") : arguments.IndexOf("--addml");
+
+            if (indexOfKeyword >= 0 && arguments.Count > indexOfKeyword + 1)
+            {
+                if (File.Exists(arguments[indexOfKeyword + 1]))
+                {
+                    Parameters["Addml"] = arguments[indexOfKeyword + 1].Replace("\\", "/");
+                }
+                else
+                {
+                    Console.WriteLine($"Error on 'addml project-file': No such file.");
+                }
+            }
+
+
             // Recursive search
             indexOfKeyword = arguments.IndexOf("-r") >= 0 ? arguments.IndexOf("-r") : arguments.IndexOf("--recursive");
 

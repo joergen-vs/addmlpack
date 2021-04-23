@@ -1,5 +1,4 @@
-﻿using AddmlPack.Standards.Addml;
-using AddmlPack.Standards.Addml.Classes.v8_3;
+using Addml.Standard.v8_3;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +6,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace AddmlPack.Utils.Addml
+namespace Addml.Utils
 {
     public class AddmlUtils
     {
@@ -32,44 +31,9 @@ namespace AddmlPack.Utils.Addml
             }
         }
 
-        public static string FromAddml(addml aml, string version)
-        {
-            var serializer = new XmlSerializer(typeof(addml));
-
-            using (CustomStringWriter sw = new CustomStringWriter())
-            {
-                using (XmlTextWriter xw = new XmlTextWriter(sw))
-                {
-                    XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                    ns.Add("", "http://www.arkivverket.no/standarder/addml");
-
-                    xw.Formatting = Formatting.Indented;
-                    xw.IndentChar = '\t';
-
-                    serializer.Serialize(xw, aml, ns);
-
-                    return PrettyPrintXML(sw.ToString());
-                }
-            }
-        }
-
         public static addml ToAddml(string objectData)
         {
-            return ToAddml(objectData, AddmlVersionsImplemented.Latest);
-        }
-
-        public static addml ToAddml(string objectData, string version)
-        {
-            Type amlType = null;
-            if(!AddmlVersionsImplemented.Instance.Versions.Contains( version))
-            {
-                return null;
-            }
-            if (version == AddmlVersionsImplemented.V8_3 ||
-                version == AddmlVersionsImplemented.Latest)
-                amlType = typeof(Standards.Addml.Classes.v8_3.addml);
-
-            var serializer = new XmlSerializer(amlType);
+            var serializer = new XmlSerializer(typeof(addml));
             addml aml = null;
 
             TextReader reader = null;
@@ -89,6 +53,38 @@ namespace AddmlPack.Utils.Addml
             }
 
             return aml;
+        }
+
+        public static string toSeparator(string text)
+        {
+            if (text == null)
+                return text;
+            if (text.Contains("CRLF"))
+                text = text.Replace("CRLF", "\r\n");
+            if (text.Contains("CR"))
+                text = text.Replace("CR", "\r");
+            if (text.Contains("LF"))
+                text = text.Replace("LF", "\n");
+            if (text.Contains("TAB"))
+                text = text.Replace("TAB", "\t");
+
+            return text;
+        }
+
+        public static string fromSeparator(string text)
+        {
+            if (text == null)
+                return text;
+            if (text.Contains("\r\n"))
+                text = text.Replace("\r\n", "CRLF");
+            if (text.Contains("\r"))
+                text = text.Replace("\r", "CR");
+            if (text.Contains("\n"))
+                text = text.Replace("\n", "LF");
+            if (text.Contains("\t"))
+                text = text.Replace("\t", "\\t");
+
+            return text;
         }
 
         public static string PrettyPrintXML(string xml)
@@ -133,52 +129,19 @@ namespace AddmlPack.Utils.Addml
             }
         }
 
+        public static void GenerateAddmlTemplate(string pathOfAddmlFile)
+        {
+            GenerateAddmlTemplate(Files.Addml_for_N3, pathOfAddmlFile);
+        }
+
+        public static void GenerateAddmlTemplate(string template, string pathOfAddmlFile)
+        {
+            addml aml = AddmlUtils.ToAddml(GeneratorUtils.GetTemplate(template));
+            FileUtils.AddmlToFile(aml, pathOfAddmlFile);
+        }
+
         public static void AppendProcesses(addml aml)
         {
-            Dictionary<string, List<string>> D = new Dictionary<string, List<string>>();
-
-            D.Add("file", new List<string>
-            {
-                "Analyse_CountRecords",
-                "Control_NumberOfRecords",
-            });
-            D.Add("record", new List<string>
-            {
-                "Analyse_CountRecordDefinitionOccurences",
-                "Control_FixedLength",
-                "Control_NotUsedRecordDef",
-                "Control_Key",
-                "Control_ForeignKey",
-            });
-            D.Add("field", new List<string>
-            {
-                "Analyse_CountNULL",
-                "Analyse_FindExtremeValues",
-                "Analyse_FindMinMaxValue",
-                "Analyse_FrequenceList",
-                "Control_MinLength",
-                "Control_MaxLength",
-                "Control_DataFormat",
-                "Control_NotNull",
-                "Control_Uniqueness",
-                "Control_Codes",
-            });
-
-            AppendProcesses(aml, D);
-        }
-
-        public static void AppendProcesses(addml aml, Dictionary<string, string[]> processesToAppend)
-        {
-            Dictionary<string, List<string>> D = new Dictionary<string, List<string>>();
-            foreach (string key in processesToAppend.Keys)
-                D.Add(key, new List<string>(processesToAppend[key]));
-
-            AppendProcesses(aml, D);
-        }
-
-        public static void AppendProcesses(addml aml, Dictionary<string, List<string>> processesToAppend)
-        {
-            Console.WriteLine("AppendProcesses");
             flatFiles _flatFiles = aml.dataset[0].flatFiles;
             if (_flatFiles == null)
                 return;
@@ -201,55 +164,43 @@ namespace AddmlPack.Utils.Addml
 
                                 // Add field-processes
                                 //Analyse_CountNULL
-                                if (processesToAppend["field"].Contains("Analyse_CountNULL"))
-                                    if (_fieldDefinition.notNull == null)
-                                        _fieldProcess.addProcess("Analyse_CountNULL");
+                                if (_fieldDefinition.notNull == null)
+                                    _fieldProcess.addProcess("Analyse_CountNULL");
 
                                 //Analyse_FindExtremeValues
-                                if (processesToAppend["field"].Contains("Analyse_FindExtremeValues"))
-                                    _fieldProcess.addProcess("Analyse_FindExtremeValues");
+                                _fieldProcess.addProcess("Analyse_FindExtremeValues");
 
                                 //Analyse_FindMinMaxValue
-                                if (processesToAppend["field"].Contains("Analyse_FindMinMaxValue"))
-                                    _fieldProcess.addProcess("Analyse_FindMinMaxValue");
+                                _fieldProcess.addProcess("Analyse_FindMinMaxValue");
 
                                 //Analyse_FrequenceList
-                                if (processesToAppend["field"].Contains("Analyse_FrequenceList"))
-                                    if (_fieldDefinition.codes != null)
-                                        _fieldProcess.addProcess("Analyse_FrequenceList");
+                                if (_fieldDefinition.codes != null)
+                                    _fieldProcess.addProcess("Analyse_FrequenceList");
 
                                 //Control_MinLength
-                                if (processesToAppend["field"].Contains("Control_MinLength"))
-                                    if (_fieldDefinition.minLength != null)
-                                        _fieldProcess.addProcess("Control_MinLength");
+                                if (_fieldDefinition.minLength != null)
+                                    _fieldProcess.addProcess("Control_MinLength");
 
                                 //Control_MaxLength
-                                if (processesToAppend["field"].Contains("Control_MaxLength"))
-                                    if (_fieldDefinition.maxLength != null)
-                                        _fieldProcess.addProcess("Control_MaxLength");
+                                if (_fieldDefinition.maxLength != null)
+                                    _fieldProcess.addProcess("Control_MaxLength");
 
                                 //Control_DataFormat
-                                if (processesToAppend["field"].Contains("Control_DataFormat"))
-                                {
-                                    fieldType _fieldType = _flatFiles.structureTypes?.getFieldType(_fieldDefinition.typeReference);
-                                    if (_fieldType.dataType != null)
-                                        _fieldProcess.addProcess("Control_DataFormat");
-                                }
+                                fieldType _fieldType = _flatFiles.structureTypes?.getFieldType(_fieldDefinition.typeReference);
+                                if (_fieldType.dataType != null)
+                                    _fieldProcess.addProcess("Control_DataFormat");
 
                                 //Control_NotNull
-                                if (processesToAppend["field"].Contains("Control_NotNull"))
-                                    if (_fieldDefinition.notNull != null)
-                                        _fieldProcess.addProcess("Control_NotNull");
+                                if (_fieldDefinition.notNull != null)
+                                    _fieldProcess.addProcess("Control_NotNull");
 
                                 //Control_Uniqueness
-                                if (processesToAppend["field"].Contains("Control_Uniqueness"))
-                                    if (_fieldDefinition.unique != null)
-                                        _fieldProcess.addProcess("Control_Uniqueness");
+                                if (_fieldDefinition.unique != null)
+                                    _fieldProcess.addProcess("Control_Uniqueness");
 
                                 //Control_Codes
-                                if (processesToAppend["field"].Contains("Control_Codes"))
-                                    if (_fieldDefinition.codes != null)
-                                        _fieldProcess.addProcess("Control_Codes");
+                                if (_fieldDefinition.codes != null)
+                                    _fieldProcess.addProcess("Control_Codes");
 
                                 if (_fieldProcess.processes != null &&
                                     _fieldProcess.processes.Length == 0)
@@ -266,50 +217,38 @@ namespace AddmlPack.Utils.Addml
                             // Add record-processes
 
                             //Analyse_FindExtremeRecords
-                            if (processesToAppend["record"].Contains("Analyse_FindExtremeRecords"))
-                                _recordProcess.addProcess("Analyse_FindExtremeRecords");
 
                             //Analyse_CountRecordDefinitionOccurences
-                            if (processesToAppend["record"].Contains("Analyse_CountRecordDefinitionOccurences"))
-                                if (_recordDefinition.recordDefinitionFieldValue != null)
-                                    _recordProcess.addProcess("Analyse_CountRecordDefinitionOccurences");
+                            if (_recordDefinition.recordDefinitionFieldValue != null)
+                                _recordProcess.addProcess("Analyse_CountRecordDefinitionOccurences");
 
                             //Analyse_AllFrequenceList
-                            // Not necessary. Already added Control_Codes for each field.
-                            if (processesToAppend["record"].Contains("Analyse_AllFrequenceList"))
-                                _recordProcess.addProcess("Analyse_AllFrequenceList");
 
                             //Analyse_CrossTable
-                            if (processesToAppend["record"].Contains("Analyse_CrossTable"))
-                                _recordProcess.addProcess("Analyse_CrossTable");
 
                             // Control_FixedLength
-                            if (processesToAppend["record"].Contains("Control_FixedLength"))
-                                if (_recordDefinition.fixedLength != null)
-                                    _recordProcess.addProcess("Control_FixedLength");
+                            if (_recordDefinition.fixedLength != null)
+                                _recordProcess.addProcess("Control_FixedLength");
 
                             // Control_NotUsedRecordDef
-                            if (processesToAppend["record"].Contains("Control_NotUsedRecordDef"))
-                                if (_recordDefinition.recordDefinitionFieldValue != null)
-                                    _recordProcess.addProcess("Control_NotUsedRecordDef");
+                            if (_recordDefinition.recordDefinitionFieldValue != null)
+                                _recordProcess.addProcess("Control_NotUsedRecordDef");
 
                             // Control_Key
-                            if (processesToAppend["record"].Contains("Control_Key"))
-                                if (_recordDefinition.keys != null)
-                                    _recordProcess.addProcess("Control_Key");
+                            if (_recordDefinition.keys != null)
+                                _recordProcess.addProcess("Control_Key");
 
                             // Control_ForeignKey
-                            if (processesToAppend["record"].Contains("Control_ForeignKey"))
-                                if (_recordDefinition.keys != null)
+                            if (_recordDefinition.keys != null)
+                            {
+                                foreach (key _key in _recordDefinition.keys)
                                 {
-                                    foreach (key _key in _recordDefinition.keys)
+                                    if (_key.Item.GetType().IsEquivalentTo(typeof(foreignKey)))
                                     {
-                                        if (_key.Item.GetType().IsEquivalentTo(typeof(foreignKey)))
-                                        {
-                                            _recordProcess.addProcess("Control_Key");
-                                        }
+                                        _recordProcess.addProcess("Control_ForeignKey");
                                     }
                                 }
+                            }
 
 
                             if (_recordProcess.processes == null &&
@@ -326,22 +265,17 @@ namespace AddmlPack.Utils.Addml
                 // Add flatFile-processes
 
                 //Analyse_CountRecords
-                if (processesToAppend["file"].Contains("Analyse_CountRecords"))
-                    _flatFileProcess.addProcess("Analyse_CountRecords");
+                _flatFileProcess.addProcess("Analyse_CountRecords");
 
                 //Analyse_CountChars
-                if (processesToAppend["file"].Contains("Analyse_CountChars"))
-                    _flatFileProcess.addProcess("Analyse_CountChars");
+                // Not that useful
 
                 //Control_AllFixedLength
                 // Not necessary. Already added Control_FixedLength for each record.
-                if (processesToAppend["file"].Contains("Control_AllFixedLength"))
-                    _flatFileProcess.addProcess("Control_AllFixedLength");
 
                 //Control_NumberOfRecords
-                if (processesToAppend["file"].Contains("Control_NumberOfRecords"))
-                    if (_flatFile.getProperty("numberOfRecords")?.value != null)
-                        _flatFileProcess.addProcess("Control_NumberOfRecords");
+                if (_flatFile.getProperty("numberOfRecords")?.value != null)
+                    _flatFileProcess.addProcess("Control_NumberOfRecords");
 
 
                 if (_flatFileProcess.processes == null &&

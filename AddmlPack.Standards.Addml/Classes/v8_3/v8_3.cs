@@ -392,6 +392,22 @@ namespace AddmlPack.Standards.Addml.Classes.v8_3
             return a;
         }
 
+        public additionalElement addElement(string name, string value)
+        {
+
+            additionalElement a = new additionalElement();
+            a.name = name;
+            a.value = value;
+
+            additionalElement[] tmp = new additionalElement[additionalElementField.Length + 1];
+            for (int i = 0; i < additionalElementField.Length; i++)
+                tmp[i] = additionalElementField[i];
+            tmp[additionalElementField.Length] = a;
+            additionalElementField = tmp;
+
+            return a;
+        }
+
         /// <remarks/>
         public string description
         {
@@ -555,6 +571,14 @@ namespace AddmlPack.Standards.Addml.Classes.v8_3
             if (additionalElementsField == null)
                 additionalElementsField = new additionalElements();
             return additionalElementsField.addElement(name);
+        }
+
+        public additionalElement addElement(string name, string value)
+        {
+            if (additionalElementsField == null)
+                additionalElementsField = new additionalElements();
+
+            return additionalElementsField.addElement(name, value);
         }
 
         /// <remarks/>

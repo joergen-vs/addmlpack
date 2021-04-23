@@ -66,7 +66,7 @@ namespace AddmlPack.Utils
         {
             try
             {
-                return Encoding.GetEncoding(_name).BodyName;
+                return TextUtils.GetEncoding(_name).BodyName;
             }
             catch (ArgumentException)
             {

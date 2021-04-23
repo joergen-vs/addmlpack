@@ -13,22 +13,35 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddmlPack.API", "AddmlPack.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddmlPack.CLI", "AddmlPack.CLI\AddmlPack.CLI.csproj", "{23D07A54-C913-4547-B94D-2930281C0FC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddmlPack.Utils.Mets", "AddmlPack.Utils.Mets\AddmlPack.Utils.Mets.csproj", "{1897A26D-F5AE-46F2-BB9D-EBE8F4B2D2E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddmlPack.Utils.Mets", "AddmlPack.Utils.Mets\AddmlPack.Utils.Mets.csproj", "{1897A26D-F5AE-46F2-BB9D-EBE8F4B2D2E9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A44D0DBD-0A2D-4770-880E-9502B9871ABC} = {A44D0DBD-0A2D-4770-880E-9502B9871ABC}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddmlPack.Utils.Addml", "AddmlPack.Utils.Addml\AddmlPack.Utils.Addml.csproj", "{2E5DB1AF-1F0E-43B2-B5F1-E1F56B444AA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddmlPack.Utils.Addml", "AddmlPack.Utils.Addml\AddmlPack.Utils.Addml.csproj", "{2E5DB1AF-1F0E-43B2-B5F1-E1F56B444AA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddmlPack.Templates", "AddmlPack.Templates\AddmlPack.Templates.csproj", "{00FAA2D2-A4AC-43B4-A875-57C4ECAF18F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddmlPack.Templates", "AddmlPack.Templates\AddmlPack.Templates.csproj", "{00FAA2D2-A4AC-43B4-A875-57C4ECAF18F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddmlPack.Standards.Mets", "AddmlPack.Standards.Mets\AddmlPack.Standards.Mets.csproj", "{A44D0DBD-0A2D-4770-880E-9502B9871ABC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddmlPack.Standards.Mets", "AddmlPack.Standards.Mets\AddmlPack.Standards.Mets.csproj", "{A44D0DBD-0A2D-4770-880E-9502B9871ABC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddmlPack.Standards.Addml", "AddmlPack.Standards.Addml\AddmlPack.Standards.Addml.csproj", "{1EC5C175-0CA7-4A2E-83BC-EABCD4893608}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddmlPack.Standards.Addml", "AddmlPack.Standards.Addml\AddmlPack.Standards.Addml.csproj", "{1EC5C175-0CA7-4A2E-83BC-EABCD4893608}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddmlPack.Utils.Spreadsheet", "AddmlPack.Utils.Spreadsheet\AddmlPack.Utils.Spreadsheet.csproj", "{343141BB-667F-4748-BE34-FE9BAF99A257}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddmlPack.Utils.Spreadsheet", "AddmlPack.Utils.Spreadsheet\AddmlPack.Utils.Spreadsheet.csproj", "{343141BB-667F-4748-BE34-FE9BAF99A257}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddmlPack.Objects", "AddmlPack.Objects\AddmlPack.Objects.csproj", "{ED8BC811-1A06-42C6-A1D8-91F318A91450}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddmlPack.Objects", "AddmlPack.Objects\AddmlPack.Objects.csproj", "{ED8BC811-1A06-42C6-A1D8-91F318A91450}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddmlPack.FileTypes.Text", "AddmlPack.FileTypes.Text\AddmlPack.FileTypes.Text.csproj", "{7B6262AE-1D84-4FE7-9821-24DA635E16E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddmlPack.FileTypes.Delimited", "AddmlPack.FileTypes.Delimited\AddmlPack.FileTypes.Delimited.csproj", "{58245637-55BD-458F-97DC-CFC924884BAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddmlPack.TestingPurposes", "AddmlPack.TestingPurposes\AddmlPack.TestingPurposes.csproj", "{8FC6A889-F87E-42F4-8ECC-BA9CC9B2530F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E8D96407-021B-49CE-8EC6-3AD5748623DD} = {E8D96407-021B-49CE-8EC6-3AD5748623DD}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddmlPack.Objects.Datatypes", "AddmlPack.Objects.Datatypes\AddmlPack.Objects.Datatypes.csproj", "{3DB966B1-925F-423A-B70D-84FCA995C8FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddmlPack.Scan", "AddmlPack.Scan\AddmlPack.Scan.csproj", "{CC245980-E73E-43E6-A473-41CB6E40D2F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +89,26 @@ Global
 		{ED8BC811-1A06-42C6-A1D8-91F318A91450}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED8BC811-1A06-42C6-A1D8-91F318A91450}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED8BC811-1A06-42C6-A1D8-91F318A91450}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B6262AE-1D84-4FE7-9821-24DA635E16E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B6262AE-1D84-4FE7-9821-24DA635E16E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B6262AE-1D84-4FE7-9821-24DA635E16E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B6262AE-1D84-4FE7-9821-24DA635E16E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58245637-55BD-458F-97DC-CFC924884BAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58245637-55BD-458F-97DC-CFC924884BAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58245637-55BD-458F-97DC-CFC924884BAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58245637-55BD-458F-97DC-CFC924884BAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FC6A889-F87E-42F4-8ECC-BA9CC9B2530F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC6A889-F87E-42F4-8ECC-BA9CC9B2530F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC6A889-F87E-42F4-8ECC-BA9CC9B2530F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC6A889-F87E-42F4-8ECC-BA9CC9B2530F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DB966B1-925F-423A-B70D-84FCA995C8FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DB966B1-925F-423A-B70D-84FCA995C8FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DB966B1-925F-423A-B70D-84FCA995C8FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DB966B1-925F-423A-B70D-84FCA995C8FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC245980-E73E-43E6-A473-41CB6E40D2F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC245980-E73E-43E6-A473-41CB6E40D2F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC245980-E73E-43E6-A473-41CB6E40D2F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC245980-E73E-43E6-A473-41CB6E40D2F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

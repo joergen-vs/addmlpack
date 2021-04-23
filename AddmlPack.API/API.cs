@@ -177,6 +177,44 @@ namespace AddmlPack.API
                             }
                         }
                         break;
+                    case "scan":
+                        if (P.Help)
+                        {
+                            help("scan");
+                        }
+                        else
+                        {
+                            switch (P.type)
+                            {
+                                case "addml":
+                                    {
+                                        string _aml = P.GetString("archivetype");
+                                        _aml = Template.GetTemplate(_aml);
+
+                                        addml aml = AddmlUtils.ToAddml(_aml);
+                                        _aml = AddmlUtils.FromAddml(aml);
+
+                                        FileUtils.ToFile(_aml, P.Output);
+                                    }
+                                    break;
+                                case "excel":
+                                    {
+                                        string _aml = P.GetString("archivetype");
+                                        _aml = Template.GetTemplate(_aml);
+
+                                        addml aml = AddmlUtils.ToAddml(_aml);
+
+                                        SpreadsheetUtils.ToSpreadsheet(aml, P.Output, P.Language);
+                                    }
+                                    break;
+                                default:
+                                    {
+                                        Console.WriteLine(Messages.InvalidUseOfProcess);
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
                     case "help":
                         help();
                         break;
@@ -226,6 +264,11 @@ namespace AddmlPack.API
                 case "appendProcesses":
                     {
                         Console.WriteLine("Usage: dotnet AddmlPack.CLI.dll appendProcesses -t <TYPE> -i <Input> -o <Output> [-l <Language>]");
+                    }
+                    break;
+                default:
+                    {
+                        Console.WriteLine($"Usage: dotnet AddmlPack.CLI.dll {process} TBD");
                     }
                     break;
             }

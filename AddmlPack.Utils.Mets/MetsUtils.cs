@@ -31,27 +31,71 @@ namespace AddmlPack.Utils.Mets
 
             foreach (metsTypeMetsHdrAgent agent in metsHdr.agent)
             {
-                foreach (additionalElement element in agentElements.getElements("agent"))
-                {
-                    //if ()
-                }
-
-                if (agentElement == null)
-                    agentElement = agentElements.addElement("agent");
-
-                string type = agent.TYPE == metsTypeMetsHdrAgentTYPE.OTHER ?
+                string roleType = agent.TYPE == metsTypeMetsHdrAgentTYPE.OTHER ?
                     agent.OTHERTYPE.ToString() : agent.TYPE.ToString();
                 string role = agent.ROLE == metsTypeMetsHdrAgentROLE.OTHER ?
                     agent.OTHERROLE.ToString() : agent.ROLE.ToString();
 
-                agentElement.addProperty("type").value = type;
-                agentElement.addProperty("role").value = role;
+                foreach (additionalElement element in agentElements.getElements("agent"))
+                {
+                    if (element.getProperty("role").value == role &&
+                        element.getProperty("type").value == roleType &&
+                        element.value == agent.name)
+                    {
+                        agentElement = element;
+                        break;
+                    }
+                }
 
-                agentElement.value = agent.name;
+                if (agentElement != null)
+                {
+                    Console.WriteLine($"name='{agent.name}'");
+                    foreach (metsTypeMetsHdrAgentNote note in agent.note)
+                        Console.WriteLine($"note='{note.Value}'");
+                }
+                else
+                {
+                    agentElement = agentElements.addElement("agent");
 
-                Console.WriteLine($"name='{agent.name}'");
-                foreach (metsTypeMetsHdrAgentNote note in agent.note)
-                    Console.WriteLine($"note='{note.Value}'");
+                    agentElement.getElement("name").value = agent.name;
+                    agentElement.addProperty("type").value = roleType;
+                    agentElement.addProperty("role").value = role;
+                }
+
+                string notescontent = agent.note[agent.note.Length - 1].Value;
+                if (notescontent.StartsWith("notescontent:"))
+                {
+                    var noteTypes = notescontent
+                        .Replace("notescontent:", "")
+                        .Split(',');
+
+                    if (agentElement.hasElement("contact"))
+                    {
+                        for (int i = 0; i < noteTypes.Length; i++)
+                        {
+                            bool exists = false;
+                            foreach(additionalElement contact in agentElement.getElements("contact"))
+                            {
+
+                                if (contact.getProperty("type").value == noteTypes[i] &&
+                                    contact.value == agent.note[i].Value)
+                                { exists = true; break; }
+                            }
+
+                            if (!exists)
+                            {
+                                agentElement.addElement("contact", agent.note[i].Value)
+                                    .addProperty("type").value = noteTypes[i];
+                            }
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                }
+
             }
             return;
         }

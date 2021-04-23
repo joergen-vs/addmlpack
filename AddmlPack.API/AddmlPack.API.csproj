@@ -17,6 +17,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AddmlPack.FileTypes.Delimited\AddmlPack.FileTypes.Delimited.csproj" />
+    <ProjectReference Include="..\AddmlPack.FileTypes.Text\AddmlPack.FileTypes.Text.csproj" />
     <ProjectReference Include="..\AddmlPack.Objects\AddmlPack.Objects.csproj" />
     <ProjectReference Include="..\AddmlPack.Templates\AddmlPack.Templates.csproj" />
     <ProjectReference Include="..\AddmlPack.Utils.Addml\AddmlPack.Utils.Addml.csproj" />

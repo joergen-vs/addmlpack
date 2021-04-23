@@ -37,5 +37,16 @@ namespace AddmlPack.Utils
 
             return text;
         }
+
+        public static Encoding GetEncoding(string encoding)
+        {
+            if (encoding == "ANSI")
+                return Encoding.Default;
+
+            try { return Encoding.GetEncoding(encoding); }
+            catch (ArgumentException) { }
+
+            return Encoding.Default;
+        }
     }
 }
