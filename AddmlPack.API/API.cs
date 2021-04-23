@@ -184,6 +184,8 @@ namespace AddmlPack.API
                         }
                         else
                         {
+                            Console.WriteLine("It's not done yet!");
+                            return;
                             switch (P.type)
                             {
                                 case "addml":
@@ -264,6 +266,11 @@ namespace AddmlPack.API
                 case "appendProcesses":
                     {
                         Console.WriteLine("Usage: dotnet AddmlPack.CLI.dll appendProcesses -t <TYPE> -i <Input> -o <Output> [-l <Language>]");
+                    }
+                    break;
+                case "appendMetsInfo":
+                    {
+                        Console.WriteLine("Usage: dotnet AddmlPack.CLI.dll appendMetsInfo -t <TYPE> -i <Input> -mf <METS-file> -o <Output> [-l <Language>]");
                     }
                     break;
                 default:
