@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Schema.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Schema.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
@@ -26,6 +26,10 @@
     <None Update="Schemas\v8_3.xsd">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Profiles\" />
   </ItemGroup>
 
 </Project>

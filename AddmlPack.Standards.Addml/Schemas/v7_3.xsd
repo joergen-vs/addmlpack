@@ -1,0 +1,222 @@
+﻿<xs:schema xmlns="http://www.arkivverket.no/standarder/addml" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.arkivverket.no/standarder/addml" elementFormDefault="qualified" version="7.3">
+
+  <!--    XML-Skjema for                                                          -->
+  <!--    ADDMML (Archives' Data Description and Manipulation Markup Language):   -->
+
+  <!--    Arkivverkets standard for teknisk og logisk beskrivelse og behandling   -->
+  <!--    (sjekk, analyse og konvertering) av avlevert, digitalt arkivmateriale   -->
+
+  <xs:element name="addmml" type="addmmlType" />
+
+  <xs:complexType name="addmmlType">
+    <xs:sequence>
+      <xs:element type="referenceType" name="reference" />
+      <xs:element type="structureType" name="structure" />
+      <xs:element type="processesType" name="processes" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="referenceType">
+    <xs:sequence>
+      <xs:element type="archivesType" name="archives" />
+      <xs:element type="seriesType" name="series" />
+      <xs:element type="processesType" name="processes" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="archivesType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="ar_name" />
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="ar_id" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="seriesType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="se_name" />
+      <xs:element type="xs:string" name="startdate" minOccurs="0"/>
+      <xs:element type="xs:string" name="enddate" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="se_id" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="structureType">
+    <xs:sequence>
+      <xs:element type="datasetType" name="dataset" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="datasetType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="ds_descr" minOccurs="0" />
+      <xs:element type="xs:string" name="charset" />
+      <xs:element type="chardefType" name="chardef" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element type="xs:string" name="format" />
+      <xs:element type="xs:string" name="string_null" minOccurs="0"/>
+      <xs:element type="xs:string" name="integer_null" minOccurs="0"/>
+      <xs:element type="xs:string" name="float_null" minOccurs="0"/>
+      <xs:element type="xs:string" name="date_null" minOccurs="0"/>
+      <xs:element type="xs:string" name="nu_files" />
+      <xs:element type="sqlType" name="sql"  minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element type="fileType" name="file" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="ds_id" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="chardefType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="local"/>
+      <xs:element type="xs:string" name="iso" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sqlType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="stnr" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="fileType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="fi_descr" minOccurs="0"/>
+      <xs:element type="xs:string" name="recsep" />
+      <xs:element type="xs:string" name="fi_format" minOccurs="0"/>
+      <xs:element type="xs:string" name="reclength" minOccurs="0"/>
+      <xs:element type="delimspecType" name="delimspec" minOccurs="0"/>
+      <xs:element type="xs:string" name="padchar" minOccurs="0"/>
+      <xs:element type="xs:string" name="nu_rectypes" />
+      <xs:element type="xs:string" name="rectypeid" minOccurs="0" />
+      <xs:element type="xs:string" name="nu_records" minOccurs="0"/>
+      <xs:element type="xs:string" name="nu_bytes" minOccurs="0"/>
+      <xs:element type="rectypeType" name="rectype" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="path" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="delimspecType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="fieldsep"/>
+      <xs:element type="xs:string" name="quote" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rectypeType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="rt_descr" minOccurs="0"/>
+      <xs:element type="xs:string" name="rt_id" minOccurs="0"/>
+      <xs:element type="xs:string" name="primkey" minOccurs="0"/>
+      <xs:element type="xs:string" name="altkey" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element type="forkeyType" name="forkey" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element type="xs:string" name="rt_fixlength" minOccurs="0"/>
+      <xs:element type="xs:string" name="rt_minlength" minOccurs="0" />
+      <xs:element type="xs:string" name="rt_maxlength" minOccurs="0" />
+      <xs:element type="xs:string" name="nu_fields" minOccurs="0"/>
+      <xs:element type="xs:string" name="nu_recs" minOccurs="0"/>
+      <xs:element type="fieldtypeType" name="fieldtype" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" />
+  </xs:complexType>
+
+  <xs:complexType name="forkeyType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="fields"/>
+      <xs:element type="xs:string" name="reffilerec"/>
+      <xs:element type="xs:string" name="reffields"/>
+      <xs:element type="xs:string" name="reltype" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="fieldtypeType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="ft_descr" minOccurs="0"/>
+      <xs:element type="xs:string" name="startpos" minOccurs="0"/>
+      <xs:element type="xs:string" name="endpos" minOccurs="0"/>
+      <xs:element type="xs:string" name="ft_fixlength" minOccurs="0"/>
+      <xs:element type="xs:string" name="ft_minlength" minOccurs="0"/>
+      <xs:element type="xs:string" name="ft_maxlength" minOccurs="0"/>
+      <xs:element type="emtpyType" name="rep" minOccurs="0"/>
+      <xs:element type="xs:string" name="datatype" />
+      <xs:element type="xs:string" name="mask" minOccurs="0"/>
+      <xs:element type="xs:string" name="packed" minOccurs="0"/>
+      <xs:element type="xs:string" name="century" minOccurs="0"/>
+      <xs:element type="xs:string" name="ft_nullvalue" minOccurs="0"/>
+      <xs:element type="emtpyType" name="nonull" minOccurs="0"/>
+      <xs:element type="emtpyType" name="unique" minOccurs="0"/>
+      <xs:element type="codeType" name="code" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="codeType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="value" />
+      <xs:element type="xs:string" name="explan" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="processesType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element type="p_datasetType" name="p_dataset" minOccurs="0"/>
+        <xs:element type="p_fileType" name="p_file" minOccurs="0"/>
+        <xs:element type="p_rectypeType" name="p_rectype" minOccurs="0"/>
+        <xs:element type="p_fieldtypeType" name="p_fieldtype" minOccurs="0"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="spc" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="p_datasetType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="ds_analysis" minOccurs="0"/>
+      <xs:element type="xs:string" name="new_charset" minOccurs="0"/>
+      <xs:element type="xs:string" name="new_format" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="p_fileType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="fi_check" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element type="xs:string" name="fi_analysis" minOccurs="0"/>
+      <xs:element type="xs:string" name="new_recsep" minOccurs="0"/>
+      <xs:element type="xs:string" name="fi_new_format" minOccurs="0"/>
+      <xs:element type="xs:string" name="extract" minOccurs="0"/>
+      <xs:element type="emtpyType" name="split_rectypes" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="file" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="p_rectypeType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="rt_check" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element type="xs:string" name="rt_analysis" minOccurs="0"/>
+      <xs:element type="emtpyType" name="freq_allfields" minOccurs="0"/>
+      <xs:element type="xs:string" name="crosstab" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element type="xs:string" name="extract" minOccurs="0"/>
+      <xs:element type="emtpyType" name="split_repgroups" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="file" use="required" />
+    <xs:attribute type="xs:string" name="rectype" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="p_fieldtypeType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="ft_check" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element type="emtpyType" name="ft_analysis" minOccurs="0"/>
+      <xs:element type="emtpyType" name="freq" minOccurs="0"/>
+      <xs:sequence minOccurs="0">
+        <xs:element type="emtpyType" name="unpack" minOccurs="0"/>
+        <xs:element type="xs:string" name="new_datatype"/>
+        <xs:element type="xs:string" name="new_mask"/>
+      </xs:sequence>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="file" use="required" />
+    <xs:attribute type="xs:string" name="rectype" use="required" />
+    <xs:attribute type="xs:string" name="fieldtype" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="emtpyType"/>
+</xs:schema>

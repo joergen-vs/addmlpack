@@ -86,7 +86,7 @@ namespace AddmlPack.Standards.Addml.Classes.v8_3
         }
 
         [XmlAttribute(AttributeName = "schemaLocation", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
-        public string schemaLocation { get { return "http://www.arkivverket.no/standarder/addml AddmlPack.xsd"; } set { } }
+        public string schemaLocation { get { return "http://www.arkivverket.no/standarder/addml http://www.arkivverket.no/standarder/addml/addml.xsd"; } set { } }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("dataset")]

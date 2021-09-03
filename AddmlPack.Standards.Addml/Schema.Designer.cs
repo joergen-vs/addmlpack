@@ -22,7 +22,7 @@ namespace AddmlPack.Standards.Addml {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Schema {
+    public class Schema {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace AddmlPack.Standards.Addml {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AddmlPack.Standards.Addml.Schema", typeof(Schema).Assembly);
@@ -51,12 +51,27 @@ namespace AddmlPack.Standards.Addml {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;xs:schema xmlns=&quot;http://www.arkivverket.no/standarder/addml&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; targetNamespace=&quot;http://www.arkivverket.no/standarder/addml&quot; elementFormDefault=&quot;qualified&quot; version=&quot;7.3&quot;&gt;
+        ///
+        ///  &lt;!--    XML-Skjema for                                                          --&gt;
+        ///  &lt;!--    ADDMML (Archives&apos; Data Description and Manipulation Markup Language):   --&gt;
+        ///
+        ///  &lt;!--    Arkivverkets standard for teknisk og logisk beskrivelse og behandling   --&gt;
+        ///  &lt;!--    (sjekk, analyse og konv [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string v7_3 {
+            get {
+                return ResourceManager.GetString("v7_3", resourceCulture);
             }
         }
         
@@ -74,9 +89,9 @@ namespace AddmlPack.Standards.Addml {
         ///&lt;!ELEMENT archives (ar_name)&gt;
         ///&lt;!ATTLIST archi [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string v7_3 {
+        public static string v7_3_dtd {
             get {
-                return ResourceManager.GetString("v7_3", resourceCulture);
+                return ResourceManager.GetString("v7_3_dtd", resourceCulture);
             }
         }
         
@@ -94,7 +109,7 @@ namespace AddmlPack.Standards.Addml {
         ///    &lt;/xs:complexType&gt;
         ///  &lt;/xs:e [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string v8_2 {
+        public static string v8_2 {
             get {
                 return ResourceManager.GetString("v8_2", resourceCulture);
             }
@@ -113,7 +128,7 @@ namespace AddmlPack.Standards.Addml {
         ///      Version 8.3:
         ///      1 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string v8_3 {
+        public static string v8_3 {
             get {
                 return ResourceManager.GetString("v8_3", resourceCulture);
             }
