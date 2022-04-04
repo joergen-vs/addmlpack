@@ -1,4 +1,5 @@
 ﻿using AddmlPack.Standards.Addml;
+using AddmlPack.Standards.Addml.Classes.v7_3;
 using AddmlPack.Standards.Addml.Classes.v8_3;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace AddmlPack.Utils.Addml
         public static addml ToAddml(string objectData, string version)
         {
             Type amlType = null;
-            if(!AddmlVersionsImplemented.Instance.Versions.Contains( version))
+            if (!AddmlVersionsImplemented.Instance.Versions.Contains(version))
             {
                 return null;
             }
@@ -154,7 +155,7 @@ namespace AddmlPack.Utils.Addml
             {
                 "Analyse_CountNULL",
                 "Analyse_FindExtremeValues",
-                "Analyse_FindMinMaxValue",
+                "Analyse_FindMinMaxValues",
                 "Analyse_FrequenceList",
                 "Control_MinLength",
                 "Control_MaxLength",
@@ -185,7 +186,22 @@ namespace AddmlPack.Utils.Addml
 
             foreach (flatFile _flatFile in _flatFiles.flatFile)
             {
-                flatFileProcesses _flatFileProcess = _flatFiles.addFlatFileProcesses(_flatFile.name);
+                flatFileProcesses _flatFileProcess = null;
+
+                if (_flatFiles.flatFileProcesses != null)
+                {
+                    foreach (flatFileProcesses flatFileProcess in _flatFiles.flatFileProcesses)
+                    {
+                        if (flatFileProcess.flatFileReference == _flatFile.definitionReference)
+                        {
+                            _flatFileProcess = flatFileProcess;
+                            break;
+                        }
+                    }
+                }
+
+                if (_flatFileProcess == null)
+                    _flatFileProcess = _flatFiles.addFlatFileProcesses(_flatFile.definitionReference);
 
                 foreach (flatFileDefinition _flatFileDefinition in _flatFiles.flatFileDefinitions)
                 {
@@ -193,11 +209,37 @@ namespace AddmlPack.Utils.Addml
                     {
                         foreach (recordDefinition _recordDefinition in _flatFileDefinition.recordDefinitions)
                         {
-                            recordProcesses _recordProcess = _flatFileProcess.addRecordProcesses(_recordDefinition.name);
+                            recordProcesses _recordProcess = null;
+
+                            if (_flatFileProcess.recordProcesses != null)
+                                foreach (recordProcesses recordProcess in _flatFileProcess.recordProcesses)
+                                {
+                                    if (recordProcess.definitionReference == _recordDefinition.name)
+                                    {
+                                        _recordProcess = recordProcess;
+                                        break;
+                                    }
+                                }
+
+                            if (_recordProcess == null)
+                                _recordProcess = _flatFileProcess.addRecordProcesses(_recordDefinition.name);
 
                             foreach (fieldDefinition _fieldDefinition in _recordDefinition.fieldDefinitions)
                             {
-                                fieldProcesses _fieldProcess = _recordProcess.addFieldProcesses(_fieldDefinition.name);
+                                fieldProcesses _fieldProcess = null;
+
+                                if (_recordProcess.fieldProcesses != null)
+                                    foreach (fieldProcesses fieldProcess in _recordProcess.fieldProcesses)
+                                    {
+                                        if (fieldProcess.definitionReference == _fieldDefinition.name)
+                                        {
+                                            _fieldProcess = fieldProcess;
+                                            break;
+                                        }
+                                    }
+
+                                if (_fieldProcess == null)
+                                    _fieldProcess = _recordProcess.addFieldProcesses(_fieldDefinition.name);
 
                                 // Add field-processes
                                 //Analyse_CountNULL
@@ -209,9 +251,9 @@ namespace AddmlPack.Utils.Addml
                                 if (processesToAppend["field"].Contains("Analyse_FindExtremeValues"))
                                     _fieldProcess.addProcess("Analyse_FindExtremeValues");
 
-                                //Analyse_FindMinMaxValue
-                                if (processesToAppend["field"].Contains("Analyse_FindMinMaxValue"))
-                                    _fieldProcess.addProcess("Analyse_FindMinMaxValue");
+                                //Analyse_FindMinMaxValues
+                                if (processesToAppend["field"].Contains("Analyse_FindMinMaxValues"))
+                                    _fieldProcess.addProcess("Analyse_FindMinMaxValues");
 
                                 //Analyse_FrequenceList
                                 if (processesToAppend["field"].Contains("Analyse_FrequenceList"))
@@ -306,7 +348,7 @@ namespace AddmlPack.Utils.Addml
                                     {
                                         if (_key.Item.GetType().IsEquivalentTo(typeof(foreignKey)))
                                         {
-                                            _recordProcess.addProcess("Control_Key");
+                                            _recordProcess.addProcess("Control_ForeignKey");
                                         }
                                     }
                                 }
@@ -436,6 +478,11 @@ namespace AddmlPack.Utils.Addml
                     }
                 }
             }
+        }
+
+        public addml upgrade(addmml aml)
+        {
+            return null;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace AddmlPack.Standards.Addml.Classes.v7_3
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.arkivverket.no/standarder/addml")]
     [System.Xml.Serialization.XmlRootAttribute("addmml", Namespace = "http://www.arkivverket.no/standarder/addml", IsNullable = false)]
-    public partial class addmmlType
+    public partial class addmml
     {
 
         private referenceType referenceField;
