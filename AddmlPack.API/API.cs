@@ -217,6 +217,36 @@ namespace AddmlPack.API
                             }
                         }
                         break;
+                    case "update":
+                        if (P.Help)
+                        {
+                            help("update");
+                        }
+                        else
+                        {
+                            Console.WriteLine("It's not done yet!");
+                            return;
+                            switch (P.type)
+                            {
+                                case "addml":
+                                    {
+                                        string _aml = P.GetString("archivetype");
+                                        _aml = Template.GetTemplate(_aml);
+
+                                        addml aml = AddmlUtils.ToAddml(_aml);
+                                        _aml = AddmlUtils.FromAddml(aml);
+
+                                        FileUtils.ToFile(_aml, P.Output);
+                                    }
+                                    break;
+                                default:
+                                    {
+                                        Console.WriteLine(Messages.InvalidUseOfProcess);
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
                     case "help":
                         help();
                         break;
@@ -301,6 +331,7 @@ namespace AddmlPack.API
                 {
                     Console.WriteLine(" * " + arg);
                 }
+                return;
             }
 
             new API(project);
