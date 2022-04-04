@@ -41,30 +41,6 @@ namespace AddmlPack.Objects
             }
             set { _parameters["input"] = value; }
         }
-        //public FileInfo inputFile
-        //{
-        //    get
-        //    {
-        //        if (_parameters.ContainsKey("inputFile"))
-        //            return (FileInfo)_parameters["inputFile"];
-        //        return null;
-        //    }
-        //    set { 
-        //        _parameters["inputFile"] = value;
-        //        _parameters["input"] = value;
-        //        _parameters["inputDirectory"] = null;
-        //    }
-        //}
-        //public DirectoryInfo inputDirectory
-        //{
-        //    get
-        //    {
-        //        if (_parameters.ContainsKey("inputDirectory"))
-        //            return (DirectoryInfo)_parameters["inputDirectory"];
-        //        return null;
-        //    }
-        //    set { _parameters["inputDirectory"] = value; }
-        //}
         public string Output
         {
             get { return (string)_parameters["output"]; }
