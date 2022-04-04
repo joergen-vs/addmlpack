@@ -12,12 +12,12 @@ namespace AddmlPack.Scan.Delimited
     {
         private string Path { get; set; }
         private DelimitedReader Reader { get; set; }
+        private DelimitedReader2 Reader2 { get; set; }
         private long ScanLimit { get; set; }
         private Dictionary<string, string[]> FieldFormats;
 
         public DelimitedScan(Project P)
         {
-
         }
 
         public DelimitedScan

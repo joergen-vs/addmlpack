@@ -7,7 +7,7 @@ using AddmlPack.Objects;
 
 namespace AddmlPack.FileTypes.Delimited
 {
-    public class DelimitedReader : IRecordReader
+    public class DelimitedReader
     {
         public string RecordSeparator { get; set; }
         public string FieldSeparator { get; set; }

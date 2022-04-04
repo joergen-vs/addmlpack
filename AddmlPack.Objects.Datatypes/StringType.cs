@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AddmlPack.Objects.Datatypes
 {
-    class StringType : BaseType
+    public class StringType : BaseType
     {
         public static string _description = "STRING";
         public static string _datatype = "string";

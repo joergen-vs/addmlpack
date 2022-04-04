@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AddmlPack.Objects.Datatypes
 {
-    class UnknownType : BaseType
+    public class UnknownType : BaseType
     {
         public UnknownType()
         {

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AddmlPack.Objects.Datatypes
 {
-    class DateType : BaseType
+    public class DateType : BaseType
     {
         public static string datatype = "date";
         private List<string> _DateFieldFormats;
