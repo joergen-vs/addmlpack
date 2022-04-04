@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace AddmlPack.Objects.Datatypes
 {
-    class FloatType : BaseType
+    public class FloatType : BaseType
     {
         public static string datatype = "float";
         private Regex pattern;

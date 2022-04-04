@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AddmlPack.Objects.Datatypes
 {
-    class ClobType : BaseType
+    public class ClobType : BaseType
     {
         public static string datatype = "string";
         public static string description = "CLOB";
