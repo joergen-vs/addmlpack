@@ -9,12 +9,10 @@ namespace AddmlPack.Objects.Datatypes
 {
     public class IntegerType : BaseType
     {
-        public static string datatype = "integer";
-
         public IntegerType()
         {
             this.Description = "Integer";
-            this.Datatype = IntegerType.datatype;
+            this.Datatype = "integer";
             this.isValidated = true;
         }
 

@@ -194,6 +194,9 @@ namespace AddmlPack.API
                                         _aml = Template.GetTemplate(_aml);
 
                                         addml aml = AddmlUtils.ToAddml(_aml);
+
+                                        // Add or append files
+
                                         _aml = AddmlUtils.FromAddml(aml);
 
                                         FileUtils.ToFile(_aml, P.Output);

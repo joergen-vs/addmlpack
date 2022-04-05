@@ -20,10 +20,8 @@ namespace AddmlPack.Objects.Datatypes
 
         public override bool validate(string text)
         {
-            if (text.Equals(string.Empty) || text.Length > 10)
-                return false;
             this.trueOrFalse.Add(text);
-            return this.trueOrFalse.Count < 2;
+            return this.trueOrFalse.Count < 3;
         }
     }
 }

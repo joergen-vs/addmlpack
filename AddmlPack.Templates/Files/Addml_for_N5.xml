@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<addml xmlns="http://www.arkivverket.no/standarder/addml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.arkivverket.no/standarder/addml AddmlPack.xsd" name="Noark 5-arkivuttrekk">
+<addml xmlns="http://www.arkivverket.no/standarder/addml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.arkivverket.no/standarder/addml addml.xsd" name="Noark 5-arkivuttrekk">
   <dataset>
     <description>Noark 5-arkivuttrekk</description>
     <reference>

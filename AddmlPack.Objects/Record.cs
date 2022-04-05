@@ -27,8 +27,9 @@ namespace AddmlPack.Objects
             FieldSeparator = fieldSeparator;
             Fields = fields;
             LineNumber = lineNumber;
+            LineCount = 1;
 
-            if(recordIdentifierIndex>0 && recordIdentifierIndex - 1 < Fields.Count)
+            if (recordIdentifierIndex>0 && recordIdentifierIndex - 1 < Fields.Count)
                 RecordIdentifierValue = Fields[recordIdentifierIndex - 1].Value;
             else
                 RecordIdentifierValue = null;
@@ -40,11 +41,21 @@ namespace AddmlPack.Objects
             FieldSeparator = fieldSeparator;
             Fields = fields.ToList();
             LineNumber = lineNumber;
+            LineCount = 1;
 
             if (recordIdentifierIndex > 0 && recordIdentifierIndex - 1 < Fields.Count)
                 RecordIdentifierValue = Fields[recordIdentifierIndex - 1].Value;
             else
                 RecordIdentifierValue = null;
+        }
+
+        public void validate(Record other)
+        {
+            for(int i=0; i<Fields.Count; i++)
+            {
+                Fields[i].validate(other.Fields[i].Value);
+            }
+            LineCount += 1;
         }
     }
 }

@@ -14,14 +14,16 @@ namespace AddmlPack.FileTypes.Delimited
         public string FieldSeparator { get; set; }
         public string QuotationText { get; set; }
         public int RecordIdentifierIndex { get; set; }
-        public List<string> Record { get; set; }
+        public bool hasHeader { get; set; }
+        public Dictionary<string, Record> Records { get; set; }
+
         private StreamReader Stream;
 
         /**
          * Add default encoding (UTF-8)
          */
         public DelimitedReader2(string path) : this(path, Encoding.UTF8) { }
-        
+
         /**
          * Add default record- (newline) and field-separator (semicolon)
          */
@@ -50,6 +52,8 @@ namespace AddmlPack.FileTypes.Delimited
             QuotationText = quotationText;
             RecordIdentifierIndex = recordIdentifierIndex;
 
+            Records = new Dictionary<string, Record>();
+
             Stream = GetStream(path, encoding);
         }
 
@@ -58,8 +62,29 @@ namespace AddmlPack.FileTypes.Delimited
             long recordCounter = 0;
             IRecordEnumerator recordEnumerator = new DelimiterFileFormatReader(RecordSeparator, FieldSeparator, QuotationText, RecordIdentifierIndex, Stream);
 
-            List<Record> records = new List<Record>();
 
+
+            // Find header
+            while (hasHeader && recordEnumerator != null)
+            {
+                if (!recordEnumerator.MoveNext())
+                    break;
+                Record record = recordEnumerator.Current;
+                Console.WriteLine($"{0}" + String.Join(",", record.Fields));
+                Records["header"] = record;
+                break;
+            }
+
+            recordEnumerator.Reset();
+
+            while (recordEnumerator != null)
+            {
+                if (!recordEnumerator.MoveNext())
+                    break;
+                break;
+            }
+
+            // Find data
             while (recordEnumerator != null)
             {
                 if (!recordEnumerator.MoveNext())
@@ -68,10 +93,37 @@ namespace AddmlPack.FileTypes.Delimited
                 Record record = recordEnumerator.Current;
                 recordCounter++;
 
-                // validate field-datatypes
+                // To get som progress-output
+                if (recordCounter % 10000 == 0)
+                    Console.WriteLine(recordCounter);
+
+                var recordKey = "";
+                if (RecordIdentifierIndex != -1)
+                    recordKey = record.Fields[RecordIdentifierIndex].Value;
 
                 // check if record-definition exists
+                if (Records.ContainsKey(recordKey))
+                {
+                    if(Records[recordKey].Fields.Count != record.Fields.Count)
+                    {
+                        Console.WriteLine($"Records are of different lengths, " +
+                            $"expected {Records[recordKey].Fields.Count}, found {record.Fields.Count}");
+                        return -1;
+                    }
 
+                    // validate field-datatypes
+                    Records[recordKey].validate(record);
+
+                    record = Records[recordKey];
+                }
+                else
+                {
+                    Records[recordKey] = record;
+
+                    // validate field-datatypes
+                    foreach (Field field in record.Fields)
+                        field.validate();
+                }
             }
             return recordCounter;
         }

@@ -1,4 +1,5 @@
 ﻿using AddmlPack.Objects;
+using AddmlPack.Scan.Delimited;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,7 +28,15 @@ namespace AddmlPack.Scan
             foreach(string filePath in filePaths)
             {
 
+                switch (P.GetString("fileformat"))
+                {
+                    case "delimited":
+                        {
+                            new DelimitedScan(filePath, P);
+                        }
+                }
             }
+
         }
     }
 }

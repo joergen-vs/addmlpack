@@ -22,6 +22,11 @@ namespace AddmlPack.FileTypes.Delimited
         object IEnumerator.Current => Current;
 
         private string _currentName;
+        private Dictionary<string, string[]> formats = new Dictionary<string, string[]>()
+        {
+            { "float",new String[] { "." }},
+            { "nullValues",new String[] { ""," " }}
+        };
 
         public DelimiterFileFormatReader(string recorddelimiter, string fielddelimiter, string quotingchar, int recordidentifier, StreamReader streamReader)
         {
@@ -31,7 +36,7 @@ namespace AddmlPack.FileTypes.Delimited
             _identifierIndex = recordidentifier;
 
             _lines = new DelimiterFileRecordEnumerable(streamReader, _recordDelimiter, _quotingChar).GetEnumerator();
-        }
+        } 
 
         private static StreamReader GetStream(string filePath, string charset)
         {
@@ -52,7 +57,7 @@ namespace AddmlPack.FileTypes.Delimited
 
             for (int i = 0; i < strings.Length; i++)
             {
-                fields.Add(new Field("fd"+(i+1), strings[i]));
+                fields.Add(new Field("fd"+(i+1), strings[i], formats));
             }
 
             return new Record("rd"+(RecordNumber+1), _fieldDelimiter, RecordNumber, _identifierIndex, fields);

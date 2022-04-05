@@ -2,7 +2,7 @@
 <addml xmlns="http://www.arkivverket.no/standarder/addml"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    name="Mal for arkivuttrekk som følger Noark 3"
-   xsi:schemaLocation="http://www.arkivverket.no/standarder/addml AddmlPack.xsd">
+   xsi:schemaLocation="http://www.arkivverket.no/standarder/addml addml.xsd">
    <dataset name="Noark_3">
       <reference>
          <context>

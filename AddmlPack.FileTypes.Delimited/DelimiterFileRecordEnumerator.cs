@@ -98,7 +98,7 @@ namespace AddmlPack.FileTypes.Delimited
 
         public void Reset()
         {
-            throw new NotImplementedException();
+            _stream.BaseStream.Position = 0;
         }
 
         public void Dispose()
@@ -110,27 +110,17 @@ namespace AddmlPack.FileTypes.Delimited
         private bool _CheckIfEndOfStringContainsDelimiter(StringBuilder sb, string delim)
         {
             if (sb.Length < delim.Length)
-            {
                 return false;
-            }
-            else
-            {
-                string endOfSb = sb.ToString(sb.Length - delim.Length, delim.Length);
-                return endOfSb.Equals(delim);
-            }
+
+            string endOfSb = sb.ToString(sb.Length - delim.Length, delim.Length);
+            return endOfSb.Equals(delim);
         }
 
 
         private string _ReturnStringWithoutDelimAtEndOfStringbuilder(StringBuilder sb, string delim)
         {
-            if (sb.Length < delim.Length)
-            {
-                return String.Empty;
-            }
-            else
-            {
-                return (sb.ToString(0, sb.Length - delim.Length));
-            }
+            return sb.Length < delim.Length ? String.Empty : (sb.ToString(0, sb.Length - delim.Length));
+
         }
 
     }

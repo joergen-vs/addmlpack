@@ -19,13 +19,13 @@ namespace AddmlPack.Objects
         public Dictionary<string, object> Parameters { get { return _parameters; } }
         public string Process
         {
-            get { return (string)_parameters["process"]; }
+            get { return _parameters.ContainsKey("process") ? (string)_parameters["process"] : null; }
             set { _parameters["process"] = value; }
         }
         private List<string> implementedProcesses { get; set; }
         public string type
         {
-            get { return (string)_parameters["type"]; }
+            get { return _parameters.ContainsKey("type") ? (string)_parameters["type"] : null; }
             set { _parameters["type"] = value; }
         }
         public bool Help { get; set; }
@@ -33,62 +33,70 @@ namespace AddmlPack.Objects
         {
             get
             {
-
-                if (_parameters.ContainsKey("input"))
-                    return (string)_parameters["input"];
-                else
-                    return null;
+                return _parameters.ContainsKey("input") ? (string)_parameters["input"] : null;
             }
             set { _parameters["input"] = value; }
         }
         public string Output
         {
-            get { return (string)_parameters["output"]; }
+            get
+            {
+                return _parameters.ContainsKey("output") ? (string)_parameters["output"] : null;
+            }
             set { _parameters["output"] = value; }
         }
         public string Extension
         {
-            get { return (string)_parameters["extension"]; }
+            get
+            {
+                return _parameters.ContainsKey("extension") ? (string)_parameters["extension"] : null;
+            }
             set { _parameters["extension"] = value; }
         }
         public bool recursiveSearch
         {
-            get { return (bool)_parameters["recursive"]; }
+            get
+            {
+                return _parameters.ContainsKey("recursive") ? (bool)_parameters["recursive"] : false;
+            }
             set { _parameters["recursive"] = value; }
         }
         public string Language
         {
-            get { return (string)_parameters["lang"]; }
+            get
+            {
+                return _parameters.ContainsKey("lang") ? (string)_parameters["lang"] : null;
+            }
             set { _parameters["lang"] = value; }
         }
         public string RecordSeparator
         {
-            get { return (string)_parameters["recordSeparator"]; }
+            get { return _parameters.ContainsKey("recordSeparator") ? (string)_parameters["recordSeparator"] : null; }
             set { _parameters["recordSeparator"] = value; }
         }
         public string FieldSeparator
         {
-            get { return (string)_parameters["fieldSeparator"]; }
+            get { return _parameters.ContainsKey("fieldSeparator") ? (string)_parameters["fieldSeparator"] : null; }
             set { _parameters["fieldSeparator"] = value; }
         }
         public string QuotationText
         {
-            get { return (string)_parameters["quotationChars"]; }
+            get { return _parameters.ContainsKey("quotationChars") ? (string)_parameters["quotationChars"] : null; }
             set { _parameters["quotationChars"] = value; }
         }
         public string Encoding
         {
-            get { return (string)_parameters["encoding"]; }
+            get { return _parameters.ContainsKey("encoding") ? (string)_parameters["encoding"] : null; }
             set { _parameters["encoding"] = value; }
         }
         public string id
         {
-            get { return (string)_parameters["id"]; }
+            get { return _parameters.ContainsKey("id") ? (string)_parameters["id"] : null; }
             set { _parameters["id"] = value; }
         }
         public DirectoryInfo documents
         {
-            get { return (DirectoryInfo)_parameters["doc"]; }
+            get { return _parameters.ContainsKey("doc") ? (DirectoryInfo)_parameters["doc"] : null; }
             set { _parameters["doc"] = value; }
         }
         private CustomOptions structuredOptions
@@ -109,11 +117,6 @@ namespace AddmlPack.Objects
         public Dictionary<string, string[]> ProcessesToAppend
         {
             get { return (Dictionary<string, string[]>)structuredOptions.processes; }
-        }
-        public int ScanDepth
-        {
-            get { return (int)_parameters["scanDepth"]; }
-            set { _parameters["scanDepth"] = value; }
         }
         private string[] _files { get; set; }
         public string[] Files
@@ -335,18 +338,6 @@ namespace AddmlPack.Objects
                 Encoding = arguments[indexOfKeyword + 1];
             }
 
-            // Number of records per file to scan
-            indexOfKeyword = arguments.IndexOf("-sd") >= 0 ? arguments.IndexOf("-sd") : arguments.IndexOf("--scandepth");
-
-            if (indexOfKeyword >= 0 && arguments.Count > indexOfKeyword + 1)
-            {
-                ScanDepth = int.Parse(arguments[indexOfKeyword + 1]);
-            }
-            else
-            {
-                ScanDepth = -1;
-            }
-
             // Type of system to output
             indexOfKeyword = arguments.IndexOf("-at") >= 0 ? arguments.IndexOf("-at") : arguments.IndexOf("--archivetype");
 
@@ -441,13 +432,30 @@ namespace AddmlPack.Objects
         {
             List<string> list = new List<string>();
 
-            if (type == null)
-                list.Add("'-t' or '--type'");
+            if (Process == null)
+                list.Add("<name of process>");
             else
-            {
-                switch (type)
+                switch (Process)
                 {
                     case "delimited":
+                        if (type == null)
+                            list.Add("'-t' or '--type'");
+                        if (Input == null)
+                            list.Add("'-i' or '--input'");
+                        if (Output == null)
+                            list.Add("'-o' or '--output'");
+                        if (Extension == null)
+                            list.Add("'-x' or '--extension'");
+                        if (RecordSeparator == null)
+                            list.Add("'-rs' or '--recordSeparator'");
+                        if (FieldSeparator == null)
+                            list.Add("'-fs' or '--fieldSeparator'");
+                        if (Encoding == null)
+                            list.Add("'-e' or '--encoding'");
+                        break;
+                    case "scan":
+                        if (type == null)
+                            list.Add("'-t' or '--type'");
                         if (Input == null)
                             list.Add("'-i' or '--input'");
                         if (Output == null)
@@ -462,7 +470,6 @@ namespace AddmlPack.Objects
                             list.Add("'-e' or '--encoding'");
                         break;
                 }
-            }
 
             return list;
         }

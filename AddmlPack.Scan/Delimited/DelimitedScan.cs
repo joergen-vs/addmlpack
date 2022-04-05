@@ -1,6 +1,7 @@
 ﻿using AddmlPack.FileTypes.Delimited;
 using AddmlPack.Objects;
 using AddmlPack.Standards.Addml.Classes.v8_3;
+using AddmlPack.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,14 +12,19 @@ namespace AddmlPack.Scan.Delimited
     class DelimitedScan
     {
         private string Path { get; set; }
-        private DelimitedReader Reader { get; set; }
-        private DelimitedReader2 Reader2 { get; set; }
+        private Project P { get; set; }
+        private DelimitedReader2 Reader { get; set; }
         private long ScanLimit { get; set; }
         private Dictionary<string, string[]> FieldFormats;
 
-        public DelimitedScan(Project P)
-        {
-        }
+        public DelimitedScan(string path, Project P) : this(
+            path,
+            Encoding.GetEncoding(P.Encoding),
+            P.RecordSeparator,
+            P.FieldSeparator,
+            P.QuotationText,
+            P.FieldFormats)
+        { this.P = P; }
 
         public DelimitedScan
         (
@@ -27,32 +33,19 @@ namespace AddmlPack.Scan.Delimited
             string recordSeparator,
             string fieldSeparator,
             string quotationText,
-            Dictionary<string, string[]> formats,
-            long scanLimit
+            Dictionary<string, string[]> formats
         )
         {
-            Reader = new DelimitedReader(path, encoding, recordSeparator, fieldSeparator, quotationText, 4 << 10);
-            FieldFormats = formats;
-        }
-
-        public DelimitedScan
-        (
-            Stream stream,
-            Encoding encoding,
-            string recordSeparator,
-            string fieldSeparator,
-            string quotationText,
-            Dictionary<string, string[]> formats,
-            long scanLimit
-        )
-        {
-            Reader = new DelimitedReader(stream, encoding, recordSeparator, fieldSeparator, quotationText, 4 << 10);
+            Path = path;
+            Reader = new DelimitedReader2(path, encoding, recordSeparator, fieldSeparator, -1, quotationText);
             FieldFormats = formats;
         }
 
         public string Scan(addml aml)
         {
             flatFiles FlatFiles = aml.dataset?[0].flatFiles;
+
+
             flatFile FlatFile = null;
             foreach (flatFile file in FlatFiles.flatFile)
             {
@@ -73,26 +66,29 @@ namespace AddmlPack.Scan.Delimited
                 return "No such file among listed flatfiles.";
             }
 
-            long recordCount = 0;
-
             // Read all records
-            if (ScanLimit == -1)
+
+            long recordCount = Reader.Read();
+
+            if(recordCount < 0)
             {
-                while (Reader.Next())
-                {
-                    recordCount += 1;
-                }
+                // Some error..
+                return aml;
             }
 
-            // Read number of records or all if a higher number is given
-            else
-            {
-                bool EndOfFile = false;
-                for (long i = 0; i < ScanLimit && !EndOfFile; i++)
-                {
-                    recordCount += 1;
-                }
-            }
+            FlatFile.addProperty("numberOfOccurrences").value = $"{recordCount}";
+
+            string ffdRef = GeneratorUtils.NewGUID();
+            var ffd = FlatFiles.addFlatFileDefinition()
+
+            string fftRef = GeneratorUtils.NewGUID();
+            var fft = FlatFiles.addFlatFileType(fftRef);
+            fft.charset = P.Encoding;
+            delimFileFormat _ = new delimFileFormat();
+            _.fieldSeparatingChar = P.FieldSeparator;
+            _.recordSeparator = P.RecordSeparator;
+            _.quotingChar = P.QuotationText;
+            fft.Item = _;
 
             return null;
         }
