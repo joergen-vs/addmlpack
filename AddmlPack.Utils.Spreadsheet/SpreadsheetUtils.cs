@@ -62,67 +62,75 @@ namespace AddmlPack.Utils.SpreadsheetUtils
             });
             row += 1;
 
-            if (aml.dataset?[0].reference?.context?.additionalElements.getElement("recordCreators") != null)
+            context _context = aml.dataset?[0].reference?.context ?? null;
+            if (_context != null)
             {
-                foreach (additionalElement agent in aml.dataset?[0].reference.context?.additionalElements.getElement("recordCreators")?.additionalElements?.additionalElement)
-                {
-                    if (agent.name.Equals("recordCreator") && agent.value != null)
-                    {
-                        AddRow(ws, row, column, new string[] {
-                            agent.value,
-                            "organization",
-                            "recordCreator",
-                        });
 
-                        row += 1;
-                    }
-                }
-            }
-            else if (aml.dataset?[0].reference?.context?.additionalElements.getElement("recordCreator") != null)
-            {
-                additionalElement agent = aml.dataset?[0].reference.context?.additionalElements.getElement("recordCreator");
+                if (_context.additionalElements.getElement("recordCreators") != null)
                 {
-                    if (agent.value != null)
+                    foreach (additionalElement agent in aml.dataset?[0].reference.context?.additionalElements.getElement("recordCreators")?.additionalElements?.additionalElement)
                     {
-                        AddRow(ws, row, column, new string[] {
-                            agent.value,
-                            "organization",
-                            "recordCreator",
-                        });
-
-                        row += 1;
-                    }
-                }
-            }
-            else if (aml.dataset?[0].reference?.context?.additionalElements?.getElement("agents")?
-                    .additionalElements?.getElements("agent").Count > 0)
-            {
-                foreach (additionalElement agent in
-                    aml.dataset?[0].reference?.context?.additionalElements?.getElement("agents")?
-                    .additionalElements?.getElements("agent"))
-                {
-                    if (agent.hasElement("contact"))
-                    {
-                        foreach(additionalElement e in agent.getElements("contact"))
+                        if (agent.name.Equals("recordCreator") && agent.value != null)
                         {
                             AddRow(ws, row, column, new string[] {
-                            agent.getElement("name")?.value,
-                            agent.getProperty("type")?.value,
-                            agent.getProperty("role")?.value,
-                            e.value,
-                            e.getProperty("type")?.value,
+                            agent.value,
+                            "organization",
+                            "recordCreator",
                         });
+
                             row += 1;
                         }
-                    }else { 
-                        AddRow(ws, row, column, new string[] {
-                            agent.getElement("name").value,
-                            agent.getProperty("type")?.value,
-                            agent.getProperty("role")?.value
-                        });
-                        row += 1;
                     }
                 }
+                else if (_context.additionalElements.getElement("recordCreator") != null)
+                {
+                    additionalElement agent = aml.dataset?[0].reference.context?.additionalElements.getElement("recordCreator");
+                    {
+                        if (agent.value != null)
+                        {
+                            AddRow(ws, row, column, new string[] {
+                            agent.value,
+                            "organization",
+                            "recordCreator",
+                        });
+
+                            row += 1;
+                        }
+                    }
+                }
+                else if (_context.additionalElements?.getElement("agents")?
+                        .additionalElements?.getElements("agent").Count > 0)
+                {
+                    foreach (additionalElement agent in
+                        _context.additionalElements?.getElement("agents")?
+                        .additionalElements?.getElements("agent"))
+                    {
+                        if (agent.hasElement("contact"))
+                        {
+                            foreach (additionalElement e in agent.getElements("contact"))
+                            {
+                                AddRow(ws, row, column, new string[] {
+                                    agent.getElement("name")?.value,
+                                    agent.getProperty("type")?.value,
+                                    agent.getProperty("role")?.value,
+                                    e.value,
+                                    e.getProperty("type")?.value,
+                                });
+                                row += 1;
+                            }
+                        }
+                        else
+                        {
+                            AddRow(ws, row, column, new string[] {
+                                agent.getElement("name").value,
+                                agent.getProperty("type")?.value,
+                                agent.getProperty("role")?.value
+                            });
+                            row += 1;
+                        }
+                    }
+                }
+
             }
             row += 2;
             AddSection(ws, row, column, new string[]
@@ -189,7 +197,7 @@ namespace AddmlPack.Utils.SpreadsheetUtils
                         getProperty("value")?.value;
 
                     string numberOfRecords = files.flatFile[i].
-                        getProperty("numberOfRecords")?.value;
+                        getProperty("numberOfOccurrences")?.value;
 
                     AddRow(ws, row + i, column, new string[] {
                     files.flatFile[i].name,
@@ -1131,7 +1139,7 @@ namespace AddmlPack.Utils.SpreadsheetUtils
                         ws.Cell(flatFileIndex, column + 2).Value.ToString()
                     );
 
-                    _flatfile.addProperty("fileName").value = ws.Cell(flatFileIndex, 2).Value.ToString();
+                    _flatfile.addProperty("fileName").value = ws.Cell(flatFileIndex, column + 1).Value.ToString();
 
                     string checksumAlgorithm = getCellValue(ws, flatFileIndex, column + 4);
                     string checksumValue = getCellValue(ws, flatFileIndex, column + 5);
@@ -1157,6 +1165,9 @@ namespace AddmlPack.Utils.SpreadsheetUtils
                         {
                             _flatfile.addProperty("checksum").addProperty("value").value = checksumValue;
                         }
+
+                    if(getCellValue(ws, flatFileIndex, column + 3) != null)
+                        _flatfile.addProperty("numberOfOccurrences").value = ws.Cell(flatFileIndex, column + 3).Value.ToString();
 
                     flatFileIndex += 1;
                 }
