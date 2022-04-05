@@ -28,13 +28,13 @@ namespace AddmlPack.Scan
             foreach(string filePath in filePaths)
             {
 
-                switch (P.GetString("fileformat"))
-                {
-                    case "delimited":
-                        {
-                            new DelimitedScan(filePath, P);
-                        }
-                }
+                //switch (P.GetString("fileformat"))
+                //{
+                //    case "delimited":
+                //        {
+                //            new DelimitedScan(filePath, P);
+                //        }
+                //}
             }
 
         }

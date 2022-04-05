@@ -73,15 +73,16 @@ namespace AddmlPack.Scan.Delimited
             if(recordCount < 0)
             {
                 // Some error..
-                return aml;
+                return "";
             }
 
             FlatFile.addProperty("numberOfOccurrences").value = $"{recordCount}";
 
             string ffdRef = GeneratorUtils.NewGUID();
-            var ffd = FlatFiles.addFlatFileDefinition()
-
             string fftRef = GeneratorUtils.NewGUID();
+
+            var ffd = FlatFiles.addFlatFileDefinition(ffdRef, fftRef);
+
             var fft = FlatFiles.addFlatFileType(fftRef);
             fft.charset = P.Encoding;
             delimFileFormat _ = new delimFileFormat();

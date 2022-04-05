@@ -101,6 +101,8 @@ namespace AddmlPack.Utils.SpreadsheetUtils
                 else if (_context.additionalElements?.getElement("agents")?
                         .additionalElements?.getElements("agent").Count > 0)
                 {
+                    Console.WriteLine(_context.additionalElements?.getElement("agents")?
+                        .additionalElements?.getElements("agent").Count);
                     foreach (additionalElement agent in
                         _context.additionalElements?.getElement("agents")?
                         .additionalElements?.getElements("agent"))
@@ -121,6 +123,7 @@ namespace AddmlPack.Utils.SpreadsheetUtils
                         }
                         else
                         {
+
                             AddRow(ws, row, column, new string[] {
                                 agent.getElement("name").value,
                                 agent.getProperty("type")?.value,
@@ -133,6 +136,18 @@ namespace AddmlPack.Utils.SpreadsheetUtils
 
             }
             row += 2;
+
+            var systemName = aml.dataset?[0].reference?.context?.additionalElements?
+                    .getElement("systemName")?.value;
+            var systemType = aml.dataset?[0].reference?.context?.additionalElements?
+                .getElement("systemType")?.value;
+            var archive = aml.dataset?[0].reference?.context?.additionalElements?
+                .getElement("archive")?.value;
+            var startDate = aml.dataset?[0].reference?.content?.additionalElements?
+                .getElement("archivalPeriod")?.getProperty("startDate")?.value;
+            var endDate = aml.dataset?[0].reference?.content?.additionalElements?
+                .getElement("archivalPeriod")?.getProperty("endDate")?.value;
+
             AddSection(ws, row, column, new string[]
             {
                 Excel.Reference_System_Name,
@@ -142,16 +157,7 @@ namespace AddmlPack.Utils.SpreadsheetUtils
                 Excel.Reference_ArchivalPeriod_End,
             }, new string[]
             {
-                aml.dataset?[0].reference?.context?.additionalElements?
-                    .getElement("systemName")?.value,
-                aml.dataset?[0].reference?.context?.additionalElements?
-                .getElement("systemType")?.value,
-                aml.dataset?[0].reference?.context?.additionalElements?
-                .getElement("archive")?.value,
-                aml.dataset?[0].reference?.content?.additionalElements?
-                .getElement("archivalPeriod")?.getProperty("startDate")?.value,
-                aml.dataset?[0].reference?.content?.additionalElements?
-                .getElement("archivalPeriod")?.getProperty("endDate")?.value
+                systemName,systemType,archive,startDate,endDate
             });
             row += 1;
 
@@ -301,6 +307,11 @@ namespace AddmlPack.Utils.SpreadsheetUtils
                                 _recordDefinition.description,
                                 _flatFileDefinition.name,
                                 _recordDefinition.typeReference,
+                                _recordDefinition.recordDefinitionFieldValue,
+                                $"{_recordDefinition.incomplete != null}".ToUpper(),
+                                _recordDefinition.fixedLength,
+                                null,
+                                $"{_recordDefinition.keys != null}".ToUpper()
                             });
 
                             if (_recordDefinition.keys != null)
@@ -956,6 +967,7 @@ namespace AddmlPack.Utils.SpreadsheetUtils
             {
                 foreach (flatFileProcesses _flatFileProcesses in files.flatFileProcesses)
                 {
+                    if(_flatFileProcesses.processes != null)
                     foreach (process _process in _flatFileProcesses.processes)
                     {
                         fileProcesses.Add(new string[]
@@ -1196,6 +1208,7 @@ namespace AddmlPack.Utils.SpreadsheetUtils
                     while (!ws.Cell(recordDefinitionsIndex, column).IsEmpty())
                     {
                         if (ws.Cell(recordDefinitionsIndex, column + 2).Value.Equals(
+                          
                             _flatFileDefinition.name))
                         {
                             recordDefinition _recordDefinition = _flatFileDefinition.addRecordDefinition(
