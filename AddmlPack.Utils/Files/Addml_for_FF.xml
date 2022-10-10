@@ -125,7 +125,7 @@
               <property name="numberOfOccurrences">
                 <value>dokumenter</value>
                 <properties>
-                  <property name="elementPath">
+                  <property name="filePath">
                     <value>*.*</value>
                   </property>
                   <property name="value" dataType="integer">
